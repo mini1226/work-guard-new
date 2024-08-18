@@ -1,0 +1,165 @@
+<div class="card pb-5">
+  <div class="page-header px-5 pt-3">
+    <div class="page-title">
+      <h4>{{ isEditId ? 'Edit Athletes' : 'Add Athletes' }}</h4>
+    </div>
+    <div class="btn-toolbar p-0 m-0">
+      <div class="m-0">
+        <button type="button" class="me-1 btn btn-info btn ms-1" (click)="reset()"><i class="feather icon-refresh-ccw"></i>
+          Reset
+        </button>
+        <button type="submit" class="me-1 btn btn-success btn" (click)="onSubmit()"><i class="feather icon-save"></i>
+          SAVE
+        </button>
+        <button type="button" class="me-1 btn btn-danger btn" (click)="onBackClick()"><i
+          class="feather icon-chevrons-left"></i> Back
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="px-5 mt-3" >
+    <div>
+      <form [formGroup]="athleteForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">First Name :</label>
+              <div class="col-lg-9  form-group">
+                <input type="text" placeholder="Enter first name" class="form-control" formControlName="client_name"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('firstName')?.invalid && (athleteForm.get('firstName')?.dirty || athleteForm.get('firstName')?.touched) }">
+                <div
+                  *ngIf="athleteForm.get('firstName')?.invalid && (athleteForm.get('firstName')?.dirty || athleteForm.get('firstName')?.touched)"
+                  class="text-danger">First name is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Last Name :</label>
+              <div class="col-lg-9  form-group">
+                <input type="text" placeholder="Enter last name" class="form-control" formControlName="lastName"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('lastName')?.invalid && (athleteForm.get('lastName')?.dirty || athleteForm.get('lastName')?.touched) }">
+                <div
+                  *ngIf="athleteForm.get('lastName')?.invalid && (athleteForm.get('lastName')?.dirty || athleteForm.get('lastName')?.touched)"
+                  class="text-danger">Last name is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Email :</label>
+              <div class="col-lg-9  form-group">
+                <input type="text" placeholder="Enter email " class="form-control" formControlName="email"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('email')?.invalid && (athleteForm.get('email')?.dirty || athleteForm.get('email')?.touched) }">
+                <div
+                  *ngIf="athleteForm.get('email')?.invalid && (athleteForm.get('email')?.dirty || athleteForm.get('email')?.touched)"
+                  class="text-danger">Email is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Contact Number:</label>
+              <div class="col-lg-9  form-group">
+                <input type="number" placeholder="Enter contact number " class="form-control" formControlName="contactNumber"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('contactNumber')?.invalid && (athleteForm.get('contactNumber')?.dirty || athleteForm.get('contactNumber')?.touched) }">
+                <div
+                  *ngIf="athleteForm.get('contactNumber')?.invalid && (athleteForm.get('contactNumber')?.dirty || athleteForm.get('contactNumber')?.touched)"
+                  class="text-danger">Contact number is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-xl-6">
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Date of birth:</label>
+              <div class="col-lg-9 form-group">
+                <div class="input-groupicon">
+                  <input
+                    matInput
+                    [matDatepicker]="picker1"
+                    placeholder="Date"
+                    formControlName="dob"
+                    class="mat-input-element"
+                  />
+                  <div class="addonset">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </div>
+                </div>
+                <div
+                  *ngIf="athleteForm.get('dob')?.invalid && (athleteForm.get('dob')?.dirty || athleteForm.get('dob')?.touched)"
+                  class="text-danger">Date of birth is required
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Level :</label>
+              <div class="col-lg-9  form-group">
+                <mat-select name="level" id="level" formControlName="level">
+                  <mat-option *ngFor="let level of levelData" [value]="level.id">{{level.name}}</mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Heart Rate :</label>
+              <div class="col-lg-9  form-group">
+                <mat-select name="hrRate" id="hrRate" formControlName="hrRate">
+                  <mat-option *ngFor="let hr of hrData" [value]="hr.id">{{hr.name}}</mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Gender :</label>
+              <div class="col-lg-9  form-group">
+                <mat-select name="gender" id="gender" formControlName="gender">
+                  <mat-option *ngFor="let gender of genderData" [value]="gender.id">{{gender.name}}</mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Weight :</label>
+              <div class="col-lg-9  form-group">
+                <input type="number" placeholder="Enter weight " class="form-control" formControlName="weight"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('weight')?.invalid && (athleteForm.get('weight')?.dirty || athleteForm.get('weight')?.touched) }">
+                <div
+                  *ngIf="athleteForm.get('weight')?.invalid && (athleteForm.get('weight')?.dirty || athleteForm.get('weight')?.touched)"
+                  class="text-danger">Weight is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Height :</label>
+              <div class="col-lg-9  form-group">
+                <input type="number" placeholder="Enter height " class="form-control" formControlName="height"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('height')?.invalid && (athleteForm.get('height')?.dirty || athleteForm.get('height')?.touched) }">
+                <div
+                  *ngIf="athleteForm.get('height')?.invalid && (athleteForm.get('height')?.dirty || athleteForm.get('height')?.touched)"
+                  class="text-danger">Height is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div >
+      </form>
+    </div>
+  </div>
+
+
+
+</div>

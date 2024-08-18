@@ -6,7 +6,7 @@ export class routes {
     return this.base;
   }
   // auth routes *start*
-  
+
   public static get signIn(): string {
     return this.base + '/signin';
   }
@@ -39,12 +39,52 @@ export class routes {
 
   // core pages routes *start*
 
+
+
   public static get core(): string {
     return this.baseUrl;
   }
   public static get dashboard(): string {
     return this.baseUrl + '/dashboard';
   }
+  public static get athletes(): string {
+    return this.dashboard + '/athletes';
+  }
+  public static get competition(): string {
+    return this.dashboard + '/competition';
+  }
+  public static get addAthlete(): string {
+    return this.dashboard + '/add-athlete';
+  }
+  public static get addCompetition(): string {
+    return this.dashboard + '/start-competition';
+  }
+  public static get competitionSummary(): string {
+    return this.dashboard + '/view-summary';
+  }
+  public static get viewHistory(): string {
+    return this.dashboard + '/view-history';
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   public static get components(): string {
     return this.core + '/components';
   }
@@ -943,6 +983,6 @@ export class routes {
   public static get permissions(): string {
     return this.usersManagement + '/permissions';
   }
-  
+
   // core pages child routes *ends*
 }

@@ -184,7 +184,7 @@
             filter: brightness(0) invert(1);
         }
         @include respond-below(custom991) {
-            padding: 10px 10px; 
+            padding: 10px 10px;
         }
         &:hover{
             background: $title-color;
@@ -212,7 +212,7 @@
             filter: brightness(0) invert(1);
         }
         @include respond-below(custom991) {
-            padding: 10px 10px; 
+            padding: 10px 10px;
         }
         &:hover{
             background: $primary;
@@ -239,7 +239,7 @@
             filter: brightness(0) invert(1);
         }
         @include respond-below(custom991) {
-            padding: 10px 10px; 
+            padding: 10px 10px;
         }
         &:hover{
             background: $secondary;
@@ -316,7 +316,7 @@
     -ms-flex-align: center;
     .search-input{
         position: relative;
-        margin-right: 15px;    
+        margin-right: 15px;
         input[type="search"] {
             height: 38px;
             border: 1px solid var(--Stroke, rgba(145, 158, 171, 0.30));
@@ -444,7 +444,7 @@
             }
         }
     }
-} 
+}
 .custom-control.custom-checkbox .checkboxs {
     line-height: 1;
 }
@@ -509,7 +509,7 @@ th,td {
                 top: 3px;
             }
         }
-    } 
+    }
 }
 .image-upload {
     border: 1px solid rgba(145, 158, 171, 0.32);
@@ -672,7 +672,7 @@ th,td {
                display: none;
             }
         }
-        
+
     }
     .input-groupicon.select-code {
         input[type="text"],
@@ -680,10 +680,10 @@ th,td {
             padding: 0;
             &::placeholder {
                 padding-left: 10px !important;
-                
+
             }
         }
-    }   
+    }
     input[type="text"],
     input[type="password"], input[type="email"] {
         border:1px solid rgba(145, 158, 171, 0.32);
@@ -694,7 +694,7 @@ th,td {
         @include margin-padding(null, 10px 10px);
         @include rounded(5px);
         width: 100%;
-        
+
     }
     .display-btn {
         color: $white;
@@ -759,7 +759,7 @@ th,td {
     .text-form {
         width: 100%;
     }
-    
+
 }
 .input-blocks.date-group {
     margin-top: 29px;
@@ -773,4 +773,58 @@ th,td {
 }
 .input-blocks.daterange-wraper input[type=text] {
     padding: 10px 10px 10px 35px !important;
+}
+
+.input-blocks.date-group {
+  margin-top: 29px;
+}
+
+.bd-placeholder-img {
+  margin: .125rem;
+}
+.h-250 {
+  height: 250px;
+}
+.input-blocks.daterange-wraper input[type=text] {
+  padding: 10px 10px 10px 35px !important;
+}
+
+.form-group {
+  .input-groupicon {
+    position: relative;
+    .addonset {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none; // Makes sure the icon doesn't interfere with input actions
+    }
+
+    input.mat-input-element {
+      padding-right: 40px; // Adjust the padding to make room for the icon
+    }
+  }
+}
+
+.required{
+  color: red;
+}
+.sticky-thead th {
+  position: sticky;
+  top: 0;
+}
+.gm-style .gm-style-iw-d{
+  margin-right: -5px;
+  margin-top: 12px;
+}
+.gm-style-iw-chr{
+  display:none
+}
+
+.swal2-container{
+  z-index: 10001 !important;;
+}
+.toast-container{
+  top: 63px;
+  right: 20px;
 }

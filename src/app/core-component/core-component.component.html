@@ -4,24 +4,20 @@
   'menu-opened': mobileSidebar === true,
   'slide-nav': mobileSidebar === true,
 }">
-  @if (loading$ | async) {
-  <div id="global-loader">
-    <div class="whirly-loader"> </div>
-  </div>
-  }
+
   <!-- Main Wrapper -->
   @if (page !== 'coming-soon' && page !== 'under-maintenance') {
   <div class="main-wrapper" [ngClass]="{
-        'light': themeMode === 'light_mode', 
+        'light': themeMode === 'light_mode',
         'dark': themeMode === 'dark_mode',
         'default': layoutMode === 'default_mode',
-        'box': layoutMode === 'box_mode', 
-        'collapsed': layoutMode === 'collapsed_mode', 
-        'horizontal': layoutMode === 'horizontal_mode', 
-        'modern': layoutMode === 'modern_mode', 
+        'box': layoutMode === 'box_mode',
+        'collapsed': layoutMode === 'collapsed_mode',
+        'horizontal': layoutMode === 'horizontal_mode',
+        'modern': layoutMode === 'modern_mode',
         'nav-light': navigationColor === 'light_color',
-        'nav-grey': navigationColor === 'grey_color', 
-        'nav-dark': navigationColor === 'dark_color', 
+        'nav-grey': navigationColor === 'grey_color',
+        'nav-dark': navigationColor === 'dark_color',
         'main-chat-blk': page === 'chat',
       }" [class.header-collapse]="isCollapsed">
     <app-header></app-header>

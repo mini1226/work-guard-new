@@ -1,0 +1,46 @@
+<div class="card pb-5">
+  <div class="page-header px-3 pt-3">
+    <div class="page-title">
+      <h4>Competitions</h4>
+    </div>
+    <div class="page-btn">
+      <button type="button" class="me-1 btn btn-primary btn ms-1" (click)="addAthletes()"><i class="feather icon-plus"></i>
+        Add New
+      </button>
+    </div>
+  </div>
+
+
+  <div class="table-responsive dataview px-3">
+    <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
+      <thead>
+      <tr>
+        <th mat-sort-header="id">ID</th>
+        <th mat-sort-header="name">Name</th>
+        <th mat-sort-header="date">Date</th>
+        <th mat-sort-header="venue">Venue</th>
+        <th mat-sort-header="action">Action</th>
+        <th mat-sort-header="view">View</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let project of sampleData">
+        <td>{{ project.id }}</td>
+        <td>{{ project.name }}</td>
+        <td>{{ project.date }}</td>
+        <td>{{ project.venue }}</td>
+        <td>
+          <a class="confirm-text p-2" href="javascript:void(0);">
+            <i class="feather icon-edit feather-edit"></i>
+          </a>
+        </td>
+        <td>
+          <a class="confirm-text p-2" href="javascript:void(0);" (click)="viewDetails()">
+            <i class="feather icon-eye feather-eye"></i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
