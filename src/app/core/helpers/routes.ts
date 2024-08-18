@@ -57,6 +57,9 @@ export class routes {
     return this.dashboard + '/add-athlete';
   }
   public static get addCompetition(): string {
+    return this.dashboard + '/add-competition';
+  }
+  public static get startCompetition(): string {
     return this.dashboard + '/start-competition';
   }
   public static get competitionSummary(): string {
