@@ -1,7 +1,7 @@
 <div class="card pb-5">
   <div class="page-header px-5 pt-3">
     <div class="page-title">
-      <h4>{{ isEditId ? 'Edit Athletes' : 'Add Athletes' }}</h4>
+      <h4>{{ isEditId ? 'Edit Competition' : 'Add Competition' }}</h4>
     </div>
     <div class="btn-toolbar p-0 m-0">
       <div class="m-0">
@@ -81,6 +81,8 @@
                 <tr>
                   <th style="width: 100px !important;">Id</th>
                   <th style="width: 300px !important;">Name</th>
+                  <th style="width: 200px !important;">Level</th>
+                  <th style="width: 200px !important;">H.R range</th>
                   <th style="width: 100px !important;">Device</th>
                   <th style="width: 50px !important;">Action</th>
                 </tr>
@@ -95,6 +97,16 @@
                   <td style="padding: 0px 5px !important;">
                     <mat-select name="dataType" id="dataType" formControlName="name">
                       <mat-option *ngFor="let athlete of sampleData" [value]="athlete.id">{{athlete.name}}</mat-option>
+                    </mat-select>
+                  </td>
+                  <td style="padding: 0px 5px !important;">
+                    <mat-select name="level" id="level" formControlName="level">
+                      <mat-option *ngFor="let level of levelData" [value]="level.id">{{level.name}}</mat-option>
+                    </mat-select>
+                  </td>
+                  <td style="padding: 0px 5px !important;">
+                    <mat-select name="hrRate" id="hrRate" formControlName="hrRate">
+                      <mat-option *ngFor="let hr of hrData" [value]="hr.id">{{hr.name}}</mat-option>
                     </mat-select>
                   </td>
                   <td style="padding: 0px 5px !important;">

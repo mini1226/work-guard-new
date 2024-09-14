@@ -30,7 +30,14 @@
         <td>{{ project.name }}</td>
         <td>{{ project.date }}</td>
         <td>{{ project.venue }}</td>
-        <td>{{ project.status }}</td>
+        <td>
+          {{ project.status }}
+          <ng-container *ngIf="project.status === 'Not Completed'">
+            <a class="confirm-text p-2" href="javascript:void(0);" (click)="startCompetition(project.id)">
+              <i class="feather icon-play feather-play"></i>
+            </a>
+          </ng-container>
+        </td>
         <td>
           <a class="confirm-text p-2" href="javascript:void(0);" (click)="editCompetition(project.id)">
             <i class="feather icon-edit feather-edit"></i>

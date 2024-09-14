@@ -110,5 +110,13 @@ export class CompetitionComponent {
       }
     });
   }
+
+  startCompetition(id: any) {
+    this.router.navigate([routes.startCompetition], {
+      queryParams: {
+        id: id
+      }
+    });
+  }
 }
 

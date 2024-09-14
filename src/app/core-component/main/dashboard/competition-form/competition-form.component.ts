@@ -119,6 +119,38 @@ export class CompetitionFormComponent {
 
 
 
+  levelData = [
+    {
+      'id': 1,
+      'name': 'Beginner'
+    },{
+      'id': 2,
+      'name': 'Intermediate'
+    },{
+      'id': 3,
+      'name': 'Expert'
+    }
+  ];
+
+
+
+
+  hrData = [
+    {
+      'id': 1,
+      'name': '70-80'
+    },{
+      'id': 2,
+      'name': '80-90'
+    },{
+      'id': 3,
+      'name': '90-100'
+    },{
+      'id': 4,
+      'name': '100-120'
+    }
+  ];
+
   athleteForm: FormGroup = new FormGroup({
     competitionName: new FormControl(''),
     date: new FormControl(''),
@@ -147,6 +179,8 @@ export class CompetitionFormComponent {
     let formGroup = new FormGroup({
       id: new FormControl(''),
       name: new FormControl(''),
+      level: new FormControl(''),
+      hr: new FormControl(''),
       device: new FormControl(''),
     });
 
