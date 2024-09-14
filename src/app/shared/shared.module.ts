@@ -20,14 +20,13 @@ import {
   BsDatepickerModule,
   BsDatepickerConfig,
 } from 'ngx-bootstrap/datepicker';
-import { SettingsSidebarModule } from '../core-component/settings/common/settings-sidebar/settings-sidebar.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { LightgalleryModule } from 'lightgallery/angular'; 
+import { LightgalleryModule } from 'lightgallery/angular';
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { CountUpModule } from 'ngx-countup';
 import { TimepickerActions, TimepickerModule } from 'ngx-bootstrap/timepicker';
@@ -59,7 +58,6 @@ const icons = {
     MatTooltipModule,
     ToastModule,
     BsDatepickerModule.forRoot(),
-    SettingsSidebarModule,
     NgxMaskModule.forRoot({
       showMaskTyped: false,
     }),
@@ -74,7 +72,7 @@ const icons = {
     NgxMatIntlTelInputComponent,
     CountUpModule,
     TimepickerModule,
-    
+
     FeatherModule.pick(icons)
 
   ],
@@ -96,7 +94,6 @@ const icons = {
     MatTooltipModule,
     ToastModule,
     BsDatepickerModule,
-    SettingsSidebarModule,
     NgxMaskModule,
     NgxDropzoneModule,
     MatStepperModule,

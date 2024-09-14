@@ -19,6 +19,7 @@
         <th mat-sort-header="name">Name</th>
         <th mat-sort-header="date">Date</th>
         <th mat-sort-header="venue">Venue</th>
+        <th mat-sort-header="status">Status</th>
         <th mat-sort-header="action">Action</th>
         <th mat-sort-header="view">View</th>
       </tr>
@@ -29,8 +30,9 @@
         <td>{{ project.name }}</td>
         <td>{{ project.date }}</td>
         <td>{{ project.venue }}</td>
+        <td>{{ project.status }}</td>
         <td>
-          <a class="confirm-text p-2" href="javascript:void(0);">
+          <a class="confirm-text p-2" href="javascript:void(0);" (click)="editCompetition(project.id)">
             <i class="feather icon-edit feather-edit"></i>
           </a>
         </td>

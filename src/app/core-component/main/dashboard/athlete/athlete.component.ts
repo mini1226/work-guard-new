@@ -16,6 +16,7 @@ export class AthleteComponent {
       email: "john.doe@example.com",
       device: "D001",
       gender: "Male",
+      age: "24",
       level: "Beginner",
       hrRange: '70-80',
       weight: 75,
@@ -28,6 +29,7 @@ export class AthleteComponent {
       email: "jane.smith@example.com",
       device: "D002",
       gender: "Female",
+      age: "28",
       level: "Intermediate",
       hrRange: '70-80',
       weight: 65,
@@ -40,6 +42,7 @@ export class AthleteComponent {
       email: "michael.brown@example.com",
       device: "D003",
       gender: "Male",
+      age: "20",
       level: "Intermediate",
       hrRange: '80-90',
       weight: 82,
@@ -52,6 +55,7 @@ export class AthleteComponent {
       email: "emily.davis@example.com",
       device: "D004",
       gender: "Female",
+      age: "18",
       level: "Expert",
       hrRange: '80-90',
       weight: 58,
@@ -64,6 +68,7 @@ export class AthleteComponent {
       email: "david.wilson@example.com",
       device: "D005",
       gender: "Male",
+      age: "17",
       level: "Beginner",
       hrRange: '100-120',
       weight: 90,
@@ -76,6 +81,7 @@ export class AthleteComponent {
       email: "sophia.johnson@example.com",
       device: "D006",
       gender: "Female",
+      age: "19",
       level: "Expert",
       hrRange:' 70-80',
       weight: 70,
@@ -88,6 +94,7 @@ export class AthleteComponent {
       email: "james.lee@example.com",
       device: "D007",
       gender: "Male",
+      age: "24",
       level: "Intermediate",
       hrRange: '80-90',
       weight: 68,
@@ -100,6 +107,7 @@ export class AthleteComponent {
       email: "olivia.martinez@example.com",
       device: "D008",
       gender: "Female",
+      age: "20",
       level: "Expert",
       hrRange: '90-100',
       weight: 60,
@@ -112,6 +120,7 @@ export class AthleteComponent {
       email: "daniel.white@example.com",
       device: "D009",
       gender: "Male",
+      age: "21",
       level: "Beginner",
       hrRange: '70-80',
       weight: 85,
@@ -124,6 +133,7 @@ export class AthleteComponent {
       email: "isabella.garcia@example.com",
       device: "D0010",
       gender: "Female",
+      age: "21",
       level: "Expert",
       hrRange: '80-90',
       weight: 55,
@@ -137,5 +147,13 @@ export class AthleteComponent {
 
   addAthletes() {
     this.router.navigate([routes.addAthlete]);
+  }
+
+  editAthletes(athleteId: any) {
+    this.router.navigate([routes.addAthlete], {
+      queryParams: {
+        id: athleteId
+      }
+    });
   }
 }

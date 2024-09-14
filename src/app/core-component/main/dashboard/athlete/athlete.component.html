@@ -20,8 +20,9 @@
         <th mat-sort-header="email">Email</th>
         <th mat-sort-header="device">Device</th>
         <th mat-sort-header="gender">Gender</th>
-        <th mat-sort-header="level">Level</th>
-        <th mat-sort-header="hrRange">Heart Rate Range</th>
+        <th mat-sort-header="age">Age</th>
+<!--        <th mat-sort-header="level">Level</th>-->
+<!--        <th mat-sort-header="hrRange">Heart Rate Range</th>-->
         <th mat-sort-header="weight">Weight</th>
         <th mat-sort-header="height">Height</th>
         <th mat-sort-header="action">Action</th>
@@ -34,12 +35,13 @@
         <td>{{ project.email }}</td>
         <td>{{ project.device }}</td>
         <td>{{ project.gender }}</td>
-        <td>{{ project.level }}</td>
-        <td>{{ project.hrRange }}</td>
-        <td>{{ project.weight }}</td>
-        <td>{{ project.height }}</td>
+        <td>{{ project.age }} years</td>
+<!--        <td>{{ project.level }}</td>-->
+<!--        <td>{{ project.hrRange }}</td>-->
+        <td>{{ project.weight }} Kg</td>
+        <td>{{ project.height }} Cm</td>
         <td>
-          <a class="confirm-text p-2" href="javascript:void(0);">
+          <a class="confirm-text p-2" href="javascript:void(0);" (click)="editAthletes(project.id)">
             <i class="feather icon-edit feather-edit"></i>
           </a>
         </td>

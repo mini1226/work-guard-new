@@ -10,6 +10,7 @@ import {CompetitionFormComponent} from "./competition-form/competition-form.comp
 import {StartCompetitionComponent} from "./start-competition/start-competition.component";
 import {ViewHistoryComponent} from "./view-history/view-history.component";
 import {CompetitionSummaryComponent} from "./competition-summary/competition-summary.component";
+import {HeartRateGraphComponent} from "./heart-rate-graph/heart-rate-graph.component";
 
 const routes: Routes = [{ path: '', component: DashboardComponent,
 children: [
@@ -53,6 +54,10 @@ children: [
   {
     path: 'view-summary',
     component: CompetitionSummaryComponent
+  },
+  {
+    path: 'view-heart-rate',
+    component: HeartRateGraphComponent
   }
 ]
 }];

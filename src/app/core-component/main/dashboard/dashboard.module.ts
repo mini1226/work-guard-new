@@ -15,6 +15,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {StartCompetitionComponent} from "./start-competition/start-competition.component";
 import {ViewHistoryComponent} from "./view-history/view-history.component";
 import {CompetitionSummaryComponent} from "./competition-summary/competition-summary.component";
+import {HeartRateGraphComponent} from "./heart-rate-graph/heart-rate-graph.component";
+import {NgApexchartsModule} from "ng-apexcharts";
 
 @NgModule({
   declarations: [
@@ -27,14 +29,16 @@ import {CompetitionSummaryComponent} from "./competition-summary/competition-sum
     CompetitionFormComponent,
     StartCompetitionComponent,
     ViewHistoryComponent,
-    CompetitionSummaryComponent
+    CompetitionSummaryComponent,
+    HeartRateGraphComponent
   ],
   imports: [CommonModule,
     DashboardRoutingModule,
     sharedModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgApexchartsModule
   ],
 })
 export class DashboardModule {}

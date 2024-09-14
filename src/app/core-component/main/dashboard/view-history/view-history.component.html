@@ -1,1 +1,48 @@
-<p>view-history works!</p>
+<div class="card pb-5">
+  <div class="page-header px-5 pt-3">
+    <div class="page-title">
+      <h4>View Athlete History</h4>
+    </div>
+    <div class="btn-toolbar p-0 m-0">
+      <div class="m-0">
+                <button type="button" class="me-1 btn btn-info btn ms-1" (click)="reset()"><i class="feather icon-refresh-ccw"></i>
+                  Reset
+                </button>
+                <button type="submit" class="me-1 btn btn-success btn" (click)="onSubmit()"><i class="feather icon-save"></i>
+                  SAVE
+                </button>
+                <button type="button" class="me-1 btn btn-danger btn" (click)="onBackClick()"><i
+                  class="feather icon-chevrons-left"></i> Back
+                </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="px-5 mt-3" >
+    <div class="row pt-5">
+      <div class="col-xl-12">
+        <div class="table-responsive dataview px-3">
+          <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
+            <thead>
+            <tr>
+              <th mat-sort-header="id">ID</th>
+              <th mat-sort-header="competitionName">Competition Name</th>
+              <th mat-sort-header="date">Date</th>
+              <th mat-sort-header="performance">Performance</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let project of sampleData">
+              <td>{{ project.id }}</td>
+              <td>{{ project.competitionName }}</td>
+              <td>{{ project.date }}</td>
+              <td>{{ project.performance }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div >
+  </div>
+</div>

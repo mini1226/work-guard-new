@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {routes} from "../../../../core/helpers/routes";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import {moment} from "ngx-bootstrap/chronos/testing/chain";
 
 @Component({
   selector: 'app-athlete-form',
@@ -59,9 +60,13 @@ export class AthleteFormComponent {
     weight: new FormControl(''),
     contactNumber: new FormControl(''),
     dob: new FormControl(''),
+    age: new FormControl(''),
     contact: new FormControl(''),
     email: new FormControl(''),
     height: new FormControl(''),
+    level: new FormControl(''),
+    hrRate: new FormControl(''),
+    personalBest: new FormControl(''),
   });
 
   constructor(private route: ActivatedRoute) { }
@@ -69,6 +74,13 @@ export class AthleteFormComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isEditId = params['id'];
+    });
+
+    this.athleteForm.get('dob')?.valueChanges.subscribe((dobValue) => {
+      if (dobValue) {
+        const age = this.calculateAge(dobValue);
+        this.athleteForm.get('age')?.setValue(age);
+      }
     });
   }
 
@@ -85,4 +97,21 @@ export class AthleteFormComponent {
   onSubmit(): void {
     console.log('Form Submitted',this.athleteForm.value);
   }
+
+
+  calculateAge(dob: string | Date): number {
+    const dobDate = new Date(dob);
+    const today = new Date();
+
+    let age = today.getFullYear() - dobDate.getFullYear();
+    const monthDiff = today.getMonth() - dobDate.getMonth();
+
+    // If birthdate hasn't occurred yet this year, subtract one from the age
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
 }

@@ -13,15 +13,7 @@ export class routes {
   public static get signUp(): string {
     return this.base + '/signup';
   }
-  public static get forgotPassword(): string {
-    return this.base + '/forgot-password';
-  }
-  public static get forgotPassword2(): string {
-    return this.base + '/forgot-password-2';
-  }
-  public static get forgotPassword3(): string {
-    return this.base + '/forgot-password-3';
-  }
+
   // auth routes *end*
 
   // error pages routes *start*
@@ -67,6 +59,9 @@ export class routes {
   }
   public static get viewHistory(): string {
     return this.dashboard + '/view-history';
+  }
+  public static get viewHeartRate(): string {
+    return this.dashboard + '/view-heart-rate';
   }
 
 

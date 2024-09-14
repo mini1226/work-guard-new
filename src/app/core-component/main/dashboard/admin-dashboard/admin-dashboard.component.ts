@@ -214,7 +214,7 @@ export class AdminDashboardComponent {
   ];
 
   startCompetition() {
-    this.router.navigate([routes.addCompetition]);
+    this.router.navigate([routes.startCompetition]);
   }
 
   viewHistory() {
