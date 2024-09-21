@@ -17,6 +17,7 @@ import {ViewHistoryComponent} from "./view-history/view-history.component";
 import {CompetitionSummaryComponent} from "./competition-summary/competition-summary.component";
 import {HeartRateGraphComponent} from "./heart-rate-graph/heart-rate-graph.component";
 import {NgApexchartsModule} from "ng-apexcharts";
+import {LiveHeartRateComponent} from "./live-heart-rate/live-heart-rate.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {NgApexchartsModule} from "ng-apexcharts";
     StartCompetitionComponent,
     ViewHistoryComponent,
     CompetitionSummaryComponent,
-    HeartRateGraphComponent
+    HeartRateGraphComponent,
+    LiveHeartRateComponent
   ],
   imports: [CommonModule,
     DashboardRoutingModule,

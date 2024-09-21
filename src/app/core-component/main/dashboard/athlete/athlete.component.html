@@ -17,7 +17,7 @@
       <tr>
         <th mat-sort-header="id">ID</th>
         <th mat-sort-header="name">Name</th>
-        <th mat-sort-header="email">Email</th>
+        <th mat-sort-header="email">Events</th>
         <th mat-sort-header="device">Device</th>
         <th mat-sort-header="gender">Gender</th>
         <th mat-sort-header="age">Age</th>
@@ -32,7 +32,7 @@
       <tr *ngFor="let project of sampleData">
         <td>{{ project.id }}</td>
         <td>{{ project.name }}</td>
-        <td>{{ project.email }}</td>
+        <td>{{ project.events }}</td>
         <td>{{ project.device }}</td>
         <td>{{ project.gender }}</td>
         <td>{{ project.age }} years</td>

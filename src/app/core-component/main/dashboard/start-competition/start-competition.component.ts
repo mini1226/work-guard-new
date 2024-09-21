@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 
 @Component({
@@ -66,7 +66,7 @@ export class StartCompetitionComponent {
   ];
 
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,private router: Router) { }
 
   ngOnInit(): void {
 
@@ -82,5 +82,9 @@ export class StartCompetitionComponent {
 
 
   onSubmit(): void {
+  }
+
+  liveHr() {
+    this.router.navigate([routes.liveHeartRate]);
   }
 }

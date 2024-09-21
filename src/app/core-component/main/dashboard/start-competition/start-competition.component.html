@@ -32,8 +32,8 @@
         </div>
     </div>
     <div class="row pt-5">
-      <div class="col-xl-4"></div>
-      <div class="col-xl-4">
+<!--      <div class="col-xl-4"></div>-->
+      <div class="col-xl-12">
         <div class="table-responsive dataview px-3">
           <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
             <thead>
@@ -41,6 +41,7 @@
               <th mat-sort-header="id">ID</th>
               <th mat-sort-header="name">Name</th>
               <th mat-sort-header="action">Action</th>
+              <th mat-sort-header="hr">Heart Rate</th>
             </tr>
             </thead>
             <tbody>
@@ -52,12 +53,17 @@
                   STOP
                 </button>
               </td>
+              <td>
+                <a class="confirm-text p-2" href="javascript:void(0);" (click)="liveHr()">
+                  <i class="feather icon-eye feather-eye"></i>
+                </a>
+              </td>
             </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-xl-4"></div>
+<!--      <div class="col-xl-4"></div>-->
     </div >
   </div>
 </div>

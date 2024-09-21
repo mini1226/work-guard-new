@@ -21,7 +21,8 @@ export class AthleteComponent {
       hrRange: '70-80',
       weight: 75,
       height: 180,
-      action: "Edit"
+      action: "Edit",
+      events: "100m,200m"
     },
     {
       id: 2,
@@ -34,7 +35,8 @@ export class AthleteComponent {
       hrRange: '70-80',
       weight: 65,
       height: 165,
-      action: "Edit"
+      action: "Edit",
+      events: "400m,200m"
     },
     {
       id: 3,
@@ -47,7 +49,8 @@ export class AthleteComponent {
       hrRange: '80-90',
       weight: 82,
       height: 175,
-      action: "Edit"
+      action: "Edit",
+      events: "100m,200m"
     },
     {
       id: 4,
@@ -60,7 +63,8 @@ export class AthleteComponent {
       hrRange: '80-90',
       weight: 58,
       height: 160,
-      action: "Edit"
+      action: "Edit",
+      events: "100m,200m"
     },
     {
       id: 5,
@@ -73,7 +77,8 @@ export class AthleteComponent {
       hrRange: '100-120',
       weight: 90,
       height: 185,
-      action: "Edit"
+      action: "Edit",
+      events: "800m,400m"
     },
     {
       id: 6,
@@ -86,7 +91,8 @@ export class AthleteComponent {
       hrRange:' 70-80',
       weight: 70,
       height: 170,
-      action: "Edit"
+      action: "Edit",
+      events: "100m,400m"
     },
     {
       id: 7,
@@ -99,7 +105,8 @@ export class AthleteComponent {
       hrRange: '80-90',
       weight: 68,
       height: 172,
-      action: "Edit"
+      action: "Edit",
+      events: "400m,200m"
     },
     {
       id: 8,
@@ -112,7 +119,8 @@ export class AthleteComponent {
       hrRange: '90-100',
       weight: 60,
       height: 162,
-      action: "Edit"
+      action: "Edit",
+      events: "800m,200m"
     },
     {
       id: 9,
@@ -125,7 +133,8 @@ export class AthleteComponent {
       hrRange: '70-80',
       weight: 85,
       height: 178,
-      action: "Edit"
+      action: "Edit",
+      events: "100m,200m"
     },
     {
       id: 10,
@@ -138,7 +147,8 @@ export class AthleteComponent {
       hrRange: '80-90',
       weight: 55,
       height: 158,
-      action: "Edit"
+      action: "Edit",
+      events: "100m,200m"
     }
   ];
 

@@ -12,6 +12,8 @@ import {moment} from "ngx-bootstrap/chronos/testing/chain";
 export class AthleteFormComponent {
   public routes = routes;
   isEditId: any;
+  customHrRate: string | null = null;
+
 
   genderData = [
     {
@@ -51,6 +53,9 @@ export class AthleteFormComponent {
     },{
       'id': 4,
       'name': '100-120'
+    },{
+      'id': 5,
+      'name': 'Other'
     }
   ];
 
@@ -66,6 +71,7 @@ export class AthleteFormComponent {
     height: new FormControl(''),
     level: new FormControl(''),
     hrRate: new FormControl(''),
+    cusHrRate: new FormControl(''),
     personalBest: new FormControl(''),
   });
 
@@ -95,6 +101,15 @@ export class AthleteFormComponent {
 
 
   onSubmit(): void {
+    const selectedHrRate = this.athleteForm.get('hrRate')?.value;
+
+    if (selectedHrRate === null && this.customHrRate) {
+      // Handle custom heart rate input here
+      console.log('Custom Heart Rate:', this.customHrRate);
+    } else {
+      // Handle predefined heart rate option
+      console.log('Selected Heart Rate:', selectedHrRate);
+    }
     console.log('Form Submitted',this.athleteForm.value);
   }
 

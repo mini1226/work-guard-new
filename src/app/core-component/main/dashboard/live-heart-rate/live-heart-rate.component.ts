@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { ApexChart, ApexAxisChartSeries, ApexXAxis, ApexYAxis, ApexStroke, ChartComponent } from "ng-apexcharts";
+import {Component, ViewChild} from '@angular/core';
+import {ApexAxisChartSeries, ApexChart, ApexStroke, ApexXAxis, ApexYAxis, ChartComponent} from "ng-apexcharts";
+import {ActivatedRoute} from "@angular/router";
+
 
 export type LineChartOptions = {
   series: ApexAxisChartSeries;
@@ -14,11 +15,11 @@ export type LineChartOptions = {
 
 
 @Component({
-  selector: 'app-heart-rate-graph',
-  templateUrl: './heart-rate-graph.component.html',
-  styleUrls: ['./heart-rate-graph.component.scss']
+  selector: 'app-live-heart-rate',
+  templateUrl: './live-heart-rate.component.html',
+  styleUrl: './live-heart-rate.component.scss'
 })
-export class HeartRateGraphComponent {
+export class LiveHeartRateComponent {
 
 
   @ViewChild("chart") chart!: ChartComponent;
@@ -107,4 +108,5 @@ export class HeartRateGraphComponent {
   onSubmit(): void {
     // Submit logic here
   }
+
 }

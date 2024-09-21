@@ -148,6 +148,9 @@ export class CompetitionFormComponent {
     },{
       'id': 4,
       'name': '100-120'
+    },{
+      'id': 5,
+      'name': 'Other'
     }
   ];
 
@@ -181,6 +184,7 @@ export class CompetitionFormComponent {
       name: new FormControl(''),
       level: new FormControl(''),
       hr: new FormControl(''),
+      cusHr: new FormControl(''),
       device: new FormControl(''),
     });
 
@@ -217,4 +221,6 @@ export class CompetitionFormComponent {
   removeAthleteFormArray(index: number): void {
     this.athleteArray.removeAt(index);
   }
+
+
 }

@@ -61,6 +61,18 @@
             </div>
 
             <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Events :</label>
+              <div class="col-lg-9  form-group">
+                <input type="text" placeholder="Enter events " class="form-control" formControlName="events"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('events')?.invalid && (athleteForm.get('events')?.dirty || athleteForm.get('events')?.touched) }">
+                <div
+                  *ngIf="athleteForm.get('events')?.invalid && (athleteForm.get('events')?.dirty || athleteForm.get('events')?.touched)"
+                  class="text-danger">Events is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
               <label class="col-lg-3 col-form-label col-form-label-sm">Contact Number:</label>
               <div class="col-lg-9  form-group">
                 <input type="number" placeholder="Enter contact number " class="form-control" formControlName="contactNumber"
@@ -134,6 +146,21 @@
                 </mat-select>
               </div>
             </div>
+
+            <ng-container *ngIf="athleteForm.get('hrRate')?.value === 5">
+              <span>You selected "Other"</span>
+              <div class="row">
+                <label class="col-lg-3 col-form-label col-form-label-sm">Custom Heart Rate :</label>
+                <div class="col-lg-9  form-group">
+                  <input type="text" placeholder="Enter heart rate " class="form-control" formControlName="cusHrRate"
+                         [ngClass]="{ 'is-invalid': athleteForm.get('cusHrRate')?.invalid && (athleteForm.get('cusHrRate')?.dirty || athleteForm.get('cusHrRate')?.touched) }">
+                  <div
+                    *ngIf="athleteForm.get('cusHrRate')?.invalid && (athleteForm.get('cusHrRate')?.dirty || athleteForm.get('cusHrRate')?.touched)"
+                    class="text-danger">Heart rate is required
+                  </div>
+                </div>
+              </div>
+            </ng-container>
 
 
 

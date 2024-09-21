@@ -1,7 +1,7 @@
 <div class="card pb-5">
   <div class="page-header px-3 pt-3">
     <div class="page-title">
-      <h4>Competitions</h4>
+      <h4>Session</h4>
     </div>
     <div class="page-btn">
       <button type="button" class="me-1 btn btn-primary btn ms-1" (click)="addAthletes()"><i class="feather icon-plus"></i>
@@ -44,7 +44,12 @@
           </a>
         </td>
         <td>
-          <a class="confirm-text p-2" href="javascript:void(0);" (click)="viewDetails()">
+          <a
+            class="confirm-text p-2"
+            href="javascript:void(0);"
+            [ngClass]="{'disabled-link': project.status === 'Not Completed'}"
+            (click)="project.status !== 'Not Completed' && viewDetails()"
+          >
             <i class="feather icon-eye feather-eye"></i>
           </a>
         </td>

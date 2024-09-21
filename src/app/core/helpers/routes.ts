@@ -63,6 +63,9 @@ export class routes {
   public static get viewHeartRate(): string {
     return this.dashboard + '/view-heart-rate';
   }
+  public static get liveHeartRate(): string {
+    return this.dashboard + '/live-heart-rate';
+  }
 
 
 
