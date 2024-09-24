@@ -1,0 +1,94 @@
+<div class="card pb-5">
+  <div class="page-header px-5 pt-3">
+    <div class="page-title">
+      <h4>Performance Predictor</h4>
+    </div>
+  </div>
+
+  <div class="px-5 mt-3">
+    <div>
+      <form [formGroup]="athleteForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Age :</label>
+              <div class="col-lg-9 form-group">
+                <input type="number" placeholder="Enter age" class="form-control" formControlName="age"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('age')?.invalid && (athleteForm.get('age')?.dirty || athleteForm.get('age')?.touched) }">
+                <div *ngIf="athleteForm.get('age')?.invalid && (athleteForm.get('age')?.dirty || athleteForm.get('age')?.touched)"
+                     class="text-danger">Age is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Height(Cm) :</label>
+              <div class="col-lg-9 form-group">
+                <input type="number" placeholder="Enter height" class="form-control" formControlName="height"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('height')?.invalid && (athleteForm.get('height')?.dirty || athleteForm.get('height')?.touched) }">
+                <div *ngIf="athleteForm.get('height')?.invalid && (athleteForm.get('height')?.dirty || athleteForm.get('height')?.touched)"
+                     class="text-danger">Height is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">BMI :</label>
+              <div class="col-lg-9 form-group">
+                <input type="number" placeholder="Enter BMI" class="form-control" formControlName="bmi"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('bmi')?.invalid && (athleteForm.get('bmi')?.dirty || athleteForm.get('bmi')?.touched) }">
+                <div *ngIf="athleteForm.get('bmi')?.invalid && (athleteForm.get('bmi')?.dirty || athleteForm.get('bmi')?.touched)"
+                     class="text-danger">BMI is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6">
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Gender :</label>
+              <div class="col-lg-9 form-group">
+                <mat-select name="gender" id="gender" formControlName="gender">
+                  <mat-option *ngFor="let gender of genderData" [value]="gender.id">{{gender.name}}</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Weight(Kg) :</label>
+              <div class="col-lg-9 form-group">
+                <input type="number" placeholder="Enter weight" class="form-control" formControlName="weight"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('weight')?.invalid && (athleteForm.get('weight')?.dirty || athleteForm.get('weight')?.touched) }">
+                <div *ngIf="athleteForm.get('weight')?.invalid && (athleteForm.get('weight')?.dirty || athleteForm.get('weight')?.touched)"
+                     class="text-danger">Weight is required
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-lg-3 col-form-label col-form-label-sm">Time taken for 3000m :</label>
+              <div class="col-lg-9 form-group">
+                <input type="number" placeholder="Enter time taken for 3000m" class="form-control" formControlName="time"
+                       [ngClass]="{ 'is-invalid': athleteForm.get('time')?.invalid && (athleteForm.get('time')?.dirty || athleteForm.get('time')?.touched) }">
+                <div *ngIf="athleteForm.get('time')?.invalid && (athleteForm.get('time')?.dirty || athleteForm.get('time')?.touched)"
+                     class="text-danger">Time taken for 3000m is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center the button -->
+        <div class="d-flex justify-content-center mt-5">
+          <button type="submit" class="btn btn-success" style="width: 100px; text-align: center;">
+            <i class="feather icon-save"></i> SAVE
+          </button>
+        </div>
+      </form>
+      <div class="d-flex justify-content-center mt-5">
+        <h4>Predicted Time for 10000m</h4>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <h2>00:00:09.58</h2>
+      </div>
+    </div>
+  </div>
+</div>

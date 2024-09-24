@@ -71,12 +71,19 @@ export class SidebarService {
           base1: 'test',
           route: routes.athletes,
         },{
-          menuValue: 'Competition',
+          menuValue: 'Session',
           hasSubRoute: false,
           showSubRoute: false,
           icon: 'clock',
           base1: 'test',
           route: routes.competition,
+        },{
+          menuValue: 'Performance Predictor',
+          hasSubRoute: false,
+          showSubRoute: false,
+          icon: 'activity',
+          base1: 'test',
+          route: routes.performanceCal,
         }
       ],
     },

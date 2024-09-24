@@ -38,7 +38,7 @@
   <div class="col-xl-6 col-sm-12 col-12 d-flex ">
     <div class="card">
       <div class="card-header">
-        <h4>Upcoming sessions :</h4>
+        <h4>Upcoming Sessions :</h4>
       </div>
       <div class="card-body">
         <div class="table-responsive dataview px-3">
@@ -81,7 +81,7 @@
             <tr>
               <th mat-sort-header="id">ID</th>
               <th mat-sort-header="name">Name</th>
-              <th mat-sort-header="email">Email</th>
+              <th mat-sort-header="email">Events</th>
               <th mat-sort-header="gender">Gender</th>
               <th mat-sort-header="action">Action</th>
             </tr>
@@ -90,7 +90,7 @@
             <tr *ngFor="let project of sampleData2">
               <td>{{ project.id }}</td>
               <td>{{ project.name }}</td>
-              <td>{{ project.email }}</td>
+              <td>{{ project.events }}</td>
               <td>{{ project.gender }}</td>
               <td>
                 <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="viewHistory()"><i class="feather icon-info me-2"></i>View

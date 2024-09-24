@@ -1,7 +1,7 @@
 <div class="card pb-5">
   <div class="page-header px-5 pt-3">
     <div class="page-title">
-      <h4>View Competition Summary</h4>
+      <h4>View Session Summary</h4>
     </div>
     <div class="btn-toolbar p-0 m-0">
       <div class="m-0">
@@ -29,7 +29,8 @@
               <th mat-sort-header="id">ID</th>
               <th mat-sort-header="name">Name</th>
               <th mat-sort-header="avgHr">Avg. Heart Rate</th>
-              <th mat-sort-header="performance">Performance</th>
+              <th mat-sort-header="performance">Time</th>
+              <th mat-sort-header="distance">Distance</th>
               <th mat-sort-header="maxHrExceeded">Max H.R Exceeded</th>
               <th mat-sort-header="action">Heart Rate Graph</th>
             </tr>
@@ -40,6 +41,7 @@
               <td>{{ project.name }}</td>
               <td>{{ project.avgHr }} bpm</td>
               <td>{{ project.performance }}</td>
+              <td>{{ project.distance }}</td>
               <td>{{ project.maxHrExceeded }}</td>
               <td>
                 <a class="confirm-text p-2" href="javascript:void(0);" (click)="viewDetails(project.id )">

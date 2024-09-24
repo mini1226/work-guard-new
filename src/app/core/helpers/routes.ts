@@ -66,6 +66,9 @@ export class routes {
   public static get liveHeartRate(): string {
     return this.dashboard + '/live-heart-rate';
   }
+  public static get performanceCal(): string {
+    return this.dashboard + '/performance-calculator';
+  }
 
 
 
