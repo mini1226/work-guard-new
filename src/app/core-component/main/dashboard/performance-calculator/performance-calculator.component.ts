@@ -37,6 +37,15 @@ export class PerformanceCalculatorComponent {
     this.route.queryParams.subscribe(params => {
       this.isEditId = params['id'];
     });
+
+    // Subscribe to weight and height value changes
+    this.athleteForm.get('weight')?.valueChanges.subscribe(() => {
+      this.calculateBMI();
+    });
+
+    this.athleteForm.get('height')?.valueChanges.subscribe(() => {
+      this.calculateBMI();
+    });
   }
 
 
@@ -51,6 +60,17 @@ export class PerformanceCalculatorComponent {
 
   onSubmit(): void {
 
+  }
+
+  calculateBMI() {
+    const weight = this.athleteForm.get('weight')?.value;
+    const height = this.athleteForm.get('height')?.value;
+
+    if (weight && height) {
+      const heightInMeters = height / 100; // Convert height to meters
+      const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2); // Calculate BMI and round to 2 decimal places
+      this.athleteForm.get('bmi')?.setValue(bmi);
+    }
   }
 
 }

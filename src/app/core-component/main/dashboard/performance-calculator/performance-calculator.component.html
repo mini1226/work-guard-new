@@ -35,7 +35,7 @@
             <div class="row">
               <label class="col-lg-3 col-form-label col-form-label-sm">BMI :</label>
               <div class="col-lg-9 form-group">
-                <input type="number" placeholder="Enter BMI" class="form-control" formControlName="bmi"
+                <input type="number" readonly placeholder="Enter BMI" class="form-control" formControlName="bmi"
                        [ngClass]="{ 'is-invalid': athleteForm.get('bmi')?.invalid && (athleteForm.get('bmi')?.dirty || athleteForm.get('bmi')?.touched) }">
                 <div *ngIf="athleteForm.get('bmi')?.invalid && (athleteForm.get('bmi')?.dirty || athleteForm.get('bmi')?.touched)"
                      class="text-danger">BMI is required
