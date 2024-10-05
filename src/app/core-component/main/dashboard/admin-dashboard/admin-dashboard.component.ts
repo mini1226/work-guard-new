@@ -39,72 +39,72 @@ export class AdminDashboardComponent {
   sampleData1 = [
     {
       id: 1,
-      name: "100m Dash",
-      date: "2024-09-15",
-      venue: "Olympic Stadium, Tokyo",
+      name: "Running",
+      date: "2024-12-06",
+      venue: "Sugathadasa Stadium, Colombo",
       action: "Edit"
     },
     {
       id: 2,
-      name: "200m Sprint",
-      date: "2024-10-20",
-      venue: "National Stadium, Beijing",
+      name: "Running",
+      date: "2024-11-28",
+      venue: "R Premadasa Stadium, Colombo",
       action: "Edit"
     },
     {
       id: 3,
-      name: "400m Relay",
+      name: "Long Jump",
       date: "2024-11-05",
-      venue: "Athletics Arena, London",
+      venue: "Sugathadasa Stadium, Colombo",
       action: "Edit"
     },
     {
       id: 4,
-      name: "Marathon",
-      date: "2024-09-25",
-      venue: "Central Park, New York",
+      name: "Running",
+      date: "2024-12-22",
+      venue: "Pallekale Stadium, Kandy",
       action: "Edit"
     },
     {
       id: 5,
       name: "High Jump",
       date: "2024-12-10",
-      venue: "Stade de France, Paris",
+      venue: "Sugathadasa Stadium, Colombo",
       action: "Edit"
     },
     {
       id: 6,
       name: "Long Jump",
-      date: "2024-08-30",
-      venue: "Berlin Olympic Stadium, Berlin",
+      date: "2024-12-30",
+      venue: "De Soysa Stadium, Moratuwa",
       action: "Edit"
     },
     {
       id: 7,
       name: "Pole Vault",
       date: "2024-11-18",
-      venue: "Olympiastadion, Munich",
+      venue: "De Soysa Stadium, Moratuwa",
       action: "Edit"
     },
     {
       id: 8,
-      name: "400m Hurdles",
-      date: "2024-10-15",
-      venue: "National Stadium, Warsaw",
+      name: "Running",
+      date: "2024-12-15",
+      venue: "International Stadium, Galle",
       action: "Edit"
     },
     {
       id: 9,
-      name: "1500m Race",
-      date: "2024-09-10",
-      venue: "Olympic Park, Sydney",
+      name: "Yo Yo Test",
+      date: "2024-11-30",
+      venue: "CCC Grounds, Colombo",
       action: "Edit"
     },
     {
       id: 10,
-      name: "5000m Run",
+      name: "Running",
       date: "2024-12-01",
-      venue: "Olympic Stadium, Athens",
+      venue: "CCC Grounds, Colombo",
       action: "Edit"
     }
   ];
@@ -113,113 +113,113 @@ export class AdminDashboardComponent {
   sampleData2 = [
     {
       id: 1,
-      name: "John Doe",
-      email: "john.doe@example.com",
+      name: "Sadun Fernando",
+      email: "sandun.fer@example.com",
       device: "D001",
       gender: "Male",
       weight: 75,
       height: 180,
       action: "Edit",
-      events: "100m,200m,800m"
+      events: "1000m,3000m"
     },
     {
       id: 2,
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
+      name: "Yasara Gunathilaka",
+      email: "yasara.gun@example.com",
       device: "D002",
       gender: "Female",
       weight: 65,
       height: 165,
       action: "Edit",
-      events: "200m,400m,100m"
+      events: "10000m, Marathon"
     },
     {
       id: 3,
-      name: "Michael Brown",
-      email: "michael.brown@example.com",
+      name: "Budvin Perera",
+      email: "budvin.perera@example.com",
       device: "D003",
       gender: "Male",
       weight: 82,
       height: 175,
       action: "Edit",
-      events: "100m,400m,200m"
+      events: "5000m,1000m,500m"
     },
     {
       id: 4,
-      name: "Emily Davis",
-      email: "emily.davis@example.com",
+      name: "Anuki Senevirathne",
+      email: "anuki.sene@example.com",
       device: "D004",
       gender: "Female",
       weight: 58,
       height: 160,
       action: "Edit",
-      events: "400m,800m,100m"
+      events: "4000m,800m,1000m"
     },
     {
       id: 5,
-      name: "David Wilson",
-      email: "david.wilson@example.com",
+      name: "Darshana Peiris",
+      email: "darshana.peiris@example.com",
       device: "D005",
       gender: "Male",
       weight: 90,
       height: 185,
       action: "Edit",
-      events: "100m,800m,400m"
+      events: "1000m,800m,4000m"
     },
     {
       id: 6,
-      name: "Sophia Johnson",
-      email: "sophia.johnson@example.com",
+      name: "Sandali Senaratne",
+      email: "sandali.sena@example.com",
       device: "D006",
       gender: "Female",
       weight: 70,
       height: 170,
       action: "Edit",
-      events: "100m,200m,800m"
+      events: "1000m,2000m"
     },
     {
       id: 7,
-      name: "James Lee",
-      email: "james.lee@example.com",
+      name: "Kavidu Fonseka",
+      email: "kavindu.fon@example.com",
       device: "D007",
       gender: "Male",
       weight: 68,
       height: 172,
       action: "Edit",
-      events: "400m,800m,200m"
+      events: "4000m,8000m,2000m"
     },
     {
       id: 8,
-      name: "Olivia Martinez",
-      email: "olivia.martinez@example.com",
+      name: "Binuli Athauda",
+      email: "binuli.athauda@example.com",
       device: "D008",
       gender: "Female",
       weight: 60,
       height: 162,
       action: "Edit",
-      events: "100m,200m,400m"
+      events: "1000m,2000m"
     },
     {
       id: 9,
-      name: "Daniel White",
-      email: "daniel.white@example.com",
+      name: "Prasad Gamage",
+      email: "prasad.gamage@example.com",
       device: "D009",
       gender: "Male",
       weight: 85,
       height: 178,
       action: "Edit",
-      events: "800m,200m,100m"
+      events: "800m,2000m,1000m"
     },
     {
       id: 10,
-      name: "Isabella Garcia",
-      email: "isabella.garcia@example.com",
+      name: "Manoja Subasinghe",
+      email: "manoja.subasinghe@example.com",
       device: "D0010",
       gender: "Female",
       weight: 55,
       height: 158,
       action: "Edit",
-      events: "400m,200m,800m"
+      events: "2000m,800m"
     }
   ];
 

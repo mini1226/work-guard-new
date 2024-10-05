@@ -11,33 +11,33 @@ export class CompetitionComponent {
   sampleData = [
     {
       id: 1,
-      name: "100m Dash",
+      name: "Running",
       date: "2024-09-15",
-      venue: "Olympic Stadium, Tokyo",
+      venue: "Sugathadasa Stadium, Colombo",
       status: "Completed",
       action: "Edit"
     },
     {
       id: 2,
-      name: "200m Sprint",
-      date: "2024-10-20",
-      venue: "National Stadium, Beijing",
+      name: "Running",
+      date: "2024-09-28",
+      venue: "R Premadasa Stadium, Colombo",
       status: "Completed",
       action: "Edit"
     },
     {
       id: 3,
-      name: "400m Relay",
+      name: "Long Jump",
       date: "2024-11-05",
-      venue: "Athletics Arena, London",
+      venue: "Sugathadasa Stadium, Colombo",
       status: "Not Completed",
       action: "Edit"
     },
     {
       id: 4,
-      name: "Marathon",
+      name: "Running",
       date: "2024-09-25",
-      venue: "Central Park, New York",
+      venue: "Pallekale Stadium, Kandy",
       status: "Completed",
       action: "Edit"
     },
@@ -45,15 +45,15 @@ export class CompetitionComponent {
       id: 5,
       name: "High Jump",
       date: "2024-12-10",
-      venue: "Stade de France, Paris",
+      venue: "Sugathadasa Stadium, Colombo",
       status: "Not Completed",
       action: "Edit"
     },
     {
       id: 6,
       name: "Long Jump",
-      date: "2024-08-30",
-      venue: "Berlin Olympic Stadium, Berlin",
+      date: "2024-12-30",
+      venue: "De Soysa Stadium, Moratuwa",
       status: "Not Completed",
       action: "Edit"
     },
@@ -61,31 +61,31 @@ export class CompetitionComponent {
       id: 7,
       name: "Pole Vault",
       date: "2024-11-18",
-      venue: "Olympiastadion, Munich",
+      venue: "De Soysa Stadium, Colombo",
       status: "Not Completed",
       action: "Edit"
     },
     {
       id: 8,
-      name: "400m Hurdles",
-      date: "2024-10-15",
-      venue: "National Stadium, Warsaw",
+      name: "Running",
+      date: "2024-08-15",
+      venue: "International Stadium, Galle",
       status: "Completed",
       action: "Edit"
     },
     {
       id: 9,
-      name: "1500m Race",
-      date: "2024-09-10",
-      venue: "Olympic Park, Sydney",
+      name: "Yo Yo Test",
+      date: "2024-11-30",
+      venue: "CCC Grounds, Colombo",
       status: "Not Completed",
       action: "Edit"
     },
     {
       id: 10,
-      name: "5000m Run",
+      name: "Running",
       date: "2024-12-01",
-      venue: "Olympic Stadium, Athens",
+      venue: "CCC Grounds, Colombo",
       status: "Completed",
       action: "Edit"
     }

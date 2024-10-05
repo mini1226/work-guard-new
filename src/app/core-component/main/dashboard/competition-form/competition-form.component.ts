@@ -122,13 +122,16 @@ export class CompetitionFormComponent {
   levelData = [
     {
       'id': 1,
-      'name': 'Beginner'
+      'name': 'General Preparation'
     },{
       'id': 2,
-      'name': 'Intermediate'
+      'name': 'Special Preparation'
     },{
       'id': 3,
-      'name': 'Expert'
+      'name': 'Pre Competition'
+    },{
+      'id': 3,
+      'name': 'Competition'
     }
   ];
 
@@ -138,18 +141,21 @@ export class CompetitionFormComponent {
   hrData = [
     {
       'id': 1,
-      'name': '70-80'
+      'name': '120-150'
     },{
       'id': 2,
-      'name': '80-90'
+      'name': '150-165'
     },{
       'id': 3,
-      'name': '90-100'
+      'name': '165-175'
     },{
       'id': 4,
-      'name': '100-120'
+      'name': '175-185'
     },{
       'id': 5,
+      'name': '185-200'
+    },{
+      'id': 6,
       'name': 'Other'
     }
   ];
