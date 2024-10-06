@@ -66,7 +66,7 @@
             <div class="row">
               <label class="col-lg-3 col-form-label col-form-label-sm">Time taken for 3000m :</label>
               <div class="col-lg-9 form-group">
-                <input type="number" placeholder="Enter time taken for 3000m" class="form-control" formControlName="time"
+                <input type="number" placeholder="Enter time taken for 3000m (mins)" class="form-control" formControlName="time"
                        [ngClass]="{ 'is-invalid': athleteForm.get('time')?.invalid && (athleteForm.get('time')?.dirty || athleteForm.get('time')?.touched) }">
                 <div *ngIf="athleteForm.get('time')?.invalid && (athleteForm.get('time')?.dirty || athleteForm.get('time')?.touched)"
                      class="text-danger">Time taken for 3000m is required

@@ -15,8 +15,8 @@ export class StartCompetitionComponent {
   sampleData = [
     {
       id: 1,
-      name: "John Doe",
-      email: "john.doe@example.com",
+      name: "Sadun Fernando",
+      email: "sadun.fer@example.com",
       device: "D001",
       gender: "Male",
       weight: 75,
@@ -25,8 +25,8 @@ export class StartCompetitionComponent {
     },
     {
       id: 2,
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
+      name: "Yasara Gynathilaka",
+      email: "yasara.gun@example.com",
       device: "D002",
       gender: "Female",
       weight: 65,
@@ -35,8 +35,8 @@ export class StartCompetitionComponent {
     },
     {
       id: 3,
-      name: "Michael Brown",
-      email: "michael.brown@example.com",
+      name: "Budvin Perera",
+      email: "budvin.perera@example.com",
       device: "D003",
       gender: "Male",
       weight: 82,
@@ -45,8 +45,8 @@ export class StartCompetitionComponent {
     },
     {
       id: 4,
-      name: "Emily Davis",
-      email: "emily.davis@example.com",
+      name: "Anuki Senevirathne",
+      email: "anuki.sene@example.com",
       device: "D004",
       gender: "Female",
       weight: 58,
@@ -55,8 +55,8 @@ export class StartCompetitionComponent {
     },
     {
       id: 5,
-      name: "David Wilson",
-      email: "david.wilson@example.com",
+      name: "Darshana Peiris",
+      email: "darshana.peiris@example.com",
       device: "D005",
       gender: "Male",
       weight: 90,
