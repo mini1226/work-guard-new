@@ -1,0 +1,55 @@
+<div class="card pb-5">
+  <div class="page-header px-5 pt-3">
+    <div class="page-title">
+      <h4>Last Running Performance Evaluation</h4>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <div class="row pt-5">
+      <div class="col-xl-12">
+        <div id="chart" #chart>
+          <ng-container *ngIf="lineChartOptions.series && lineChartOptions.series.length > 0">
+            <apx-chart
+              [series]="lineChartOptions.series"
+              [chart]="lineChartOptions.chart"
+              [xaxis]="lineChartOptions.xaxis"
+              [yaxis]="lineChartOptions.yaxis"
+              [stroke]="lineChartOptions.stroke"
+              [responsive]="lineChartOptions.responsive"
+            ></apx-chart>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive mt-4">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Session</th>
+          <th>Date</th>
+          <th>Heart Rate Range (BPM)</th>
+          <th>Max HR Exceed</th>
+          <th>Pace</th>
+          <th>Avg Heart Rate (BPM)</th>
+          <th>Summary</th>
+          <th>Feedback</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let session of heartRateTableData; let i = index">
+          <td>Session {{ i + 1 }}</td>
+          <td>{{ session.date }}</td>
+          <td>{{ session.heartRateRange }}</td>
+          <td>{{ session.maxHrExceed ? 'Yes' : 'No' }}</td>
+          <td>{{ session.pace }}</td>
+          <td>{{ session.avgHeartRate.toFixed(2) }}</td>
+          <td>{{ session.summary }}</td>
+          <td>{{ session.feedback }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

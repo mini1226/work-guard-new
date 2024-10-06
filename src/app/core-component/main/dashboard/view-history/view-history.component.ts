@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 
 @Component({
@@ -26,7 +26,8 @@ export class ViewHistoryComponent {
 
 
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -42,5 +43,17 @@ export class ViewHistoryComponent {
 
 
   onSubmit(): void {
+  }
+
+  performanceHistory(){
+    this.router.navigate([routes.athletePerformance]);
+  }
+
+  viewDetails(id: any) {
+    this.router.navigate([routes.viewHeartRate], {
+      queryParams: {
+        id: id
+      }
+    });
   }
 }

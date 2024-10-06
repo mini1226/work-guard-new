@@ -13,6 +13,7 @@ import {CompetitionSummaryComponent} from "./competition-summary/competition-sum
 import {HeartRateGraphComponent} from "./heart-rate-graph/heart-rate-graph.component";
 import {LiveHeartRateComponent} from "./live-heart-rate/live-heart-rate.component";
 import {PerformanceCalculatorComponent} from "./performance-calculator/performance-calculator.component";
+import {AthletePerformanceHistoryComponent} from "./athlete-performance-history/athlete-performance-history.component";
 
 const routes: Routes = [{ path: '', component: DashboardComponent,
 children: [
@@ -68,6 +69,10 @@ children: [
   {
     path: 'performance-calculator',
     component: PerformanceCalculatorComponent
+  },
+  {
+    path: 'athlete-performance-history',
+    component: AthletePerformanceHistoryComponent
   }
 ]
 }];

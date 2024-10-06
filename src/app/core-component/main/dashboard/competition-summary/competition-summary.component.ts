@@ -55,4 +55,8 @@ export class CompetitionSummaryComponent {
       }
     });
   }
+
+  performanceHistory(){
+
+  }
 }

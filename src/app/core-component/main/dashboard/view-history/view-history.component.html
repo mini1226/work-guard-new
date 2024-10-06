@@ -11,6 +11,9 @@
 <!--                <button type="submit" class="me-1 btn btn-success btn" (click)="onSubmit()"><i class="feather icon-save"></i>-->
 <!--                  SAVE-->
 <!--                </button>-->
+        <button type="submit" class="me-1 btn btn-success btn" (click)="performanceHistory()"><i class="feather icon-star"></i>
+          Last Running Performance
+        </button>
                 <button type="button" class="me-1 btn btn-danger btn" (click)="onBackClick()"><i
                   class="feather icon-chevrons-left"></i> Back
                 </button>
@@ -34,7 +37,8 @@
               <th mat-sort-header="hrRange">Heart Rate Range</th>
               <th mat-sort-header="maxHrExceeded">Max H.R Exceeded</th>
               <th mat-sort-header="cal">Calories Burned</th>
-              <th mat-sort-header="action">Cardiovascular Drift</th>
+              <th mat-sort-header="action">Pace</th>
+              <th mat-sort-header="action">Heart Rate</th>
             </tr>
             </thead>
             <tbody>
@@ -48,6 +52,11 @@
               <td>{{ project.maxHrExceeded }}</td>
               <td>{{ project.cal }}</td>
               <td>{{ project.cardiovascularDrift }}</td>
+              <td>
+                <a class="confirm-text p-2" href="javascript:void(0);" (click)="viewDetails(project.id )">
+                  <i class="feather icon-eye feather-eye"></i>
+                </a>
+              </td>
             </tr>
             </tbody>
           </table>

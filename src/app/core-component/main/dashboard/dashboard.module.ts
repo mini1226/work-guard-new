@@ -19,6 +19,7 @@ import {HeartRateGraphComponent} from "./heart-rate-graph/heart-rate-graph.compo
 import {NgApexchartsModule} from "ng-apexcharts";
 import {LiveHeartRateComponent} from "./live-heart-rate/live-heart-rate.component";
 import {PerformanceCalculatorComponent} from "./performance-calculator/performance-calculator.component";
+import {AthletePerformanceHistoryComponent} from "./athlete-performance-history/athlete-performance-history.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {PerformanceCalculatorComponent} from "./performance-calculator/performan
     CompetitionSummaryComponent,
     HeartRateGraphComponent,
     LiveHeartRateComponent,
-    PerformanceCalculatorComponent
+    PerformanceCalculatorComponent,
+    AthletePerformanceHistoryComponent
   ],
   imports: [CommonModule,
     DashboardRoutingModule,

@@ -69,6 +69,9 @@ export class routes {
   public static get performanceCal(): string {
     return this.dashboard + '/performance-calculator';
   }
+  public static get athletePerformance(): string {
+    return this.dashboard + '/athlete-performance-history';
+  }
 
 
 
