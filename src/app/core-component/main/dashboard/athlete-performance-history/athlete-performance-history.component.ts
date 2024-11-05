@@ -26,13 +26,13 @@ export class AthletePerformanceHistoryComponent {
 
 
   public heartRateTableData: {
-    date: string;               // Date of the session
-    heartRateRange: string;     // Range of heart rates
-    maxHrExceed: boolean;       // Whether the max heart rate was exceeded
-    pace: string;               // Pace information
-    avgHeartRate: number;       // Average heart rate for the session
-    summary: string;            // Summary of the session
-    feedback: string;           // Feedback for the session
+    date: string;
+    heartRateRange: string;
+    maxHrExceed: boolean;
+    pace: string;
+    avgHeartRate: number;
+    summary: string;
+    feedback: string;
   }[] = [
     {
       date: '2023-10-01',
@@ -40,8 +40,8 @@ export class AthletePerformanceHistoryComponent {
       maxHrExceed: false,
       pace: '5.00',
       avgHeartRate: 80,
-      summary: 'Initial State.',
-      feedback: 'Keep up the good pace!'
+      summary: 'Same pace, same heart rate.',
+      feedback: 'You’re consistent. But to see improvement, consider increasing intensity slightly or introducing interval training.'
     },
     {
       date: '2023-10-02',
@@ -49,8 +49,8 @@ export class AthletePerformanceHistoryComponent {
       maxHrExceed: true,
       pace: '5.30',
       avgHeartRate: 85,
-      summary: 'Increased Hr',
-      feedback: 'Monitor your heart rate closely.'
+      summary: 'Same pace, but increased heart rate.',
+      feedback: 'Your heart rate is rising at the same pace, which could be a sign of fatigue. Ensure you’re recovering properly and managing stress.'
     },
     {
       date: '2023-10-03',
@@ -58,8 +58,8 @@ export class AthletePerformanceHistoryComponent {
       maxHrExceed: false,
       pace: '5.10',
       avgHeartRate: 78,
-      summary: 'Felt good throughout the run.',
-      feedback: 'Try to increase the distance next time.'
+      summary: 'Same pace, but decreased heart rate.',
+      feedback: 'Great job! You’re becoming more efficient, and your cardiovascular system is adapting well to the workload.'
     },
     {
       date: '2023-10-04',
@@ -67,8 +67,8 @@ export class AthletePerformanceHistoryComponent {
       maxHrExceed: true,
       pace: '4.50',
       avgHeartRate: 90,
-      summary: 'Pushed hard, great effort!',
-      feedback: 'Be cautious with high intensity.'
+      summary: 'Improved pace, but increased heart rate.',
+      feedback: 'Your speed is increasing, but so is your effort level. Make sure you’re not pushing too hard and monitor for overtraining.'
     },
     {
       date: '2023-10-05',
@@ -76,8 +76,8 @@ export class AthletePerformanceHistoryComponent {
       maxHrExceed: false,
       pace: '5.20',
       avgHeartRate: 82,
-      summary: 'Steady pace, maintained energy.',
-      feedback: 'Good job, keep training consistently!'
+      summary: 'Same pace, same heart rate.',
+      feedback: 'You’re consistent. Continue with your routine, but consider adding intensity or distance for further improvement.'
     }
   ];
 
@@ -104,9 +104,7 @@ export class AthletePerformanceHistoryComponent {
     this.timeInSeconds = Array.from({ length: 60 }, (_, i) => i);
   }
 
-  // Function to initialize the line chart with heart rate data
   initializeLineChart() {
-    // Prepare series data for the last 5 sessions
     const series = this.heartRateData.map((data, index) => ({
       name: `Session ${index + 1}`,
       data: data
@@ -119,36 +117,29 @@ export class AthletePerformanceHistoryComponent {
         height: 350
       },
       xaxis: {
-        categories: this.timeInSeconds, // X-axis representing seconds (0-59)
-        title: {
-          text: "Time (seconds)"
-        }
+        categories: this.timeInSeconds,
+        title: { text: "Time (seconds)" }
       },
       yaxis: {
-        title: {
-          text: "Heart Rate (BPM)"
-        },
-        min: 50, // Adjust according to the minimum heart rate
-        max: 100 // Adjust according to the maximum heart rate
+        title: { text: "Heart Rate (BPM)" },
+        min: 50,
+        max: 100
       },
-      stroke: {
-        curve: 'smooth' // Smooth line
-      },
+      stroke: { curve: 'smooth' },
+      colors: ["#FF4560", "#775DD0", "#00E396", "#FEB019", "#008FFB"], // Customize colors
       responsive: [
         {
           breakpoint: 480,
           options: {
-            chart: {
-              width: 300
-            },
-            legend: {
-              position: 'bottom'
-            }
+            chart: { width: 300 },
+            legend: { position: 'bottom' }
           }
         }
       ]
     };
   }
+
+
 
 
   getAverageHeartRate(session: number[]): number {

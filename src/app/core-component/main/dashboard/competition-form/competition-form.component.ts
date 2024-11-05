@@ -136,6 +136,15 @@ export class CompetitionFormComponent {
   ];
 
 
+  sessionData = [
+    {
+      'id': 1,
+      'name': 'Running'
+    },{
+      'id': 2,
+      'name': 'Other'
+    }
+  ];
 
 
   hrData = [
