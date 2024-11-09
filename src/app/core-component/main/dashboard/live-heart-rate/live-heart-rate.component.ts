@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ApexAxisChartSeries, ApexChart, ApexStroke, ApexXAxis, ApexYAxis, ChartComponent} from "ng-apexcharts";
 import {ActivatedRoute} from "@angular/router";
+import {Database, onValue, ref} from "@angular/fire/database";
 
 
 export type LineChartOptions = {
@@ -25,33 +26,36 @@ export class LiveHeartRateComponent {
   @ViewChild("chart") chart!: ChartComponent;
   public lineChartOptions: Partial<LineChartOptions> | any = {};
 
-  private heartRateValues: number[] = [];
-  private timeInSeconds: number[] = [];
+  private heartRateValues: any[] = [];
+  private timeInSeconds: any[] = [];
+  private timeInSeconds1: any[] = [];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private af: Database) {
+  }
 
   ngOnInit(): void {
-    this.initializeHeartRateData();
-    this.initializeLineChart();
+    this.getData();
   }
 
-  // Function to initialize hardcoded heart rate data
+  getData() {
+    let databaseReference = ref(this.af, 'D001/BPM');
+    onValue(databaseReference, snapshot => {
+      if (snapshot.val() != null) {
+        let strings:string[] = Object.keys(snapshot.val());
+        let values:number[] = Object.values(snapshot.val());
+        this.timeInSeconds1 = strings.splice( strings.length - 60,strings.length);
+        this.heartRateValues =values.splice(values.length - 60,values.length);
+        this.initializeHeartRateData()
+      }
+    })
+
+  }
+
   initializeHeartRateData() {
-    // Hardcoded heart rate values for 60 seconds
-    this.heartRateValues = [
-      72, 74, 73, 75, 77, 76, 75, 78, 80, 81,
-      83, 85, 84, 82, 81, 80, 79, 78, 77, 76,
-      75, 74, 73, 72, 74, 75, 77, 78, 79, 81,
-      82, 83, 84, 85, 86, 87, 88, 89, 90, 91,
-      90, 89, 88, 87, 86, 85, 84, 83, 82, 81,
-      80, 79, 78, 77, 76, 75, 74, 73, 72, 71
-    ];
-
-    // Time in seconds from 0 to 59
-    this.timeInSeconds = Array.from({ length: 60 }, (_, i) => i);
+    this.timeInSeconds = Array.from({length: this.timeInSeconds1.length}, (_, i) => i);
+    this.initializeLineChart()
   }
 
-  // Function to initialize the line chart with heart rate data
   initializeLineChart() {
     this.lineChartOptions = {
       series: [
@@ -60,6 +64,11 @@ export class LiveHeartRateComponent {
           data: this.heartRateValues
         }
       ],
+      zoom: {
+        type: 'x',
+        enabled: true,
+        autoScaleYaxis: true,
+      },
       chart: {
         type: "line",
         height: 350
@@ -73,12 +82,10 @@ export class LiveHeartRateComponent {
       yaxis: {
         title: {
           text: "Heart Rate (BPM)"
-        },
-        min: 60, // Adjust according to the minimum heart rate
-        max: 100 // Adjust according to the maximum heart rate
+        }
       },
       stroke: {
-        curve: 'smooth' // Smooth line
+        curve: 'smooth'
       },
       labels: this.timeInSeconds,
       responsive: [
@@ -86,7 +93,7 @@ export class LiveHeartRateComponent {
           breakpoint: 480,
           options: {
             chart: {
-              width: 300
+              width: 300,
             },
             legend: {
               position: 'bottom'
