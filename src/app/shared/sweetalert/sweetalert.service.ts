@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 })
 export class SweetalertService {
 
-   
+
   deleteBtn() {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -15,7 +15,7 @@ export class SweetalertService {
       },
       buttonsStyling: false
     })
-    
+
     swalWithBootstrapButtons.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -43,4 +43,40 @@ export class SweetalertService {
       }
     })
   }
+
+
+  saveBtn() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+      title: 'Saved!',
+      text: 'Your changes have been saved successfully.',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    });
+  }
+
+
+
+  errorPopup() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger',  // Change button styling for error
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+      title: 'Error!',
+      text: 'Something went wrong. Please try again.',
+      icon: 'error',  // Set icon to error
+      confirmButtonText: 'Ok',
+    });
+  }
+
 }
