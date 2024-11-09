@@ -4,7 +4,17 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://c8f2-112-134-154-233.ngrok-free.app'
+  baseUrl: 'https://99d8-43-252-15-204.ngrok-free.app',
+  firebaseConfig : {
+    apiKey: "AIzaSyA1VOLpuanVp7Qes7m7i9fSOYlLxLG-Tr0",
+    authDomain: "sports-project-ce7f5.firebaseapp.com",
+    databaseURL: "https://sports-project-ce7f5-default-rtdb.firebaseio.com",
+    projectId: "sports-project-ce7f5",
+    storageBucket: "sports-project-ce7f5.firebasestorage.app",
+    messagingSenderId: "728066424411",
+    appId: "1:728066424411:web:d49359d4adbc174410897e",
+    measurementId: "G-DKH18DXLTB"
+  }
 };
 
 /*

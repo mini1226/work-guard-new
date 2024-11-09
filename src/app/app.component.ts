@@ -6,6 +6,7 @@ import {
   Event as RouterEvent,
 } from '@angular/router';
 import { SettingsService, SpinnerService } from './core/core.index';
+import {AngularFirestore} from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,14 @@ export class AppComponent {
   title = 'template';
   public page = '';
 
-  constructor(private router: Router, private spinner: SpinnerService) {
-    this.router.events.subscribe((event: RouterEvent) => {
+  constructor(private router: Router, private spinner: SpinnerService,private firebase: AngularFirestore) {
+    //
+    // var recentPostsRef = firebase.collection('BPM').valueChanges((res: any)=>{
+    //   console.log(res);
+    // });
+
+
+   /* this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationStart) {
         const URL = event.url.split('/');
         this.page = URL[1];
@@ -35,6 +42,6 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         this.spinner.hide();
       }
-    });
+    });*/
   }
 }
