@@ -1,7 +1,7 @@
 <div class="account-content">
   <div class="login-wrapper bg-img">
     <div class="login-content">
-      <form>
+      <form [formGroup]="userForm">
         <div class="login-userset">
           <div class="login-logo logo-normal">
             <img src="assets/img/athletics.png" alt="img">
@@ -15,39 +15,31 @@
           </div>
           <div class="form-login">
             <label>Username / Email</label>
-            <div class="form-addons" formControl="email">
-              <input type="text" class="form-control">
+            <div class="form-addons">
+              <input type="text" class="form-control" formControlName="email">
               <img src="assets/img/icons/user-icon.svg" alt="img">
             </div>
           </div>
           <div class="form-login">
             <label>First Name</label>
-            <div class="form-addons" formControl="firstName">
-              <input type="text" class="form-control">
+            <div class="form-addons">
+              <input type="text" class="form-control" formControlName="firstName">
               <img src="assets/img/icons/user-icon.svg" alt="img">
             </div>
           </div>
           <div class="form-login">
             <label>Last Name</label>
             <div class="form-addons">
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" formControlName="lastName">
               <img src="assets/img/icons/user-icon.svg" alt="img">
             </div>
           </div>
           <div class="form-login">
             <label>Password</label>
             <div class="pass-group">
-              <input [type]="password[1] ? 'text' : 'password' " class="pass-input">
+              <input [type]="password[1] ? 'text' : 'password' " class="pass-input" formControlName="password">
               <span class="fas toggle-password" [ngClass]=" password[1] ? 'fa-eye' : 'fa-eye-slash'"
                     (click)="togglePassword(1)"></span>
-            </div>
-          </div>
-          <div class="form-login">
-            <label>Confirm Password</label>
-            <div class="pass-group">
-              <input [type]="password[2] ? 'text' : 'password' " class="pass-input">
-              <span class="fas toggle-passwords" [ngClass]=" password[2] ? 'fa-eye' : 'fa-eye-slash'"
-                    (click)="togglePassword(2)"></span>
             </div>
           </div>
           <div class="form-login authentication-check">
@@ -63,33 +55,10 @@
             </div>
           </div>
           <div class="form-login">
-            <button type="submit" class="btn btn-login" (click)="navigation()">Sign Up</button>
+            <button type="submit" class="btn btn-login" (click)="addUser()">Sign Up</button>
           </div>
           <div class="signinform">
             <h4>Already have an account ? <a [routerLink] = "routes.signIn" class="hover-a">Sign In Instead</a></h4>
-          </div>
-          <div class="form-setlogin or-text">
-            <h4>OR</h4>
-          </div>
-          <div class="form-sociallink">
-            <ul class="d-flex">
-              <li>
-                <a href="javascript:void(0);" class="facebook-logo">
-                  <img src="assets/img/icons/facebook-logo.svg" alt="Facebook">
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0);">
-                  <img src="assets/img/icons/google.png" alt="Google">
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0);" class="apple-logo">
-                  <img src="assets/img/icons/apple-logo.svg" alt="Apple">
-                </a>
-              </li>
-
-            </ul>
           </div>
         </div>
       </form>
