@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://d92b-2402-4000-1305-8923-fc9c-b824-42a6-9c4c.ngrok-free.app/api/v1/'
+  baseUrl: 'https://af226e99955cfaedc571f14761263da1.serveo.net/api/v1/'
 };
 
 /*

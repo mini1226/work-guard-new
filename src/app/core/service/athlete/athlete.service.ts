@@ -25,8 +25,21 @@ export class AthleteService {
 
 
 
-  public getAthleteCount() :Observable<any>{
-    return this.http.get<any>(this.baseURL+'/count');
+  public getAthleteCount(body: FormData): Observable<any> {
+    return this.http.post<any>(this.baseURL + '/count', body).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
+  public getAthleteAll(coach_id: any): Observable<any> {
+    const params = {
+      'coach_id': coach_id
+    }
+    return this.http.get<any>(this.baseURL,{params});
+
   }
 
 

@@ -8,7 +8,7 @@ import {map, Observable} from "rxjs";
 })
 export class AuthService {
 
-  baseURL = environment.baseUrl+'auth/';
+  baseURL = environment.baseUrl+'auth';
 
   constructor(private http: HttpClient) {
 
@@ -26,7 +26,7 @@ export class AuthService {
 
 
   public logUser(body :any) :Observable<any>{
-    return this.http.post<any>(this.baseURL ,body,{}).pipe(
+    return this.http.post<any>(this.baseURL+'/token',body,{}).pipe(
       map((res: any) => {
         return res;
       })
@@ -35,7 +35,7 @@ export class AuthService {
 
   public test() :Observable<any>{
     // let headers = new HttpHeaders().append('ngrok-skip-browser-warning', '6024');
-    return this.http.get<any>('http://127.0.0.1:4040/'+'get');
+    return this.http.get<any>('https://e6606eddb2374734b2e8a8d39575f81b.serveo.net/api/v1/auth/get');
   }
 
 

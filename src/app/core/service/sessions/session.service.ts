@@ -29,8 +29,28 @@ export class SessionService {
     return this.http.get<any>(this.baseURL);
   }
 
-  public getCompletedSessionCount() :Observable<any>{
-    return this.http.get<any>(this.baseURL+'/completed');
+
+  public getUpcomingSession() :Observable<any>{
+    return this.http.get<any>(this.baseURL+'/not-completed');
+  }
+
+
+
+  public getCompletedSessionCount(body: FormData): Observable<any> {
+    return this.http.post<any>(this.baseURL + '/completed', body).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
+  public getAllSessionCount(body: FormData): Observable<any> {
+    return this.http.post<any>(this.baseURL + '/count', body).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
   }
 
 }

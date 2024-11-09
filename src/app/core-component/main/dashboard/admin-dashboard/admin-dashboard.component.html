@@ -2,7 +2,7 @@
   <div class="col-xl-4 col-sm-6 col-12 d-flex">
     <div class="dash-count">
       <div class="dash-counts">
-        <h4>100</h4>
+        <h4>{{athleteCount}}</h4>
         <h5>Athletes</h5>
       </div>
       <div class="dash-imgs">
@@ -13,7 +13,7 @@
   <div class="col-xl-4 col-sm-6 col-12 d-flex">
     <div class="dash-count das1">
       <div class="dash-counts">
-        <h4>110</h4>
+        <h4>{{completedAthleteCount}}</h4>
         <h5>Completed Sessions</h5>
       </div>
       <div class="dash-imgs">
@@ -24,7 +24,7 @@
   <div class="col-xl-4 col-sm-6 col-12 d-flex">
     <div class="dash-count das2">
       <div class="dash-counts">
-        <h4>150</h4>
+        <h4>{{sessionCount}}</h4>
         <h5>Sessions</h5>
       </div>
       <div class="dash-imgs">
@@ -53,7 +53,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let project of sampleData1">
+            <tr *ngFor="let project of upcomingData">
               <td>{{ project.id }}</td>
               <td>{{ project.name }}</td>
               <td>{{ project.date }}</td>
@@ -87,7 +87,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let project of sampleData2">
+            <tr *ngFor="let project of historyData">
               <td>{{ project.id }}</td>
               <td>{{ project.name }}</td>
               <td>{{ project.events }}</td>

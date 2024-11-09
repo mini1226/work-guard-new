@@ -27,7 +27,7 @@ export class HeaderComponent  {
     private Router: Router,
     private common: CommonService,
     private sidebar: SidebarService,
-    private webStorage: WebstorgeService
+    private webStorage: WebstorgeService,
   ) {
     this.activePath = this.Router.url.split('/')[2];
     this.Router.events.subscribe((data: RouterEvent) => {
@@ -56,8 +56,18 @@ export class HeaderComponent  {
 
 
   public logout(): void {
+    // Clear localStorage and other data
+    console.log('Logging out...');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userEmail');
+    localStorage.clear();
     this.webStorage.Logout();
+
+    // Redirect to the sign-in page after logout
+    this.Router.navigate([routes.signIn]);
   }
+
+
 
   public toggleSidebar(): void {
     this.sidebar.switchSideMenuPosition();

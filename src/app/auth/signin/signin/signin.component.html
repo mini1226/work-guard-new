@@ -16,7 +16,7 @@
           <div class="form-login mb-3">
             <label class="form-label">Email Address</label>
             <div class="form-addons">
-              <input type="text" class="form- control" formControlName="username">
+              <input type="text" class="form- control" formControlName="userName">
               <img src="assets/img/icons/mail.svg" alt="img">
             </div>
           </div>
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="form-login">
-            <button type="button" class="btn btn-login" (click)="navigation()">Sign In</button>
+            <button type="button" class="btn btn-login" (click)="login()">Sign In</button>
           </div>
           <div class="signinform">
             <h4>New on our platform?<a [routerLink] = "routes.register" class="hover-a"> Create an account</a></h4>

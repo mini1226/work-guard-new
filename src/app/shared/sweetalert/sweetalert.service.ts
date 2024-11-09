@@ -79,4 +79,23 @@ export class SweetalertService {
     });
   }
 
+
+
+  authenticationFailedPopup() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger',  // Red button for failure
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+      title: 'Authentication Failed!',
+      text: 'Incorrect username or password. Please try again.',
+      icon: 'error',  // Set icon to error
+      confirmButtonText: 'Ok',
+    });
+  }
+
+
 }
