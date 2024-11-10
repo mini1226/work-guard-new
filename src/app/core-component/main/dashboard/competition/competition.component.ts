@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
+import {SessionService} from "../../../../core/service/sessions/session.service";
 
 @Component({
   selector: 'app-competition',
@@ -92,7 +93,8 @@ export class CompetitionComponent {
   ];
 
 
-  constructor(private router:Router) {
+  constructor(private router: Router, private sessionService: SessionService) {
+    this.loadAllSessions();
   }
 
   addAthletes() {
@@ -117,6 +119,12 @@ export class CompetitionComponent {
         id: id
       }
     });
+  }
+
+  private loadAllSessions() {
+    this.sessionService.getAllSessionDetails().subscribe(value => {
+      console.log(value);
+    })
   }
 }
 

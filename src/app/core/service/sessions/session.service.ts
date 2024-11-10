@@ -53,4 +53,14 @@ export class SessionService {
     );
   }
 
+  getAllSessionDetails(): Observable<any> {
+    /** TODO
+     * Need An APi
+     * **/
+    return this.http.get<any>(this.baseURL + '/count', {}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 }
