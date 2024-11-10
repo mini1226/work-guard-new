@@ -21,6 +21,7 @@ export class CompetitionFormComponent {
       email: "john.doe@example.com",
       device: "D001",
       gender: "Male",
+      level: "BEGINNER",
       weight: 75,
       height: 180,
       action: "Edit"
@@ -31,6 +32,7 @@ export class CompetitionFormComponent {
       email: "jane.smith@example.com",
       device: "D002",
       gender: "Female",
+      level: "INTERMEDIATE",
       weight: 65,
       height: 165,
       action: "Edit"
@@ -41,6 +43,7 @@ export class CompetitionFormComponent {
       email: "michael.brown@example.com",
       device: "D003",
       gender: "Male",
+      level: "EXPERT",
       weight: 82,
       height: 175,
       action: "Edit"
@@ -51,6 +54,7 @@ export class CompetitionFormComponent {
       email: "emily.davis@example.com",
       device: "D004",
       gender: "Female",
+      level: "EXPERT",
       weight: 58,
       height: 160,
       action: "Edit"
@@ -61,6 +65,7 @@ export class CompetitionFormComponent {
       email: "david.wilson@example.com",
       device: "D005",
       gender: "Male",
+      level: "BEGINNER",
       weight: 90,
       height: 185,
       action: "Edit"
@@ -71,6 +76,7 @@ export class CompetitionFormComponent {
       email: "sophia.johnson@example.com",
       device: "D006",
       gender: "Female",
+      level: "BEGINNER",
       weight: 70,
       height: 170,
       action: "Edit"
@@ -81,6 +87,7 @@ export class CompetitionFormComponent {
       email: "james.lee@example.com",
       device: "D007",
       gender: "Male",
+      level: "INTERMEDIATE",
       weight: 68,
       height: 172,
       action: "Edit"
@@ -91,6 +98,7 @@ export class CompetitionFormComponent {
       email: "olivia.martinez@example.com",
       device: "D008",
       gender: "Female",
+      level: "INTERMEDIATE",
       weight: 60,
       height: 162,
       action: "Edit"
@@ -101,6 +109,7 @@ export class CompetitionFormComponent {
       email: "daniel.white@example.com",
       device: "D009",
       gender: "Male",
+      level: "BEGINNER",
       weight: 85,
       height: 178,
       action: "Edit"
@@ -111,6 +120,7 @@ export class CompetitionFormComponent {
       email: "isabella.garcia@example.com",
       device: "D0010",
       gender: "Female",
+      level: "BEGINNER",
       weight: 55,
       height: 158,
       action: "Edit"
@@ -170,14 +180,9 @@ export class CompetitionFormComponent {
   ];
 
   athleteForm: FormGroup = new FormGroup({
-    competitionName: new FormControl(''),
-    date: new FormControl(''),
-    weight: new FormControl(''),
-    contactNumber: new FormControl(''),
-    dob: new FormControl(''),
-    contact: new FormControl(''),
-    email: new FormControl(''),
-    height: new FormControl(''),
+    name: new FormControl(''),
+    sess_date: new FormControl(''),
+    venue: new FormControl(''),
     athleteArray: new FormArray([]),
   });
 
@@ -211,6 +216,7 @@ export class CompetitionFormComponent {
         // Convert id to a string when setting the form control value
         formGroup.get('id')?.setValue(selectedAthlete.id.toString());
         formGroup.get('device')?.setValue(selectedAthlete.device);
+        formGroup.get('level')?.setValue(selectedAthlete.level);
       }
     });
 
