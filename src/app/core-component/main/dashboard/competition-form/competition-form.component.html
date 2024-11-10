@@ -27,10 +27,10 @@
             <div class="row">
               <label class="col-lg-3 col-form-label col-form-label-sm">Session Name :</label>
               <div class="col-lg-9  form-group">
-                <mat-select name="gender" id="gender" formControlName="competitionName">
+                <mat-select name="gender" id="gender" formControlName="name">
                   <mat-option *ngFor="let session of sessionData" [value]="session.id">{{session.name}}</mat-option>
                 </mat-select>
-                <div *ngIf="athleteForm.get('competitionName')?.invalid && (athleteForm.get('competitionName')?.dirty || athleteForm.get('competitionName')?.touched)"
+                <div *ngIf="athleteForm.get('name')?.invalid && (athleteForm.get('name')?.dirty || athleteForm.get('name')?.touched)"
                   class="text-danger">Session name is required
                 </div>
               </div>
@@ -46,7 +46,7 @@
                     matInput
                     [matDatepicker]="picker1"
                     placeholder="Date"
-                    formControlName="date"
+                    formControlName="sess_date"
                     class="mat-input-element"
                   />
                   <div class="addonset">
@@ -55,7 +55,7 @@
                   </div>
                 </div>
                 <div
-                  *ngIf="athleteForm.get('date')?.invalid && (athleteForm.get('date')?.dirty || athleteForm.get('date')?.touched)"
+                  *ngIf="athleteForm.get('sess_date')?.invalid && (athleteForm.get('sess_date')?.dirty || athleteForm.get('sess_date')?.touched)"
                   class="text-danger">Date is required
                 </div>
               </div>
@@ -85,7 +85,6 @@
                   <th style="width: 300px !important;">Name</th>
                   <th style="width: 200px !important;">Level</th>
                   <th style="width: 200px !important;">H.R range</th>
-                  <th style="width: 200px !important;">Cus H.R range</th>
                   <th style="width: 100px !important;">Device</th>
                   <th style="width: 50px !important;">Action</th>
                 </tr>
@@ -111,11 +110,6 @@
                     <mat-select name="hrRate" id="hrRate" formControlName="hrRate">
                       <mat-option *ngFor="let hr of hrData" [value]="hr.id">{{hr.name}}</mat-option>
                     </mat-select>
-                  </td>
-                  <td style="padding: 0px 5px !important;">
-                    <div class="form-group" style="margin: 0!important;">
-                      <input type="text" class="form-control" formControlName="cusHr">
-                    </div>
                   </td>
                   <td style="padding: 0px 5px !important;">
                     <div class="form-group" style="margin: 0!important;">

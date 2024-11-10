@@ -93,7 +93,8 @@ export class CompetitionComponent {
   ];
 
 
-  constructor(private router: Router, private sessionService: SessionService) {
+  constructor(private router: Router,
+              private sessionService: SessionService,) {
     this.loadAllSessions();
   }
 
