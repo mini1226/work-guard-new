@@ -44,6 +44,7 @@ export class AthleteFormComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isEditId = params['id'];
+      this.loadAthleteDetails();
     });
 
     this.athleteForm.get('dob')?.valueChanges.subscribe((dobValue) => {
@@ -102,5 +103,27 @@ export class AthleteFormComponent {
     }
 
     return age;
+  }
+
+  private loadAthleteDetails() {
+    this.athleteService.getAthleteDetail(this.isEditId).subscribe(value => {
+      console.log(value);
+      this.athleteForm.setValue({
+        firstName: value.firstName,
+        lastName: value.lastName,
+        weight: value.weight,
+        events: value.events,
+        dob: value.dob,
+        gender: value.gender,
+        age: this.calculateAge(value.dob),
+        contact: value.contact,
+        email: value.email,
+        height: value.height,
+        level: value.level,
+        hrRate: value.hrRate,
+        cusHrRate: value.cusHrRate,
+        personalBest: value.personalBest,
+      })
+    })
   }
 }
