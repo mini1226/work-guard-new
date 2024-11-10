@@ -9,6 +9,7 @@ export interface apiResultFormat {
 }
 
 export interface Athlete {
+  id?:any;
   firstName: string;
   lastName: string;
   email: string;

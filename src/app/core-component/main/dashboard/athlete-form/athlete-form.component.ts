@@ -67,19 +67,27 @@ export class AthleteFormComponent {
   onSubmit(): void {
     console.log(this.athleteForm.value);
     if (this.athleteForm.valid) {
-      const obj: Athlete = {
+      let obj: Athlete = {
         ...this.athleteForm.value,
         dob: this.datePipe.transform(this.athleteForm.get('dob')?.value, 'yyyy-MM-dd'),
         createdBy: localStorage.getItem('userId')
       }
-      this.athleteService.saveAthlete(obj).subscribe(value => {
-        console.log(value);
-      }, error => {
-        console.log(error);
-      })
+      if (this.isEditId) {
+        obj = {...obj, id: this.isEditId}
+        this.athleteService.updateAthlete(obj).subscribe(value => {
+          console.log(value);
+        }, error => {
+          console.log(error);
+        })
+      } else {
+        this.athleteService.saveAthlete(obj).subscribe(value => {
+          console.log(value);
+        }, error => {
+          console.log(error);
+        })
+      }
     }
   }
-
 
   calculateAge(dob: string | Date): number {
     const dobDate = new Date(dob);
@@ -95,5 +103,4 @@ export class AthleteFormComponent {
 
     return age;
   }
-
 }

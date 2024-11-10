@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
+import {Athlete} from "../../models/models";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,11 @@ export class AthleteService {
   }
 
 
-
-
+  updateAthlete(body: Athlete) :Observable<any>{
+    return this.http.post<any>(this.baseURL ,body,{}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 }

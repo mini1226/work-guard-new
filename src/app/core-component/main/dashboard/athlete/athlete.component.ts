@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
+import {AthleteService} from "../../../../core/service/athlete/athlete.service";
 
 @Component({
   selector: 'app-athlete',
@@ -88,7 +89,7 @@ export class AthleteComponent {
       gender: "Female",
       age: "19",
       level: "Special Preparation",
-      hrRange:' 120-150',
+      hrRange: ' 120-150',
       weight: 70,
       height: 170,
       action: "Edit",
@@ -152,7 +153,8 @@ export class AthleteComponent {
     }
   ];
 
-  constructor(private router:Router) {
+  constructor(private router: Router, private athleteService: AthleteService) {
+    this.loadAllAthletes();
   }
 
   addAthletes() {
@@ -165,5 +167,12 @@ export class AthleteComponent {
         id: athleteId
       }
     });
+  }
+
+  private loadAllAthletes() {
+    this.athleteService.getAthleteAll(localStorage.getItem('userId')).subscribe(value => {
+      console.log(value);
+      // this.sampleData
+    })
   }
 }
