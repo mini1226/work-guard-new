@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {routes} from "../../../../core/helpers/routes";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
-import {moment} from "ngx-bootstrap/chronos/testing/chain";
+import {Athlete, AthleteLevel, Gender} from 'src/app/core/models/models';
+import {AthleteService} from "../../../../core/service/athlete/athlete.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-athlete-form',
@@ -13,75 +15,31 @@ export class AthleteFormComponent {
   public routes = routes;
   isEditId: any;
   customHrRate: string | null = null;
-
-
-  genderData = [
-    {
-      'id': 1,
-      'name': 'Male'
-    },{
-      'id': 2,
-      'name': 'Female'
-    }
-  ];
-
-
-  levelData = [
-    {
-      'id': 1,
-      'name': 'General Preparation'
-    },{
-      'id': 2,
-      'name': 'Special Preparation'
-    },{
-      'id': 3,
-      'name': 'Pre Competition'
-    },{
-      'id': 4,
-      'name': 'Competition'
-    }
-  ];
-
-
-  hrData = [
-    {
-      'id': 1,
-      'name': '120-150'
-    },{
-      'id': 2,
-      'name': '150-165'
-    },{
-      'id': 3,
-      'name': '165-175'
-    },{
-      'id': 4,
-      'name': '175-185'
-    },{
-      'id': 5,
-      'name': '185-200'
-    },{
-      'id': 5,
-      'name': 'Other'
-    }
-  ];
+  genderData: string[] = [];
+  levelData: string[] = [];
+  heartRateData = ['120-150', '150-165', '165-175', '175-185', '185-200', 'Other'];
 
   athleteForm: FormGroup = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    weight: new FormControl(''),
-    contactNumber: new FormControl(''),
-    dob: new FormControl(''),
-    age: new FormControl(''),
-    contact: new FormControl(''),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    weight: new FormControl('', [Validators.required]),
+    events: new FormControl('', [Validators.required]),
+    dob: new FormControl('', [Validators.required]),
+    gender: new FormControl('', [Validators.required]),
+    age: new FormControl({value: '', disabled: true}, [Validators.required]),
+    contact: new FormControl('', [Validators.required]),
     email: new FormControl(''),
-    height: new FormControl(''),
-    level: new FormControl(''),
-    hrRate: new FormControl(''),
+    height: new FormControl('', [Validators.required]),
+    level: new FormControl('', [Validators.required]),
+    hrRate: new FormControl('', [Validators.required]),
     cusHrRate: new FormControl(''),
-    personalBest: new FormControl(''),
+    personalBest: new FormControl('', [Validators.required]),
   });
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private athleteService: AthleteService, private datePipe: DatePipe) {
+    this.levelData = Object.values(AthleteLevel);
+    this.genderData = Object.values(Gender);
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -101,22 +59,25 @@ export class AthleteFormComponent {
     window.history.back();
   }
 
-  reset(){
+  reset() {
     this.athleteForm.reset();
   }
 
 
   onSubmit(): void {
-    const selectedHrRate = this.athleteForm.get('hrRate')?.value;
-
-    if (selectedHrRate === null && this.customHrRate) {
-      // Handle custom heart rate input here
-      console.log('Custom Heart Rate:', this.customHrRate);
-    } else {
-      // Handle predefined heart rate option
-      console.log('Selected Heart Rate:', selectedHrRate);
+    console.log(this.athleteForm.value);
+    if (this.athleteForm.valid) {
+      const obj: Athlete = {
+        ...this.athleteForm.value,
+        dob: this.datePipe.transform(this.athleteForm.get('dob')?.value, 'yyyy-MM-dd'),
+        createdBy: localStorage.getItem('userId')
+      }
+      this.athleteService.saveAthlete(obj).subscribe(value => {
+        console.log(value);
+      }, error => {
+        console.log(error);
+      })
     }
-    console.log('Form Submitted',this.athleteForm.value);
   }
 
 

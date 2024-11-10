@@ -8,7 +8,7 @@ import {map, Observable} from "rxjs";
 })
 export class AthleteService {
 
-  baseURL = environment.baseUrl+'athlete';
+  baseURL = environment.baseUrl+'athlete/';
 
   constructor(private http: HttpClient) {
 
@@ -23,10 +23,8 @@ export class AthleteService {
     );
   }
 
-
-
   public getAthleteCount(body: FormData): Observable<any> {
-    return this.http.post<any>(this.baseURL + '/count', body).pipe(
+    return this.http.post<any>(this.baseURL + 'count', body).pipe(
       map((res: any) => {
         return res;
       })
