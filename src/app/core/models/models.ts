@@ -9,30 +9,26 @@ export interface apiResultFormat {
 }
 
 export interface Athlete {
-  id?:any;
+  id?: any;
   firstName: string;
   lastName: string;
   email: string;
   event: string;
   contact: string;
-  dob: string;
-  level: AthleteLevel; // assuming different levels
+  dob: any;
+  level: AthleteLevel;
   heartRate: string;
   gender: Gender;
   weight: number;
   height: number;
   personalBest: string;
-  createdBy: string;
+  createdBy: any;
 }
 
 export enum Gender {
-  Male = "Male",
-  Female = "Female"
+  MALE = "MALE",FEMALE = "FEMALE",OTHER = "OTHER"
 }
 
 export enum AthleteLevel {
-  General_Preparation = "General Preparation",
-  Special_Preparation = "Special Preparation",
-  Pre_Competition = "Pre Competition",
-  Competition = "Competition"
+  BEGINNER = "BEGINNER", INTERMEDIATE = "INTERMEDIATE", EXPERT = "EXPERT"
 }

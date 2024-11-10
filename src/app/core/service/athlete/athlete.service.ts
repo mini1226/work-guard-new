@@ -43,7 +43,7 @@ export class AthleteService {
 
 
   updateAthlete(body: Athlete): Observable<any> {
-    return this.http.post<any>(this.baseURL, body, {}).pipe(
+    return this.http.put<any>(this.baseURL, body, {}).pipe(
       map((res: any) => {
         return res;
       })

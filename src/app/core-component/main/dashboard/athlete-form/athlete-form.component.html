@@ -76,7 +76,7 @@
             <div class="row">
               <label class="col-lg-3 col-form-label col-form-label-sm">Contact Number:</label>
               <div class="col-lg-9  form-group">
-                <input type="number" placeholder="Enter contact number " class="form-control" formControlName="contact"
+                <input type="tel" placeholder="Enter contact number " class="form-control" formControlName="contact"
                        [ngClass]="{ 'is-invalid': athleteForm.get('contact')?.invalid && (athleteForm.get('contact')?.dirty || athleteForm.get('contact')?.touched) }">
                 <div
                   *ngIf="athleteForm.get('contact')?.invalid && (athleteForm.get('contact')?.dirty || athleteForm.get('contact')?.touched)"
@@ -128,7 +128,7 @@
               <label class="col-lg-3 col-form-label col-form-label-sm">Level :</label>
               <div class="col-lg-9  form-group">
                 <mat-select id="level" formControlName="level">
-                  <mat-option *ngFor="let level of levelData" [value]="level">{{level}}</mat-option>
+                  <mat-option *ngFor="let level of levelData" [value]="level">{{level | titlecase}}</mat-option>
                 </mat-select>
               </div>
             </div>
@@ -158,7 +158,7 @@
               <label class="col-lg-3 col-form-label col-form-label-sm">Gender :</label>
               <div class="col-lg-9  form-group">
                 <mat-select id="gender" formControlName="gender">
-                  <mat-option *ngFor="let gender of genderData" [value]="gender">{{gender}}</mat-option>
+                  <mat-option *ngFor="let gender of genderData" [value]="gender">{{gender | titlecase}}</mat-option>
                 </mat-select>
               </div>
             </div>
@@ -189,7 +189,7 @@
             <div class="row">
               <label class="col-lg-3 col-form-label col-form-label-sm">Personal Best :</label>
               <div class="col-lg-9  form-group">
-                <input type="number" class="form-control" formControlName="personalBest"
+                <input type="text" class="form-control" formControlName="personalBest"
                        [ngClass]="{ 'is-invalid': athleteForm.get('personalBest')?.invalid && (athleteForm.get('personalBest')?.dirty || athleteForm.get('personalBest')?.touched) }">
                 <div
                   *ngIf="athleteForm.get('personalBest')?.invalid && (athleteForm.get('personalBest')?.dirty || athleteForm.get('personalBest')?.touched)"

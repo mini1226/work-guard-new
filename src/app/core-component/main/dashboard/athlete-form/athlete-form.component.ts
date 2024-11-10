@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Athlete, AthleteLevel, Gender} from 'src/app/core/models/models';
 import {AthleteService} from "../../../../core/service/athlete/athlete.service";
 import {DatePipe} from "@angular/common";
+import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.service";
 
 @Component({
   selector: 'app-athlete-form',
@@ -14,7 +15,6 @@ import {DatePipe} from "@angular/common";
 export class AthleteFormComponent {
   public routes = routes;
   isEditId: any;
-  customHrRate: string | null = null;
   genderData: string[] = [];
   levelData: string[] = [];
   heartRateData = ['120-150', '150-165', '165-175', '175-185', '185-200', 'Other'];
@@ -36,7 +36,7 @@ export class AthleteFormComponent {
     personalBest: new FormControl('', [Validators.required]),
   });
 
-  constructor(private route: ActivatedRoute, private athleteService: AthleteService, private datePipe: DatePipe) {
+  constructor(private route: ActivatedRoute, private athleteService: AthleteService, private datePipe: DatePipe, private alertservice: SweetalertService) {
     this.levelData = Object.values(AthleteLevel);
     this.genderData = Object.values(Gender);
   }
@@ -44,7 +44,9 @@ export class AthleteFormComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isEditId = params['id'];
-      this.loadAthleteDetails();
+      if (this.isEditId) {
+        this.loadAthleteDetails();
+      }
     });
 
     this.athleteForm.get('dob')?.valueChanges.subscribe((dobValue) => {
@@ -69,20 +71,31 @@ export class AthleteFormComponent {
     console.log(this.athleteForm.value);
     if (this.athleteForm.valid) {
       let obj: Athlete = {
-        ...this.athleteForm.value,
+        firstName: this.athleteForm.get('firstName')?.value,
+        lastName: this.athleteForm.get('lastName')?.value,
+        email: this.athleteForm.get('email')?.value,
+        event: this.athleteForm.get('events')?.value,
+        contact: this.athleteForm.get('contact')?.value,
+        level: this.athleteForm.get('level')?.value,
+        gender: this.athleteForm.get('gender')?.value,
+        weight: this.athleteForm.get('weight')?.value,
+        height: this.athleteForm.get('height')?.value,
+        personalBest: this.athleteForm.get('personalBest')?.value,
+        heartRate: this.athleteForm.get('hrRate')?.value == 'Other' ? this.athleteForm.get('cusHrRate')?.value : this.athleteForm.get('hrRate')?.value,
         dob: this.datePipe.transform(this.athleteForm.get('dob')?.value, 'yyyy-MM-dd'),
-        createdBy: localStorage.getItem('userId')
+        createdBy: localStorage.getItem('userEmail')
       }
       if (this.isEditId) {
         obj = {...obj, id: this.isEditId}
         this.athleteService.updateAthlete(obj).subscribe(value => {
           console.log(value);
+          this.alertservice.saveBtn();
         }, error => {
           console.log(error);
         })
       } else {
         this.athleteService.saveAthlete(obj).subscribe(value => {
-          console.log(value);
+          this.alertservice.saveBtn();
         }, error => {
           console.log(error);
         })
@@ -109,10 +122,10 @@ export class AthleteFormComponent {
     this.athleteService.getAthleteDetail(this.isEditId).subscribe(value => {
       console.log(value);
       this.athleteForm.setValue({
-        firstName: value.firstName,
-        lastName: value.lastName,
+        firstName: value.first_name,
+        lastName: value.last_name,
         weight: value.weight,
-        events: value.events,
+        events: value.event,
         dob: value.dob,
         gender: value.gender,
         age: this.calculateAge(value.dob),
@@ -120,9 +133,9 @@ export class AthleteFormComponent {
         email: value.email,
         height: value.height,
         level: value.level,
-        hrRate: value.hrRate,
-        cusHrRate: value.cusHrRate,
-        personalBest: value.personalBest,
+        hrRate: this.heartRateData.filter(value1 => value1===value.heart_rate).length>0 ? value.heart_rate: 'Other',
+        cusHrRate: this.heartRateData.filter(value1 => value1===value.heart_rate).length===0 ? value.heart_rate: '',
+        personalBest: value.personal_best,
       })
     })
   }

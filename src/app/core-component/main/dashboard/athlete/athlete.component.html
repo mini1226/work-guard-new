@@ -16,28 +16,30 @@
       <thead>
       <tr>
         <th mat-sort-header="id">ID</th>
-        <th mat-sort-header="name">Name</th>
+        <th mat-sort-header="name">First Name</th>
+        <th mat-sort-header="name">Last Name</th>
         <th mat-sort-header="email">Events</th>
         <th mat-sort-header="device">Device</th>
         <th mat-sort-header="gender">Gender</th>
-        <th mat-sort-header="age">Age</th>
-<!--        <th mat-sort-header="level">Level</th>-->
-<!--        <th mat-sort-header="hrRange">Heart Rate Range</th>-->
+        <th mat-sort-header="age">DOB</th>
+        <th mat-sort-header="level">Level</th>
+        <th mat-sort-header="hrRange">Heart Rate Range</th>
         <th mat-sort-header="weight">Weight</th>
         <th mat-sort-header="height">Height</th>
         <th mat-sort-header="action">Action</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let project of sampleData">
-        <td>{{ project.id }}</td>
-        <td>{{ project.name }}</td>
-        <td>{{ project.events }}</td>
-        <td>{{ project.device }}</td>
+      <tr *ngFor="let project of athletes;let i=index;">
+        <td>{{ i+1 }}</td>
+        <td>{{ project.firstName }}</td>
+        <td>{{ project.lastName }}</td>
+        <td>{{ project.event }}</td>
+        <td>D001</td>
         <td>{{ project.gender }}</td>
-        <td>{{ project.age }} years</td>
-<!--        <td>{{ project.level }}</td>-->
-<!--        <td>{{ project.hrRange }}</td>-->
+        <td>{{ project.dob }} years</td>
+        <td>{{ project.level }}</td>
+        <td>{{ project.heartRate }}</td>
         <td>{{ project.weight }} Kg</td>
         <td>{{ project.height }} Cm</td>
         <td>
