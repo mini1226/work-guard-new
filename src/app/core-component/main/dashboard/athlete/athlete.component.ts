@@ -11,7 +11,7 @@ import {Athlete} from "../../../../core/models/models";
 })
 export class AthleteComponent {
 
-  athletes: Array<Athlete> = [];
+  athletes: Array<any> = [];
 
   constructor(private router: Router, private athleteService: AthleteService) {
     this.loadAllAthletes();
