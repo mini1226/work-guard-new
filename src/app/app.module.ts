@@ -24,7 +24,7 @@ import { getDatabase, provideDatabase } from '@angular/fire/database';
   exports: [],
   bootstrap: [AppComponent],
   providers: [
-    provideFirebaseApp(() => initializeApp({"projectId":"sports-project-ce7f5","appId":"1:728066424411:web:d49359d4adbc174410897e","databaseURL":"https://sports-project-ce7f5-default-rtdb.firebaseio.com","storageBucket":"sports-project-ce7f5.firebasestorage.app","apiKey":"AIzaSyA1VOLpuanVp7Qes7m7i9fSOYlLxLG-Tr0","authDomain":"sports-project-ce7f5.firebaseapp.com","messagingSenderId":"728066424411","measurementId":"G-DKH18DXLTB"})),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase())
   ],
