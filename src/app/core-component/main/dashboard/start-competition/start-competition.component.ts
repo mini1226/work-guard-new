@@ -84,9 +84,6 @@ export class StartCompetitionComponent {
 
   startTime = '00:00:00';
 
-  constructor(private route: ActivatedRoute, private router: Router, private af: Database) {
-  }
-
   sessionForm: FormGroup = new FormGroup({
     sessionId: new FormControl(''),
     sessionStartTime: new FormControl(''),
@@ -97,7 +94,8 @@ export class StartCompetitionComponent {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private athleteService: AthleteService,
-              private sessionService: SessionService,) {
+              private sessionService: SessionService, private af: Database) {}
+
   getData() {
     let databaseReference = ref(this.af, 'D001/GPS');
     let query1 = query(databaseReference, orderByChild('Time'), startAt("08:03:24"), endAt("08:03:28"));
@@ -217,14 +215,10 @@ export class StartCompetitionComponent {
     });
   }
 
-
   private loadAllAthletes() {
     this.athleteService.getAthleteAll(localStorage.getItem('userId')).subscribe(value => {
       this.athletesAll=value;
       // this.sampleData
     })
   }
-
-
-
 }

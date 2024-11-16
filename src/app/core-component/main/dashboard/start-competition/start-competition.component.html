@@ -33,7 +33,7 @@
         <div class="col-xl-4"></div>
       </div>
     </div>
-    <div class="row pt-5">
+    <div class="row pt-5" [formGroup]="sessionForm">
       <!--      <div class="col-xl-4"></div>-->
       <div class="col-xl-12">
         <div class="table-responsive dataview px-3">
@@ -57,14 +57,14 @@
                 </mat-select>
               </td>
               <td style="padding: 0px 5px !important;">
-<!--                <b>{{ task.get('duration')?.value === '0' ? stopWatch : task.get('duration')?.value }}</b>-->
+                <b>{{ task.get('duration')?.value === '0' ? stopWatch : task.get('duration')?.value }}</b>
               </td>
               <td style="padding: 0px 5px !important;">
-<!--                <button type="button" class="me-1 btn-sm btn-danger btn"-->
-<!--                        (click)="stopTimer(i)"-->
-<!--                        [disabled]="task.get('isStop')?.value">-->
-<!--                  <i class="feather icon-pause"></i> STOP-->
-<!--                </button>-->
+                <button type="button" class="me-1 btn-sm btn-danger btn"
+                        (click)="stopTimer(i)"
+                        [disabled]="task.get('isStop')?.value">
+                  <i class="feather icon-pause"></i> STOP
+                </button>
               </td>
               <td style="padding: 0px 5px !important;">
                 <a class="confirm-text p-2" href="javascript:void(0);" (click)="liveHr()">
