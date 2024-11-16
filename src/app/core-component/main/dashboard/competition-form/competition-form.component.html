@@ -9,7 +9,7 @@
           Reset
         </button>
         <button type="submit" class="me-1 btn btn-success btn" (click)="onSubmit()"><i class="feather icon-save"></i>
-          SAVE
+          {{ isEditId ? 'UPDATE' : 'SAVE' }}
         </button>
         <button type="button" class="me-1 btn btn-danger btn" (click)="onBackClick()"><i
           class="feather icon-chevrons-left"></i> Back
@@ -28,7 +28,7 @@
               <label class="col-lg-3 col-form-label col-form-label-sm">Session Name :</label>
               <div class="col-lg-9  form-group">
                 <mat-select name="gender" id="gender" formControlName="name">
-                  <mat-option *ngFor="let session of sessionData" [value]="session.id">{{session.name}}</mat-option>
+                  <mat-option *ngFor="let session of sessionData" [value]="session.name">{{session.name}}</mat-option>
                 </mat-select>
                 <div *ngIf="athleteForm.get('name')?.invalid && (athleteForm.get('name')?.dirty || athleteForm.get('name')?.touched)"
                   class="text-danger">Session name is required
@@ -81,7 +81,6 @@
               <table class="table datanew" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
                 <thead>
                 <tr>
-                  <th style="width: 100px !important;">Id</th>
                   <th style="width: 300px !important;">Name</th>
                   <th style="width: 200px !important;">Level</th>
                   <th style="width: 200px !important;">H.R range</th>
@@ -89,32 +88,23 @@
                   <th style="width: 50px !important;">Action</th>
                 </tr>
                 </thead>
-                <tbody formArrayName="athleteArray">
-                <tr *ngFor="let task of athleteArray.controls; let i = index" [formGroupName]="i">
-                  <td style="padding: 0px 5px!important;">
-                    <div class="form-group" style="margin: 0!important;">
-                      <input type="text" class="form-control" formControlName="id">
-                    </div>
-                  </td>
+                <tbody formArrayName="athletes">
+                <tr *ngFor="let task of athletes.controls; let i = index" [formGroupName]="i">
                   <td style="padding: 0px 5px !important;">
-                    <mat-select name="dataType" id="dataType" formControlName="name">
-                      <mat-option *ngFor="let athlete of sampleData" [value]="athlete.id">{{athlete.name}}</mat-option>
+                    <mat-select formControlName="id">
+                      <mat-option *ngFor="let athlete of athletesAll" [value]="athlete.id">
+                        {{ athlete.first_name + ' ' + athlete.last_name }}
+                      </mat-option>
                     </mat-select>
                   </td>
                   <td style="padding: 0px 5px !important;">
-                    <mat-select name="level" id="level" formControlName="level">
-                      <mat-option *ngFor="let level of levelData" [value]="level.id">{{level.name}}</mat-option>
-                    </mat-select>
+                    <input type="text" class="form-control" formControlName="level" readonly>
                   </td>
                   <td style="padding: 0px 5px !important;">
-                    <mat-select name="hrRate" id="hrRate" formControlName="hrRate">
-                      <mat-option *ngFor="let hr of hrData" [value]="hr.id">{{hr.name}}</mat-option>
-                    </mat-select>
+                    <input type="text" class="form-control" formControlName="hrRate" readonly>
                   </td>
                   <td style="padding: 0px 5px !important;">
-                    <div class="form-group" style="margin: 0!important;">
-                      <input type="text" class="form-control" formControlName="device">
-                    </div>
+                    <input type="text" class="form-control" formControlName="deviceId">
                   </td>
                   <td style="padding: 0px 5px !important;">
                     <a class="confirm-text p-2" href="javascript:void(0);" (click)="removeAthleteFormArray(i)">
@@ -124,9 +114,10 @@
                 </tr>
                 </tbody>
               </table>
+
             </div>
             <div class="d-flex justify-content-end mt-3">
-              <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="addAthleteArray()"><i class="feather icon-plus"></i> Add Athlete
+              <button type="button" class="me-1 btn-sm btn-primary float-end" (click)="addAthleteArray()"><i class="feather icon-plus"></i> Add Athlete
               </button>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
+import {Athlete} from "../../models/models";
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,30 @@ export class SessionService {
 
 
   public saveSession(body :any) :Observable<any>{
-    return this.http.post<any>(this.baseURL ,body,{}).pipe(
+    return this.http.post<any>(this.baseURL+'/' ,body,{}).pipe(
       map((res: any) => {
         return res;
       })
     );
   }
 
+
+  public startSession(body :any, id: any) :Observable<any>{
+    return this.http.post<any>(this.baseURL+'/'+id+'/start' ,body,{}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
+  updateSession(body: any): Observable<any> {
+    return this.http.put<any>(this.baseURL+'/', body, {}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 
 
   public getSessionCount() :Observable<any>{
@@ -53,11 +71,17 @@ export class SessionService {
     );
   }
 
-  getAllSessionDetails(): Observable<any> {
-    /** TODO
-     * Need An APi
-     * **/
-    return this.http.get<any>(this.baseURL + '/count', {}).pipe(
+  getAllSessionDetails(coachId: any): Observable<any> {
+    return this.http.get<any>(this.baseURL + '/coach/' + coachId, ).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
+  getSessionById(sessionId: any): Observable<any> {
+    return this.http.get<any>(this.baseURL + '/' + sessionId, ).pipe(
       map((res: any) => {
         return res;
       })

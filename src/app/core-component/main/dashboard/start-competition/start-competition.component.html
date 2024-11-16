@@ -37,28 +37,36 @@
       <!--      <div class="col-xl-4"></div>-->
       <div class="col-xl-12">
         <div class="table-responsive dataview px-3">
-          <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
+          <table class="table datanew" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
             <thead>
             <tr>
-              <th mat-sort-header="id">ID</th>
-              <th mat-sort-header="name">Name</th>
-              <th mat-sort-header="name">Timer</th>
-              <th mat-sort-header="action">Action</th>
-              <th mat-sort-header="hr">Heart Rate</th>
+              <th style="width: 300px !important;">Name</th>
+              <th style="width: 200px !important;">Level</th>
+              <th style="width: 200px !important;">H.R range</th>
+              <th style="width: 100px !important;">Device</th>
+              <th style="width: 50px !important;">Action</th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let project of sampleData;let i =index;">
-              <td>{{ project.id }}</td>
-              <td>{{ project.name }}</td>
-              <td><b>{{ project.timer=='0' ? stopWatch:project.timer }}</b></td>
-              <td>
-                <button type="submit" class="me-1 btn-sm btn-danger btn" (click)="stopTimer(i)" [disabled]="project.isStop"><i
-                  class="feather icon-pause"></i>
-                  STOP
-                </button>
+            <tbody formArrayName="athleteSessionTimes">
+            <tr *ngFor="let task of athleteSessionTimes.controls; let i = index" [formGroupName]="i">
+              <td style="padding: 0px 5px !important;">
+                <mat-select formControlName="athleteId">
+                  <mat-option *ngFor="let athlete of athletesAll" [value]="athlete.id">
+                    {{ athlete.first_name + ' ' + athlete.last_name }}
+                  </mat-option>
+                </mat-select>
               </td>
-              <td>
+              <td style="padding: 0px 5px !important;">
+<!--                <b>{{ task.get('duration')?.value === '0' ? stopWatch : task.get('duration')?.value }}</b>-->
+              </td>
+              <td style="padding: 0px 5px !important;">
+<!--                <button type="button" class="me-1 btn-sm btn-danger btn"-->
+<!--                        (click)="stopTimer(i)"-->
+<!--                        [disabled]="task.get('isStop')?.value">-->
+<!--                  <i class="feather icon-pause"></i> STOP-->
+<!--                </button>-->
+              </td>
+              <td style="padding: 0px 5px !important;">
                 <a class="confirm-text p-2" href="javascript:void(0);" (click)="liveHr()">
                   <i class="feather icon-eye feather-eye"></i>
                 </a>

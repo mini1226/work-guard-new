@@ -3,6 +3,9 @@ import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.service";
+import {AthleteService} from "../../../../core/service/athlete/athlete.service";
+import {SessionService} from "../../../../core/service/sessions/session.service";
+import {Athlete} from "../../../../core/models/models";
 
 @Component({
   selector: 'app-competition-form',
@@ -12,138 +15,6 @@ import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.servic
 export class CompetitionFormComponent {
   public routes = routes;
   isEditId: any;
-
-
-  sampleData = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john.doe@example.com",
-      device: "D001",
-      gender: "Male",
-      level: "BEGINNER",
-      weight: 75,
-      height: 180,
-      action: "Edit"
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      device: "D002",
-      gender: "Female",
-      level: "INTERMEDIATE",
-      weight: 65,
-      height: 165,
-      action: "Edit"
-    },
-    {
-      id: 3,
-      name: "Michael Brown",
-      email: "michael.brown@example.com",
-      device: "D003",
-      gender: "Male",
-      level: "EXPERT",
-      weight: 82,
-      height: 175,
-      action: "Edit"
-    },
-    {
-      id: 4,
-      name: "Emily Davis",
-      email: "emily.davis@example.com",
-      device: "D004",
-      gender: "Female",
-      level: "EXPERT",
-      weight: 58,
-      height: 160,
-      action: "Edit"
-    },
-    {
-      id: 5,
-      name: "David Wilson",
-      email: "david.wilson@example.com",
-      device: "D005",
-      gender: "Male",
-      level: "BEGINNER",
-      weight: 90,
-      height: 185,
-      action: "Edit"
-    },
-    {
-      id: 6,
-      name: "Sophia Johnson",
-      email: "sophia.johnson@example.com",
-      device: "D006",
-      gender: "Female",
-      level: "BEGINNER",
-      weight: 70,
-      height: 170,
-      action: "Edit"
-    },
-    {
-      id: 7,
-      name: "James Lee",
-      email: "james.lee@example.com",
-      device: "D007",
-      gender: "Male",
-      level: "INTERMEDIATE",
-      weight: 68,
-      height: 172,
-      action: "Edit"
-    },
-    {
-      id: 8,
-      name: "Olivia Martinez",
-      email: "olivia.martinez@example.com",
-      device: "D008",
-      gender: "Female",
-      level: "INTERMEDIATE",
-      weight: 60,
-      height: 162,
-      action: "Edit"
-    },
-    {
-      id: 9,
-      name: "Daniel White",
-      email: "daniel.white@example.com",
-      device: "D009",
-      gender: "Male",
-      level: "BEGINNER",
-      weight: 85,
-      height: 178,
-      action: "Edit"
-    },
-    {
-      id: 10,
-      name: "Isabella Garcia",
-      email: "isabella.garcia@example.com",
-      device: "D0010",
-      gender: "Female",
-      level: "BEGINNER",
-      weight: 55,
-      height: 158,
-      action: "Edit"
-    }
-  ];
-
-
-
-  levelData = [
-    {
-      'id': 1,
-      'name': 'General Preparation'
-    },{
-      'id': 2,
-      'name': 'Special Preparation'
-    },{
-      'id': 3,
-      'name': 'Pre Competition'
-    },{
-      'id': 3,
-      'name': 'Competition'
-    }
-  ];
 
 
   sessionData = [
@@ -157,71 +28,64 @@ export class CompetitionFormComponent {
   ];
 
 
-  hrData = [
-    {
-      'id': 1,
-      'name': '120-150'
-    },{
-      'id': 2,
-      'name': '150-165'
-    },{
-      'id': 3,
-      'name': '165-175'
-    },{
-      'id': 4,
-      'name': '175-185'
-    },{
-      'id': 5,
-      'name': '185-200'
-    },{
-      'id': 6,
-      'name': 'Other'
-    }
-  ];
+  athletesAll: Array<any> = [];
+
 
   athleteForm: FormGroup = new FormGroup({
     name: new FormControl(''),
     sess_date: new FormControl(''),
     venue: new FormControl(''),
-    athleteArray: new FormArray([]),
+    athletes: new FormArray([]),
   });
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              private athleteService: AthleteService,
+              private alertservice: SweetalertService,
+              private sessionService: SessionService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isEditId = params['id'];
     });
+    this.loadAllAthletes();
+    if (this.isEditId){
+      this.getSessionById();
+    }
   }
 
-  get athleteArray(): FormArray {
-    return this.athleteForm.get('athleteArray') as FormArray;
+  get athletes(): FormArray {
+    return this.athleteForm.get('athletes') as FormArray;
   }
 
   addAthleteArray() {
     let formGroup = new FormGroup({
       id: new FormControl(''),
-      name: new FormControl(''),
       level: new FormControl(''),
-      hr: new FormControl(''),
-      cusHr: new FormControl(''),
-      device: new FormControl(''),
+      hrRate: new FormControl(''),
+      deviceId: new FormControl(''),
     });
 
-    formGroup.get('name')?.valueChanges.subscribe(selectedAthleteId => {
-      // Convert selectedAthleteId to a number before comparison
-      const athleteId = Number(selectedAthleteId);
-      const selectedAthlete = this.sampleData.find(athlete => athlete.id === athleteId);
-      if (selectedAthlete) {
-        // Convert id to a string when setting the form control value
-        formGroup.get('id')?.setValue(selectedAthlete.id.toString());
-        formGroup.get('device')?.setValue(selectedAthlete.device);
-        formGroup.get('level')?.setValue(selectedAthlete.level);
-      }
+    // Call updateAthleteDetails on name change
+    formGroup.get('id')?.valueChanges.subscribe(selectedAthleteId => {
+      this.updateAthleteDetails(formGroup, selectedAthleteId);
+      console.log('Current Form Array Value:', this.athletes.value);
     });
 
-    this.athleteArray.push(formGroup);
+    this.athletes.push(formGroup);
   }
+
+// Updated function to handle string IDs for athlete lookup
+  updateAthleteDetails(formGroup: FormGroup, selectedAthleteId: any) {
+    const selectedAthlete = this.athletesAll.find(athlete => athlete.id === selectedAthleteId);
+    if (selectedAthlete) {
+      formGroup.get('level')?.setValue(selectedAthlete.level);
+      formGroup.get('hrRate')?.setValue(selectedAthlete.heart_rate);
+    } else {
+      formGroup.get('level')?.setValue('');
+      formGroup.get('hrRate')?.setValue('');
+    }
+  }
+
 
 
 
@@ -237,11 +101,74 @@ export class CompetitionFormComponent {
 
   onSubmit(): void {
     console.log('Form Submitted',this.athleteForm.value);
+    if (this.athleteForm.valid) {
+      if (this.isEditId) {
+        const formData = {
+          ...this.athleteForm.value,
+          id: this.isEditId,
+          sess_date: this.formatDate(this.athleteForm.value.sess_date),
+          createdBy: localStorage.getItem('userEmail')
+        };
+        this.sessionService.updateSession(formData).subscribe(value => {
+          this.alertservice.saveBtn();
+        }, error => {
+        })
+      } else {
+        const formData = {
+          ...this.athleteForm.value,
+          sess_date: this.formatDate(this.athleteForm.value.sess_date),
+          createdBy: localStorage.getItem('userEmail')
+        };
+        this.sessionService.saveSession(formData).subscribe(value => {
+          this.alertservice.saveBtn();
+        }, error => {
+          console.log(error);
+        })
+      }
+    }
   }
 
   removeAthleteFormArray(index: number): void {
-    this.athleteArray.removeAt(index);
+    this.athletes.removeAt(index);
   }
 
+
+  private loadAllAthletes() {
+    this.athleteService.getAthleteAll(localStorage.getItem('userId')).subscribe(value => {
+      this.athletesAll=value;
+      // this.sampleData
+    })
+  }
+
+  private getSessionById() {
+    this.sessionService.getSessionById(this.isEditId).subscribe(value => {
+      console.log(value);
+      this.athleteForm.patchValue({
+        'name': value.name,
+        'sess_date': value.session_date,
+        'venue': value.venue,
+      });
+
+      value.session_details.forEach((item: any, index: number) => {
+        let formGroup = new FormGroup({
+          id: new FormControl(item.athlete_id),
+          level: new FormControl(item.level),
+          hrRate: new FormControl(item.heart_rate_detail),
+          deviceId: new FormControl(item.device_id)
+        });
+        this.athletes.push(formGroup);
+      });
+
+    })
+  }
+
+
+  formatDate(date: Date): string {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
 }
