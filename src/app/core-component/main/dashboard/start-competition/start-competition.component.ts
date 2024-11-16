@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
+import {Database, endAt, onValue, orderByChild, query, ref, startAt} from "@angular/fire/database";
 
 @Component({
   selector: 'app-start-competition',
@@ -76,8 +77,22 @@ export class StartCompetitionComponent {
   seconds: number = 0;
   interval: number | null = null;
   stopWatch = '00:00:00';
+  startTime = '00:00:00';
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private af: Database) {
+  }
+
+  getData() {
+    let databaseReference = ref(this.af, 'D001/GPS');
+    let query1 = query(databaseReference, orderByChild('Time'), startAt("08:03:24"), endAt("08:03:28"));
+    onValue(query1, snapshot => {
+      if (snapshot.val() != null) {
+        console.log(snapshot.val());
+        let strings: string[] = Object.keys(snapshot.val());
+        let values: number[] = Object.values(snapshot.val());
+      }
+    })
+
   }
 
   formatTime(time: number): string {
@@ -89,7 +104,7 @@ export class StartCompetitionComponent {
   }
 
   ngOnInit(): void {
-
+    this.getData();
   }
 
   onBackClick() {
@@ -126,7 +141,12 @@ export class StartCompetitionComponent {
   }
 
   onSubmit(): void {
-    this.startTimer()
+    const now = new Date();
+    console.log(now);
+    console.log(now.toString()); // Full readable date
+    console.log(now.toISOString()); // ISO 8601 format
+    // this.startTime ='00:00:00'
+    // this.startTimer()
   }
 
 
