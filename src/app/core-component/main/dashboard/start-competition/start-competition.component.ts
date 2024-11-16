@@ -1,86 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 import {Database, endAt, onValue, orderByChild, query, ref, startAt} from "@angular/fire/database";
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {SessionService} from "../../../../core/service/sessions/session.service";
 import {AthleteService} from "../../../../core/service/athlete/athlete.service";
+import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.service";
 
 @Component({
   selector: 'app-start-competition',
   templateUrl: './start-competition.component.html',
   styleUrl: './start-competition.component.scss'
 })
-export class StartCompetitionComponent implements OnInit {
+export class StartCompetitionComponent implements OnInit,OnDestroy{
   public routes = routes;
   isEditId: any;
-  sampleData = [
-    {
-      id: 1,
-      name: "Sadun Fernando",
-      email: "sadun.fer@example.com",
-      device: "D001",
-      timer: '0',
-      gender: "Male",
-      weight: 75,
-      height: 180,
-      action: "Edit",
-      isStop: false
-    },
-    {
-      id: 2,
-      name: "Yasara Gynathilaka",
-      email: "yasara.gun@example.com",
-      device: "D002",
-      timer: '0',
-      gender: "Female",
-      weight: 65,
-      height: 165,
-      action: "Edit",
-      isStop: false
-    },
-    {
-      id: 3,
-      name: "Budvin Perera",
-      email: "budvin.perera@example.com",
-      device: "D003",
-      timer: '0',
-      gender: "Male",
-      weight: 82,
-      height: 175,
-      action: "Edit",
-      isStop: false
-    },
-    {
-      id: 4,
-      name: "Anuki Senevirathne",
-      email: "anuki.sene@example.com",
-      device: "D004",
-      timer: '0',
-      gender: "Female",
-      weight: 58,
-      height: 160,
-      action: "Edit",
-      isStop: false
-    },
-    {
-      id: 5,
-      name: "Darshana Peiris",
-      email: "darshana.peiris@example.com",
-      device: "D005",
-      timer: '0',
-      gender: "Male",
-      weight: 90,
-      height: 185,
-      action: "Edit",
-      isStop: false
-    }
-  ];
+
   seconds: number = 0;
   interval: number | null = null;
   stopWatch = '00:00:00';
   athletesAll: Array<any> = [];
   startTime = '00:00:00';
+  raceStartTime: any;
+  raceEndTime: any;
+
   sessionForm: FormGroup = new FormGroup({
     sessionId: new FormControl(''),
     sessionStartTime: new FormControl(''),
@@ -92,6 +35,7 @@ export class StartCompetitionComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
+              private alertservice: SweetalertService,
               private athleteService: AthleteService,
               private sessionService: SessionService, private af: Database) {
   }
@@ -144,8 +88,6 @@ export class StartCompetitionComponent implements OnInit {
     window.history.back();
   }
 
-  reset() {
-  }
 
   startTimer(): void {
     if (this.interval) return;  // Prevent multiple intervals
@@ -170,6 +112,34 @@ export class StartCompetitionComponent implements OnInit {
   }
 
   onSave(): void {
+    const now = new Date();
+    this.raceEndTime = now.toISOString();
+
+    this.sessionForm.patchValue({
+      'sessionStartTime': this.raceStartTime,
+      'sessionEndTime': this.raceEndTime,
+    });
+
+    const formValue = { ...this.sessionForm.value };
+
+    // Remove `isStop` from `athleteSessionTimes`
+    formValue.athleteSessionTimes = formValue.athleteSessionTimes.map((item: any) => {
+      const { isStop, ...rest } = item; // Use `any` for destructuring
+      return rest;
+    });
+
+    // Log the updated form value
+    console.log('Updated Form Value:', formValue);
+
+    this.sessionService.saveSessionAll(formValue).subscribe(value => {
+      this.alertservice.saveBtn();
+    }, error => {
+    })
+
+  }
+
+
+  reset(){
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
@@ -181,8 +151,9 @@ export class StartCompetitionComponent implements OnInit {
     console.log(now);
     console.log(now.toString()); // Full readable date
     console.log(now.toISOString()); // ISO 8601 format
-    this.startTime = '00:00:00'
-    this.startTimer()
+    this.startTime ='00:00:00'
+    this.startTimer();
+    this.raceStartTime = now.toISOString(); // Set the current datetime in ISO format for raceStartTime
   }
 
 
@@ -220,8 +191,11 @@ export class StartCompetitionComponent implements OnInit {
             let formGroup = new FormGroup({
               athleteId: new FormControl(item.athlete_id),
               duration: new FormControl('0'),
-              distance: new FormControl('0'),
               isStop: new FormControl(false),
+              distance: new FormControl(''),
+              caloriesBurned: new FormControl(''),
+              cardiovascularLift: new FormControl(''),
+              pace: new FormControl(''),
             });
             this.athleteSessionTimes.push(formGroup);
           });
@@ -241,5 +215,9 @@ export class StartCompetitionComponent implements OnInit {
       this.athletesAll = value;
       // this.sampleData
     })
+  }
+
+  ngOnDestroy(): void {
+    this.reset();
   }
 }
