@@ -34,6 +34,15 @@ export class SessionService {
   }
 
 
+  public saveSessionAll(body :any) :Observable<any>{
+    return this.http.post<any>(this.baseURL+'/time' ,body,{}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
   updateSession(body: any): Observable<any> {
     return this.http.put<any>(this.baseURL+'/', body, {}).pipe(
       map((res: any) => {
