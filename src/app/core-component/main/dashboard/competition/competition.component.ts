@@ -92,8 +92,11 @@ export class CompetitionComponent {
     }
   ];
 
+  sessions: Array<any> = [];
 
-  constructor(private router: Router, private sessionService: SessionService) {
+
+  constructor(private router: Router,
+              private sessionService: SessionService,) {
     this.loadAllSessions();
   }
 
@@ -122,7 +125,8 @@ export class CompetitionComponent {
   }
 
   private loadAllSessions() {
-    this.sessionService.getAllSessionDetails().subscribe(value => {
+    this.sessionService.getAllSessionDetails(localStorage.getItem('userId')).subscribe(value => {
+      this.sessions = value;
       console.log(value);
     })
   }

@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 import {Database, endAt, onValue, orderByChild, query, ref, startAt} from "@angular/fire/database";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import {SessionService} from "../../../../core/service/sessions/session.service";
+import {AthleteService} from "../../../../core/service/athlete/athlete.service";
 
 @Component({
   selector: 'app-start-competition',
@@ -77,11 +80,24 @@ export class StartCompetitionComponent {
   seconds: number = 0;
   interval: number | null = null;
   stopWatch = '00:00:00';
+  athletesAll: Array<any> = [];
+
   startTime = '00:00:00';
 
   constructor(private route: ActivatedRoute, private router: Router, private af: Database) {
   }
 
+  sessionForm: FormGroup = new FormGroup({
+    sessionId: new FormControl(''),
+    sessionStartTime: new FormControl(''),
+    sessionEndTime: new FormControl(''),
+    athleteSessionTimes: new FormArray([]),
+  });
+
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private athleteService: AthleteService,
+              private sessionService: SessionService,) {
   getData() {
     let databaseReference = ref(this.af, 'D001/GPS');
     let query1 = query(databaseReference, orderByChild('Time'), startAt("08:03:24"), endAt("08:03:28"));
@@ -104,6 +120,24 @@ export class StartCompetitionComponent {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.isEditId = params['id'];
+    });
+    this.loadAllAthletes();
+
+    if (this.isEditId) {
+      this.getSessionById()
+        .then(() => {
+          console.log('Session Form Value:', this.sessionForm.value);
+        })
+        .catch((error) => {
+          console.error('Failed to load session data:', error);
+        });
+    }
+  }
+
+  get athleteSessionTimes(): FormArray {
+    return this.sessionForm.get('athleteSessionTimes') as FormArray;
     this.getData();
   }
 
@@ -153,4 +187,44 @@ export class StartCompetitionComponent {
   liveHr() {
     this.router.navigate([routes.liveHeartRate]);
   }
+
+
+  private getSessionById(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.sessionService.getSessionById(this.isEditId).subscribe({
+        next: (value) => {
+          console.log(value);
+          this.sessionForm.patchValue({
+            'sessionId': this.isEditId,
+          });
+
+          value.session_details.forEach((item: any) => {
+            let formGroup = new FormGroup({
+              athleteId: new FormControl(item.athlete_id),
+              duration: new FormControl('0'),
+              isStop: new FormControl(false),
+            });
+            this.athleteSessionTimes.push(formGroup);
+          });
+
+          resolve(); // Resolve the promise once everything is done
+        },
+        error: (error) => {
+          console.error('Error fetching session:', error);
+          reject(error); // Reject the promise in case of an error
+        },
+      });
+    });
+  }
+
+
+  private loadAllAthletes() {
+    this.athleteService.getAthleteAll(localStorage.getItem('userId')).subscribe(value => {
+      this.athletesAll=value;
+      // this.sampleData
+    })
+  }
+
+
+
 }
