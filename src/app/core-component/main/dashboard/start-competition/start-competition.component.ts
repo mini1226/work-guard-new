@@ -84,6 +84,10 @@ export class StartCompetitionComponent implements OnInit,OnDestroy{
     }
   }
 
+  get athletes(): FormArray {
+    return this.sessionForm.get('athletes') as FormArray;
+  }
+
   onBackClick() {
     window.history.back();
   }
