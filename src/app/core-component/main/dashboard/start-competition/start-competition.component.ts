@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 import {Database, endAt, onValue, orderByChild, query, ref, startAt} from "@angular/fire/database";
@@ -11,10 +11,9 @@ import {AthleteService} from "../../../../core/service/athlete/athlete.service";
   templateUrl: './start-competition.component.html',
   styleUrl: './start-competition.component.scss'
 })
-export class StartCompetitionComponent {
+export class StartCompetitionComponent implements OnInit {
   public routes = routes;
   isEditId: any;
-
   sampleData = [
     {
       id: 1,
@@ -81,32 +80,39 @@ export class StartCompetitionComponent {
   interval: number | null = null;
   stopWatch = '00:00:00';
   athletesAll: Array<any> = [];
-
   startTime = '00:00:00';
-
   sessionForm: FormGroup = new FormGroup({
     sessionId: new FormControl(''),
     sessionStartTime: new FormControl(''),
     sessionEndTime: new FormControl(''),
     athleteSessionTimes: new FormArray([]),
   });
+  distance: number = 0;
+  private readonly EARTH_RADIUS = 6371e3;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private athleteService: AthleteService,
-              private sessionService: SessionService, private af: Database) {}
+              private sessionService: SessionService, private af: Database) {
+  }
 
-  getData() {
-    let databaseReference = ref(this.af, 'D001/GPS');
-    let query1 = query(databaseReference, orderByChild('Time'), startAt("08:03:24"), endAt("08:03:28"));
-    onValue(query1, snapshot => {
+  get athleteSessionTimes(): FormArray {
+    return this.sessionForm.get('athleteSessionTimes') as FormArray;
+  }
+
+  getData(device: string, startTime: string, endTime: string,index:number) {
+    let databaseReference = ref(this.af, device + '/GPS');
+    let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
+    onValue(res, snapshot => {
       if (snapshot.val() != null) {
-        console.log(snapshot.val());
-        let strings: string[] = Object.keys(snapshot.val());
-        let values: number[] = Object.values(snapshot.val());
+        let values: any[] = Object.values(snapshot.val());
+        console.log(values);
+       let number = this.calculateDistance(values[0].Latitude, values[0].Longitude, values[values.length - 1].Latitude, values[values.length - 1].Longitude);
+       this.athleteSessionTimes.controls[index].patchValue({
+         distance:number,
+       })
       }
     })
-
   }
 
   formatTime(time: number): string {
@@ -134,11 +140,6 @@ export class StartCompetitionComponent {
     }
   }
 
-  get athleteSessionTimes(): FormArray {
-    return this.sessionForm.get('athleteSessionTimes') as FormArray;
-    this.getData();
-  }
-
   onBackClick() {
     window.history.back();
   }
@@ -156,8 +157,11 @@ export class StartCompetitionComponent {
 
   stopTimer(i: number): void {
     if (this.interval !== null) {
-      this.sampleData[i].timer = this.stopWatch;
-      this.sampleData[i].isStop = true;
+      this.athleteSessionTimes.controls[i].patchValue({
+        duration: this.stopWatch,
+        isStop: true
+      })
+      this.getData('D001', '08:03:24', '08:03:28',i)
     }
   }
 
@@ -177,8 +181,8 @@ export class StartCompetitionComponent {
     console.log(now);
     console.log(now.toString()); // Full readable date
     console.log(now.toISOString()); // ISO 8601 format
-    // this.startTime ='00:00:00'
-    // this.startTimer()
+    this.startTime = '00:00:00'
+    this.startTimer()
   }
 
 
@@ -186,6 +190,22 @@ export class StartCompetitionComponent {
     this.router.navigate([routes.liveHeartRate]);
   }
 
+  calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const toRadians = (degrees: number) => degrees * (Math.PI / 180);
+
+    const q1 = toRadians(lat1);
+    const q2 = toRadians(lat2);
+    const diff = q2 - q1;
+    const pl = toRadians(lon2 - lon1);
+
+    const a = Math.sin(diff / 2) ** 2 +
+      Math.cos(q1) * Math.cos(q2) *
+      Math.sin(pl / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return this.EARTH_RADIUS * c;
+  }
 
   private getSessionById(): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -200,6 +220,7 @@ export class StartCompetitionComponent {
             let formGroup = new FormGroup({
               athleteId: new FormControl(item.athlete_id),
               duration: new FormControl('0'),
+              distance: new FormControl('0'),
               isStop: new FormControl(false),
             });
             this.athleteSessionTimes.push(formGroup);
@@ -217,7 +238,7 @@ export class StartCompetitionComponent {
 
   private loadAllAthletes() {
     this.athleteService.getAthleteAll(localStorage.getItem('userId')).subscribe(value => {
-      this.athletesAll=value;
+      this.athletesAll = value;
       // this.sampleData
     })
   }
