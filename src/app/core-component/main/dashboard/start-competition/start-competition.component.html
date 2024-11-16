@@ -46,10 +46,10 @@
               <th style="width: 100px !important;">Hr Rate</th>
             </tr>
             </thead>
-            <tbody formArrayName="athleteSessionTimes">
-            <tr *ngFor="let task of athleteSessionTimes.controls; let i = index" [formGroupName]="i">
+            <tbody formArrayName="athletes">
+            <tr *ngFor="let task of athletes.controls; let i = index" [formGroupName]="i">
               <td style="padding: 0px 5px !important;">
-                <mat-select formControlName="athleteId">
+                <mat-select formControlName="athleteId" readonly>
                   <mat-option *ngFor="let athlete of athletesAll" [value]="athlete.id">
                     {{ athlete.first_name + ' ' + athlete.last_name }}
                   </mat-option>

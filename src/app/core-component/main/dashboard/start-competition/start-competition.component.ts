@@ -29,7 +29,7 @@ export class StartCompetitionComponent implements OnInit,OnDestroy{
     sessionId: new FormControl(''),
     sessionStartTime: new FormControl(''),
     sessionEndTime: new FormControl(''),
-    athleteSessionTimes: new FormArray([]),
+    athletes: new FormArray([]),
   });
 
   constructor(private route: ActivatedRoute,
@@ -76,8 +76,8 @@ export class StartCompetitionComponent implements OnInit,OnDestroy{
     }
   }
 
-  get athleteSessionTimes(): FormArray {
-    return this.sessionForm.get('athleteSessionTimes') as FormArray;
+  get athletes(): FormArray {
+    return this.sessionForm.get('athletes') as FormArray;
     this.getData();
   }
 
@@ -96,7 +96,7 @@ export class StartCompetitionComponent implements OnInit,OnDestroy{
 
   stopTimer(i: number): void {
     if (this.interval !== null) {
-      this.athleteSessionTimes.controls[i].patchValue({
+      this.athletes.controls[i].patchValue({
         duration: this.stopWatch,
         isStop: true
       })
@@ -120,8 +120,8 @@ export class StartCompetitionComponent implements OnInit,OnDestroy{
 
     const formValue = { ...this.sessionForm.value };
 
-    // Remove `isStop` from `athleteSessionTimes`
-    formValue.athleteSessionTimes = formValue.athleteSessionTimes.map((item: any) => {
+    // Remove `isStop` from `athletes`
+    formValue.athletes = formValue.athletes.map((item: any) => {
       const { isStop, ...rest } = item; // Use `any` for destructuring
       return rest;
     });
@@ -179,7 +179,7 @@ export class StartCompetitionComponent implements OnInit,OnDestroy{
               cardiovascularLift: new FormControl(''),
               pace: new FormControl(''),
             });
-            this.athleteSessionTimes.push(formGroup);
+            this.athletes.push(formGroup);
           });
 
           resolve(); // Resolve the promise once everything is done
