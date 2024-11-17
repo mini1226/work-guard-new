@@ -47,15 +47,12 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   getData(device: string, startTime: string, endTime: string, index: number) {
     let databaseReference = ref(this.af, device + '/GPS');
     let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
+    let distanceRun = 0;
     onValue(res, snapshot => {
       if (snapshot.val() != null) {
         let values: any[] = Object.values(snapshot.val());
-        let distanceRun = this.calculateDistance(values[0].Latitude, values[0].Longitude, values[values.length - 1].Latitude, values[values.length - 1].Longitude);
+        distanceRun = this.calculateDistance(values[0].Latitude, values[0].Longitude, values[values.length - 1].Latitude, values[values.length - 1].Longitude);
         console.log(distanceRun);
-        // this.athletes.controls[index].patchValue({
-        //   distance: distanceRun
-        // })
-        // console.log(this.athletes.value);
       }
     })
 
@@ -63,12 +60,30 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     let resBPM = query(reference, orderByChild('Time'), startAt(startTime), endAt(endTime));
     onValue(resBPM, snapshot => {
       if (snapshot.val() != null) {
+        let timeTakenInMinutes = this.convertToMinutes(this.stopWatch);
         console.log(snapshot.val());
         let values: any[] = Object.values(snapshot.val());
         console.log(values[values.length - 1].BPM_VALUE);
         console.log(values[0].BPM_VALUE);
-        let cardiovascularDrift = (values[values.length - 1].BPM_VALUE - values[0].BPM_VALUE)/this.convertToMinutes(this.stopWatch);
+        let cardiovascularDrift = (values[values.length - 1].BPM_VALUE - values[0].BPM_VALUE) / timeTakenInMinutes;
         console.log(cardiovascularDrift);
+
+        let totalHeartRate = 0;
+        values.forEach(value => {
+          totalHeartRate += value.BPM_VALUE;
+        })
+
+        let avgHR = (totalHeartRate / values.length);
+        let caloriesBurned = ((avgHR * this.athletes.controls[index].value.althlete_weight * timeTakenInMinutes) * 5) / 1000;
+        let pace = timeTakenInMinutes / distanceRun;
+
+        this.athletes.controls[index].patchValue({
+          distance: distanceRun,
+          cardiovascularLift: cardiovascularDrift,
+          caloriesBurned: caloriesBurned,
+          pace: pace
+        })
+        console.log(this.athletes.value);
       }
     });
   }
@@ -138,47 +153,34 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
       //   duration: this.stopWatch,
       //   isStop: true
       // })
-      this.addTime('20:01:15:418',this.stopWatch).then(endTime => {
+      this.addTime('20:01:15:418', this.stopWatch).then(endTime => {
         console.log(endTime);
-        this.getData('D001', '20:01:15:418', endTime,i)
+        this.getData('D001', '20:01:15:418', endTime, i)
       })
     }
   }
 
   addTime(baseTime: string, duration: string): Promise<string> {
-   return new Promise<string>(resolve => {
-     console.log(duration);
-     console.log(baseTime);
-     // Split the base time and duration into hours, minutes, seconds, and milliseconds
-     const [baseHours, baseMinutes, baseSeconds, baseMilliseconds] = baseTime.split(':').map(Number);
-     const [durationHours, durationMinutes, durationSeconds, durationMilliseconds] = duration.split(':').map(Number);
-     console.log(baseHours,' ', baseMinutes,' ', baseSeconds,' ', baseMilliseconds);
-     // Convert both times to milliseconds
-     const baseTimeInMilliseconds =
-       (baseHours * 3600 + baseMinutes * 60 + baseSeconds) * 1000 + baseMilliseconds;
-     const durationInMilliseconds =
-       (durationHours * 3600 + durationMinutes * 60 + durationSeconds) * 1000 + durationMilliseconds;
+    return new Promise<string>(resolve => {
+      const [baseHours, baseMinutes, baseSeconds, baseMilliseconds] = baseTime.split(':').map(Number);
+      const [durationHours, durationMinutes, durationSeconds, durationMilliseconds] = duration.split(':').map(Number);
 
-     // Add the times
-     const totalMilliseconds = baseTimeInMilliseconds + durationInMilliseconds;
-
-     // Convert back to hours, minutes, seconds, and milliseconds
-     const resultHours = Math.floor(totalMilliseconds / (3600 * 1000)) % 24; // Handle overflow of 24 hours
-     const resultMinutes = Math.floor((totalMilliseconds % (3600 * 1000)) / (60 * 1000));
-     const resultSeconds = Math.floor((totalMilliseconds % (60 * 1000)) / 1000);
-     const resultMilliseconds = totalMilliseconds % 1000;
-     console.log(resultHours);
-     console.log(resultMinutes);
-     console.log(resultSeconds);
-     console.log(resultMilliseconds);
-     // Format the result as HH:MM:SS
-     resolve([
-       resultHours.toString().padStart(2, '0'),
-       resultMinutes.toString().padStart(2, '0'),
-       resultSeconds.toString().padStart(2, '0'),
-       resultMilliseconds.toString().padStart(3, '0'),
-     ].join(':'));
-   })
+      const baseTimeInMilliseconds =
+        (baseHours * 3600 + baseMinutes * 60 + baseSeconds) * 1000 + baseMilliseconds;
+      const durationInMilliseconds =
+        (durationHours * 3600 + durationMinutes * 60 + durationSeconds) * 1000 + durationMilliseconds;
+      const totalMilliseconds = baseTimeInMilliseconds + durationInMilliseconds;
+      const resultHours = Math.floor(totalMilliseconds / (3600 * 1000)) % 24; // Handle overflow of 24 hours
+      const resultMinutes = Math.floor((totalMilliseconds % (3600 * 1000)) / (60 * 1000));
+      const resultSeconds = Math.floor((totalMilliseconds % (60 * 1000)) / 1000);
+      const resultMilliseconds = totalMilliseconds % 1000;
+      resolve([
+        resultHours.toString().padStart(2, '0'),
+        resultMinutes.toString().padStart(2, '0'),
+        resultSeconds.toString().padStart(2, '0'),
+        resultMilliseconds.toString().padStart(3, '0'),
+      ].join(':'));
+    })
   }
 
 
@@ -238,18 +240,14 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
 
   calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const toRadians = (degrees: number) => degrees * (Math.PI / 180);
-
     const q1 = toRadians(lat1);
     const q2 = toRadians(lat2);
     const diff = q2 - q1;
     const pl = toRadians(lon2 - lon1);
-
     const a = Math.sin(diff / 2) ** 2 +
       Math.cos(q1) * Math.cos(q2) *
       Math.sin(pl / 2) ** 2;
-
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
     return this.EARTH_RADIUS * c;
   }
 
