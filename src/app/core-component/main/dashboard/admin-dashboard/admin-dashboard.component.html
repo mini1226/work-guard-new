@@ -45,7 +45,7 @@
           <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
             <thead>
             <tr>
-              <th mat-sort-header="id">ID</th>
+              <th mat-sort-header="id">Id</th>
               <th mat-sort-header="name">Name</th>
               <th mat-sort-header="date">Date</th>
               <th mat-sort-header="venue">Venue</th>
@@ -53,10 +53,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let project of sampleData1">
+            <tr *ngFor="let project of upcomingData">
               <td>{{ project.id }}</td>
               <td>{{ project.name }}</td>
-              <td>{{ project.date }}</td>
+              <td>{{ project.session_date}}</td>
               <td>{{ project.venue }}</td>
               <td>
                 <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="startCompetition()"><i class="feather icon-info"></i> View
@@ -79,7 +79,7 @@
           <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
             <thead>
             <tr>
-              <th mat-sort-header="id">ID</th>
+              <th mat-sort-header="id">Id</th>
               <th mat-sort-header="name">Name</th>
               <th mat-sort-header="email">Events</th>
               <th mat-sort-header="gender">Gender</th>
@@ -87,10 +87,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let project of sampleData2">
-              <td>{{ project.id }}</td>
-              <td>{{ project.name }}</td>
-              <td>{{ project.events }}</td>
+            <tr *ngFor="let project of historyData">
+              <td>{{ project.id}}</td>
+              <td>{{ project.first_name+' '+ project.last_name}}</td>
+              <td>{{ project.event }}</td>
               <td>{{ project.gender }}</td>
               <td>
                 <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="viewHistory()"><i class="feather icon-info me-2"></i>View

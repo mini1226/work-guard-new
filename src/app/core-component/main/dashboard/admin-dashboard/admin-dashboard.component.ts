@@ -340,7 +340,7 @@ export class AdminDashboardComponent implements OnInit{
       // Call the API with the FormData
       this.sessionService.getAllSessionCount(formData).subscribe(
         (apiRes: any) => {
-          this.sessionCount = apiRes;
+          this.sessionCount = Number(apiRes);
           resolve(true);
         },
         (error: any) => {
@@ -388,7 +388,7 @@ export class AdminDashboardComponent implements OnInit{
       // Call the API with FormData
       this.athleteService.getAthleteAll(userId).subscribe(
         (apiRes: any) => {
-          this.sessionCount = apiRes;
+          this.historyData = apiRes;
           resolve(true);
         },
         (error: any) => {

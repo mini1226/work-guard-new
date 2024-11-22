@@ -18,6 +18,7 @@
       </div>
     </div>
   </div>
+
   <div class="px-5 mt-3">
     <div>
       <div class="row">
@@ -26,11 +27,6 @@
           <button type="submit" class="me-1 btn-w-lg btn-success btn" (click)="onSubmit()"><i
             class="feather icon-play"></i>
             START SESSION
-          </button>
-
-          <button type="submit" class="me-1 btn-w-lg btn-danger btn" (click)="stopTimer(0)"><i
-            class="feather icon-pause"></i>
-            STOP SESSION
           </button>
         </div>
         <div class="col-xl-4"></div>
@@ -51,24 +47,24 @@
             </thead>
             <tbody formArrayName="athletes">
             <tr *ngFor="let task of athletes.controls; let i = index" [formGroupName]="i">
-              <td style="padding: 0 5px !important;">
+              <td style="padding: 0px 5px !important;">
                 <mat-select formControlName="athleteId" readonly>
                   <mat-option *ngFor="let athlete of athletesAll" [value]="athlete.id">
                     {{ athlete.first_name + ' ' + athlete.last_name }}
                   </mat-option>
                 </mat-select>
               </td>
-              <td style="padding: 0 5px !important;">
+              <td style="padding: 0px 5px !important;">
                 <b>{{ task.get('duration')?.value === '0' ? stopWatch : task.get('duration')?.value }}</b>
               </td>
-              <td style="padding: 0 5px !important;">
+              <td style="padding: 0px 5px !important;">
                 <button type="button" class="me-1 btn-sm btn-danger btn"
                         (click)="stopTimer(i)"
                         [disabled]="task.get('isStop')?.value">
                   <i class="feather icon-pause"></i> STOP
                 </button>
               </td>
-              <td style="padding: 0 5px !important;">
+              <td style="padding: 0px 5px !important;">
                 <a class="confirm-text p-2" href="javascript:void(0);" (click)="liveHr()">
                   <i class="feather icon-eye feather-eye"></i>
                 </a>
