@@ -59,13 +59,14 @@
               </td>
               <td style="padding: 0px 5px !important;">
                 <button type="button" class="me-1 btn-sm btn-danger btn"
-                        (click)="stopTimer(i)"
+                        (click)="stopTimer('D001',i)"
                         [disabled]="task.get('isStop')?.value">
                   <i class="feather icon-pause"></i> STOP
                 </button>
               </td>
               <td style="padding: 0px 5px !important;">
-                <a class="confirm-text p-2" href="javascript:void(0);" (click)="liveHr()">
+                <a class="confirm-text p-2" href="javascript:void(0);"
+                   (click)="liveHr('D001',task.get('duration')?.value)">
                   <i class="feather icon-eye feather-eye"></i>
                 </a>
               </td>

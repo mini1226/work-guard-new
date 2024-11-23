@@ -6,6 +6,8 @@ import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {SessionService} from "../../../../core/service/sessions/session.service";
 import {AthleteService} from "../../../../core/service/athlete/athlete.service";
 import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.service";
+import {DatePipe} from "@angular/common";
+import {CommonService} from "../../../../core/service/common/common.service";
 
 @Component({
   selector: 'app-start-competition',
@@ -20,9 +22,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   interval: number | null = null;
   stopWatch = '00:00:00:00';
   athletesAll: Array<any> = [];
-  startTime = '00:00:00:00';
-  raceStartTime: any;
-  raceEndTime: any;
+  raceStartTime: any = '20:01:15:418';
 
   sessionForm: FormGroup = new FormGroup({
     sessionId: new FormControl(''),
@@ -30,29 +30,28 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     sessionEndTime: new FormControl(''),
     athletes: new FormArray([]),
   });
-  distance: number = 0;
-  private readonly EARTH_RADIUS = 6371e3;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private alertservice: SweetalertService,
-              private athleteService: AthleteService,
-              private sessionService: SessionService, private af: Database) {
+  constructor(private route: ActivatedRoute, private router: Router, private datePipe: DatePipe,
+              private alertservice: SweetalertService, private athleteService: AthleteService,
+              private sessionService: SessionService, private af: Database,
+              private commonService: CommonService) {
+
   }
 
   get athletes(): FormArray {
     return this.sessionForm.get('athletes') as FormArray;
   }
 
-  getData(device: string, startTime: string, endTime: string, index: number) {
+  calculateParams(device: string, startTime: string, endTime: string, index: number) {
     let databaseReference = ref(this.af, device + '/GPS');
     let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
     let distanceRun = 0;
     onValue(res, snapshot => {
       if (snapshot.val() != null) {
         let values: any[] = Object.values(snapshot.val());
-        distanceRun = this.calculateDistance(values[0].Latitude, values[0].Longitude, values[values.length - 1].Latitude, values[values.length - 1].Longitude);
-        console.log(distanceRun);
+        this.commonService.calculateDistance(values[0].Latitude, values[0].Longitude, values[values.length - 1].Latitude, values[values.length - 1].Longitude).then(value => {
+          distanceRun = value;
+        });
       }
     })
 
@@ -60,30 +59,29 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     let resBPM = query(reference, orderByChild('Time'), startAt(startTime), endAt(endTime));
     onValue(resBPM, snapshot => {
       if (snapshot.val() != null) {
-        let timeTakenInMinutes = this.convertToMinutes(this.stopWatch);
-        console.log(snapshot.val());
-        let values: any[] = Object.values(snapshot.val());
-        console.log(values[values.length - 1].BPM_VALUE);
-        console.log(values[0].BPM_VALUE);
-        let cardiovascularDrift = (values[values.length - 1].BPM_VALUE - values[0].BPM_VALUE) / timeTakenInMinutes;
-        console.log(cardiovascularDrift);
-
-        let totalHeartRate = 0;
-        values.forEach(value => {
-          totalHeartRate += value.BPM_VALUE;
+        let timeTakenInMinutes;
+        this.commonService.convertToMinutes(this.stopWatch).then(value => {
+          timeTakenInMinutes = value;
         })
+        if (timeTakenInMinutes) {
+          let values: any[] = Object.values(snapshot.val());
+          let cardiovascularDrift = (values[values.length - 1].BPM_VALUE - values[0].BPM_VALUE) / timeTakenInMinutes;
+          let totalHeartRate = 0;
+          values.forEach(value => {
+            totalHeartRate += value.BPM_VALUE;
+          })
 
-        let avgHR = (totalHeartRate / values.length);
-        let caloriesBurned = ((avgHR * this.athletes.controls[index].value.althlete_weight * timeTakenInMinutes) * 5) / 1000;
-        let pace = timeTakenInMinutes / distanceRun;
+          let avgHR = (totalHeartRate / values.length);
+          let caloriesBurned = ((avgHR * this.athletes.controls[index].value.althlete_weight * timeTakenInMinutes) * 5) / 1000;
+          let pace = timeTakenInMinutes / distanceRun;
 
-        this.athletes.controls[index].patchValue({
-          distance: distanceRun,
-          cardiovascularLift: cardiovascularDrift,
-          caloriesBurned: caloriesBurned,
-          pace: pace
-        })
-        console.log(this.athletes.value);
+          this.athletes.controls[index].patchValue({
+            distance: distanceRun,
+            cardiovascularLift: cardiovascularDrift,
+            caloriesBurned: caloriesBurned,
+            pace: pace
+          })
+        }
       }
     });
   }
@@ -97,27 +95,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     return `${format(hours)}:${format(minutes)}:${format(seconds)}:${milliseconds.toString().padStart(2, '0')}`;
   }
 
-  convertToMinutes(timeString: string, fps: number = 30): number {
-    if (!timeString) {
-      throw new Error('Invalid time string');
-    }
-
-    const parts = timeString.split(':');
-    if (parts.length !== 4) {
-      throw new Error('Time string must be in the format HH:MM:SS:FF');
-    }
-
-    const hours = parseInt(parts[0], 10);
-    const minutes = parseInt(parts[1], 10);
-    const seconds = parseInt(parts[2], 10);
-    const frames = parseInt(parts[3], 10);
-    const secondsFromFrames = frames / fps;
-    const totalSeconds = hours * 3600 + minutes * 60 + seconds + secondsFromFrames;
-    return totalSeconds / 60;
-  }
-
   ngOnInit(): void {
-
     this.route.queryParams.subscribe(params => {
       this.isEditId = params['id'];
     });
@@ -138,7 +116,6 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     window.history.back();
   }
 
-
   startTimer(): void {
     if (this.interval) return;  // Prevent multiple intervals
     this.interval = window.setInterval(() => {
@@ -147,54 +124,26 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     }, 1);
   }
 
-  stopTimer(i: number): void {
+  stopTimer(device: string, i: number): void {
     if (this.interval !== null) {
-      // this.athletes.controls[i].patchValue({
-      //   duration: this.stopWatch,
-      //   isStop: true
-      // })
-      this.addTime('20:01:15:418', this.stopWatch).then(endTime => {
-        console.log(endTime);
-        this.getData('D001', '20:01:15:418', endTime, i)
+      this.athletes.controls[i].patchValue({
+        duration: this.stopWatch,
+        isStop: true
       })
+      this.commonService.individualRaceEndTime(this.raceStartTime, this.stopWatch).then((endTime: string) => {
+        this.calculateParams(device, this.raceStartTime, endTime, i)
+      });
     }
   }
-
-  addTime(baseTime: string, duration: string): Promise<string> {
-    return new Promise<string>(resolve => {
-      const [baseHours, baseMinutes, baseSeconds, baseMilliseconds] = baseTime.split(':').map(Number);
-      const [durationHours, durationMinutes, durationSeconds, durationMilliseconds] = duration.split(':').map(Number);
-
-      const baseTimeInMilliseconds =
-        (baseHours * 3600 + baseMinutes * 60 + baseSeconds) * 1000 + baseMilliseconds;
-      const durationInMilliseconds =
-        (durationHours * 3600 + durationMinutes * 60 + durationSeconds) * 1000 + durationMilliseconds;
-      const totalMilliseconds = baseTimeInMilliseconds + durationInMilliseconds;
-      const resultHours = Math.floor(totalMilliseconds / (3600 * 1000)) % 24; // Handle overflow of 24 hours
-      const resultMinutes = Math.floor((totalMilliseconds % (3600 * 1000)) / (60 * 1000));
-      const resultSeconds = Math.floor((totalMilliseconds % (60 * 1000)) / 1000);
-      const resultMilliseconds = totalMilliseconds % 1000;
-      resolve([
-        resultHours.toString().padStart(2, '0'),
-        resultMinutes.toString().padStart(2, '0'),
-        resultSeconds.toString().padStart(2, '0'),
-        resultMilliseconds.toString().padStart(3, '0'),
-      ].join(':'));
-    })
-  }
-
 
   updateDisplay(): void {
     this.stopWatch = this.formatTime(this.seconds);
   }
 
   onSave(): void {
-    const now = new Date();
-    this.raceEndTime = now.toISOString();
-
     this.sessionForm.patchValue({
       'sessionStartTime': this.raceStartTime,
-      'sessionEndTime': this.raceEndTime,
+      'sessionEndTime': this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS'),
     });
 
     const formValue = {...this.sessionForm.value};
@@ -217,13 +166,12 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     const sessionId = {
       'id': this.isEditId
     };
-    this.sessionService.startSession(sessionId,this.isEditId).subscribe(value => {
+    this.sessionService.startSession(sessionId, this.isEditId).subscribe(value => {
       this.alertservice.saveBtn();
     }, error => {
     });
 
   }
-
 
   reset() {
     if (this.interval) {
@@ -233,32 +181,21 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    const now = new Date();
-    console.log(now);
-    console.log(now.toString()); // Full readable date
-    console.log(now.toISOString()); // ISO 8601 format
-    this.startTime = '00:00:00:00'
+    this.raceStartTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS');
     this.startTimer();
-    this.raceStartTime = now.toISOString(); // Set the current datetime in ISO format for raceStartTime
   }
 
-
-  liveHr() {
-    this.router.navigate([routes.liveHeartRate]);
+  liveHr(device: string, duration: any) {
+    this.commonService.individualRaceEndTime(this.raceStartTime, duration).then((endTime: string) => {
+      const x = {
+        device: device,
+        startTime: this.raceStartTime,
+        endTime: endTime
+      }
+      this.router.navigate([routes.liveHeartRate], {queryParams: x});
+    })
   }
 
-  calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-    const toRadians = (degrees: number) => degrees * (Math.PI / 180);
-    const q1 = toRadians(lat1);
-    const q2 = toRadians(lat2);
-    const diff = q2 - q1;
-    const pl = toRadians(lon2 - lon1);
-    const a = Math.sin(diff / 2) ** 2 +
-      Math.cos(q1) * Math.cos(q2) *
-      Math.sin(pl / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return this.EARTH_RADIUS * c;
-  }
 
   ngOnDestroy(): void {
     this.reset();
