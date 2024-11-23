@@ -14,7 +14,9 @@ export class CommonService {
   private readonly EARTH_RADIUS = 6371e3;
 
   individualRaceEndTime(baseTime: string, duration: string): Promise<string> {
+    console.log(baseTime);
     return new Promise<string>(resolve => {
+      baseTime =baseTime.split(' ')[1];
       const [baseHours, baseMinutes, baseSeconds, baseMilliseconds] = baseTime.split(':').map(Number);
       const [durationHours, durationMinutes, durationSeconds, durationMilliseconds] = duration.split(':').map(Number);
 
@@ -27,12 +29,14 @@ export class CommonService {
       const resultMinutes = Math.floor((totalMilliseconds % (3600 * 1000)) / (60 * 1000));
       const resultSeconds = Math.floor((totalMilliseconds % (60 * 1000)) / 1000);
       const resultMilliseconds = totalMilliseconds % 1000;
-      resolve([
+      let s = [
         resultHours.toString().padStart(2, '0'),
         resultMinutes.toString().padStart(2, '0'),
         resultSeconds.toString().padStart(2, '0'),
         resultMilliseconds.toString().padStart(3, '0'),
-      ].join(':'));
+      ].join(':');
+      console.log(s);
+      resolve(s);
     })
   }
 

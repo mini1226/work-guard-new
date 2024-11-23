@@ -143,7 +143,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   onSave(): void {
     this.sessionForm.patchValue({
       'sessionStartTime': this.raceStartTime,
-      'sessionEndTime': this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS'),
+      'sessionEndTime': this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss:SSS'),
     });
 
     const formValue = {...this.sessionForm.value};
@@ -181,12 +181,14 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.raceStartTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS');
+    this.raceStartTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss:SSS');
     this.startTimer();
   }
 
   liveHr(device: string, duration: any) {
+    console.log(duration);
     this.commonService.individualRaceEndTime(this.raceStartTime, duration).then((endTime: string) => {
+      console.log(endTime);
       const x = {
         device: device,
         startTime: this.raceStartTime,
