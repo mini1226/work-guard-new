@@ -141,6 +141,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   onSave(): void {
+    this.calculateParams('D001',this.raceStartTime,this.stopWatch,1);
     this.sessionForm.patchValue({
       'sessionStartTime': this.raceStartTime,
       'sessionEndTime': this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss:SSS'),

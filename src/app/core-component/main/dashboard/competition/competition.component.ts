@@ -104,8 +104,12 @@ export class CompetitionComponent {
     this.router.navigate([routes.addCompetition]);
   }
 
-  viewDetails() {
-    this.router.navigate([routes.competitionSummary]);
+  viewDetails(comId: any) {
+    this.router.navigate([routes.competitionSummary], {
+      queryParams: {
+        id: comId
+      }
+    });
   }
 
   editCompetition(competitionId: any) {

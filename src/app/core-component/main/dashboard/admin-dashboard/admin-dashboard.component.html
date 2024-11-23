@@ -59,7 +59,7 @@
               <td>{{ project.session_date}}</td>
               <td>{{ project.venue }}</td>
               <td>
-                <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="startCompetition()"><i class="feather icon-info"></i> View
+                <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="startCompetition(project.id)"><i class="feather icon-info"></i> View
                 </button>
               </td>
             </tr>
@@ -93,7 +93,7 @@
               <td>{{ project.event }}</td>
               <td>{{ project.gender }}</td>
               <td>
-                <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="viewHistory()"><i class="feather icon-info me-2"></i>View
+                <button type="submit" class="me-1 btn-sm btn-primary float-end" (click)="viewHistory(project.id)"><i class="feather icon-info me-2"></i>View
                 </button>
               </td>
             </tr>

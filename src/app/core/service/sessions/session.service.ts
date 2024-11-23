@@ -96,4 +96,14 @@ export class SessionService {
       })
     );
   }
+
+  getSessionHistory(sessionId: any): Observable<any> {
+    return this.http.get<any>(this.baseURL + '/' + sessionId + '/session-detail').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
 }

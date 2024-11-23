@@ -42,6 +42,11 @@ export class AthleteService {
   }
 
 
+  public getAthleteHistory(athleteId: any): Observable<any> {
+    return this.http.get<any>(this.baseURL+athleteId+'/sessions');
+  }
+
+
   updateAthlete(body: Athlete): Observable<any> {
     return this.http.put<any>(this.baseURL, body, {}).pipe(
       map((res: any) => {

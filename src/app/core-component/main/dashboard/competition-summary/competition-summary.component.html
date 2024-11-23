@@ -24,7 +24,6 @@
           <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
             <thead>
             <tr>
-              <th mat-sort-header="id">ID</th>
               <th mat-sort-header="name">Name</th>
               <th mat-sort-header="avgHr">Avg. Heart Rate</th>
               <th mat-sort-header="performance">Time</th>
@@ -37,21 +36,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let project of sampleData">
-              <td>{{ project.id }}</td>
-              <td>{{ project.name }}</td>
-              <td>{{ project.avgHr }} bpm</td>
-              <td>{{ project.performance }}</td>
+            <tr *ngFor="let project of historyData">
+              <td>{{ project.athlete_name }}</td>
+              <td>{{ project.average_heart_rate }} bpm</td>
+              <td>{{ project.time }}</td>
               <td>{{ project.distance }}</td>
-              <td>{{ project.maxHrExceeded }}</td>
+              <td>{{ project.max_hr_exceeded }}</td>
               <td>
                 <a class="confirm-text p-2" href="javascript:void(0);" (click)="viewDetails(project.id )">
                   <i class="feather icon-eye feather-eye"></i>
                 </a>
               </td>
-              <td>{{ project.cal }}</td>
-              <td>{{ project.car }}</td>
-              <td>{{ project.cardiovascularDrift }}</td>
+              <td>{{ project.calories_burned }}</td>
+              <td>{{ project.cardio_vascular_lift }}</td>
+              <td>{{ project.pace }}</td>
             </tr>
             </tbody>
           </table>

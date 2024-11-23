@@ -47,8 +47,8 @@
           <a
             class="confirm-text p-2"
             href="javascript:void(0);"
-            [ngClass]="{'disabled-link': project.status === 'Not Completed'}"
-            (click)="project.status !== 'Not Completed' && viewDetails()"
+            [ngClass]="{'disabled-link': project.status === 'NOT_COMPLETED'}"
+            (click)="project.status !== 'NOT_COMPLETED' && viewDetails(project.id)"
           >
             <i class="feather icon-eye feather-eye"></i>
           </a>
