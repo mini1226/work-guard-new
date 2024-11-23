@@ -30,6 +30,8 @@ export class LiveHeartRateComponent {
     let device: any = this.route.snapshot.queryParamMap.get('device');
     let startTime: any = this.route.snapshot.queryParamMap.get('startTime');
     let endTime: any = this.route.snapshot.queryParamMap.get('endTime');
+    console.log(startTime);
+    startTime = startTime.split(' ')[1];
     this.getData(device, startTime, endTime);
   }
 
@@ -40,6 +42,7 @@ export class LiveHeartRateComponent {
     let databaseReference = ref(this.af, device + '/BPM');
     let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
     onValue(res, snapshot => {
+      console.log(snapshot.val());
       if (snapshot.val() != null) {
         let values: number[] = Object.values(snapshot.val());
         this.heartRateValues = values.map((res: any) => {

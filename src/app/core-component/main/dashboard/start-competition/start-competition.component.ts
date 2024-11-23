@@ -194,6 +194,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
         startTime: this.raceStartTime,
         endTime: endTime
       }
+      console.log(x);
       this.router.navigate([routes.liveHeartRate], {queryParams: x});
     })
   }
@@ -215,6 +216,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
           value.session_details.forEach((item: any) => {
             let formGroup = new FormGroup({
               athleteId: new FormControl(item.athlete_id),
+              deviceId: new FormControl(item.device_id),
               duration: new FormControl('0'),
               isStop: new FormControl(false),
               distance: new FormControl(''),

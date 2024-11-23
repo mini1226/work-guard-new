@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.service";
 import {AthleteService} from "../../../../core/service/athlete/athlete.service";
@@ -39,6 +39,7 @@ export class CompetitionFormComponent {
   });
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private athleteService: AthleteService,
               private alertservice: SweetalertService,
               private sessionService: SessionService) { }
@@ -111,6 +112,7 @@ export class CompetitionFormComponent {
         };
         this.sessionService.updateSession(formData).subscribe(value => {
           this.alertservice.saveBtn();
+          this.router.navigate([routes.competition]);
         }, error => {
         })
       } else {
@@ -121,6 +123,7 @@ export class CompetitionFormComponent {
         };
         this.sessionService.saveSession(formData).subscribe(value => {
           this.alertservice.saveBtn();
+          this.router.navigate([routes.competition]);
         }, error => {
           console.log(error);
         })

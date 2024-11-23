@@ -65,10 +65,11 @@
                 </button>
               </td>
               <td style="padding: 0px 5px !important;">
-                <a class="confirm-text p-2" href="javascript:void(0);"
-                   (click)="liveHr('D001',task.get('duration')?.value)">
+                <button class="btn confirm-text p-2" href="javascript:void(0);"
+                   [disabled]="!task.get('isStop')?.value"
+                   (click)="liveHr(task.get('deviceId')?.value,task.get('duration')?.value)">
                   <i class="feather icon-eye feather-eye"></i>
-                </a>
+                </button>
               </td>
             </tr>
             </tbody>

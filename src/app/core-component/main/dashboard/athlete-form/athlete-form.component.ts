@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {routes} from "../../../../core/helpers/routes";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Athlete, AthleteLevel, Gender} from 'src/app/core/models/models';
 import {AthleteService} from "../../../../core/service/athlete/athlete.service";
 import {DatePipe} from "@angular/common";
@@ -36,7 +36,11 @@ export class AthleteFormComponent {
     personalBest: new FormControl('', [Validators.required]),
   });
 
-  constructor(private route: ActivatedRoute, private athleteService: AthleteService, private datePipe: DatePipe, private alertservice: SweetalertService) {
+  constructor(private route: ActivatedRoute,
+              private athleteService: AthleteService,
+              private router: Router,
+              private datePipe: DatePipe,
+              private alertservice: SweetalertService) {
     this.levelData = Object.values(AthleteLevel);
     this.genderData = Object.values(Gender);
   }
@@ -90,12 +94,14 @@ export class AthleteFormComponent {
         this.athleteService.updateAthlete(obj).subscribe(value => {
           console.log(value);
           this.alertservice.saveBtn();
+          this.router.navigate([routes.athletes]);
         }, error => {
           console.log(error);
         })
       } else {
         this.athleteService.saveAthlete(obj).subscribe(value => {
           this.alertservice.saveBtn();
+          this.router.navigate([routes.athletes]);
         }, error => {
           console.log(error);
         })
