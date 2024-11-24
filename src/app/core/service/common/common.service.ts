@@ -16,7 +16,8 @@ export class CommonService {
   individualRaceEndTime(baseTime: string, duration: string): Promise<string> {
     console.log(baseTime);
     return new Promise<string>(resolve => {
-      baseTime =baseTime.split(' ')[1];
+      let year = baseTime.split(' ')[0];
+      baseTime = baseTime.split(' ')[1];
       const [baseHours, baseMinutes, baseSeconds, baseMilliseconds] = baseTime.split(':').map(Number);
       const [durationHours, durationMinutes, durationSeconds, durationMilliseconds] = duration.split(':').map(Number);
 
@@ -35,8 +36,7 @@ export class CommonService {
         resultSeconds.toString().padStart(2, '0'),
         resultMilliseconds.toString().padStart(3, '0'),
       ].join(':');
-      console.log(s);
-      resolve(s);
+      resolve(year + ' ' + s);
     })
   }
 

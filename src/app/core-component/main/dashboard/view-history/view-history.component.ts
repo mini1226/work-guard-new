@@ -37,7 +37,8 @@ export class ViewHistoryComponent {
   }
 
   performanceHistory(){
-    this.router.navigate([routes.athletePerformance]);
+    console.log(this.historyData.slice(0, 5));
+    this.router.navigate([routes.athletePerformance],{queryParams:{data:JSON.stringify(this.historyData.slice(0, 5))}});
   }
 
   viewDetails(id: any) {

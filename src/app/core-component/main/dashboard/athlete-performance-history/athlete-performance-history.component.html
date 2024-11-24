@@ -23,39 +23,31 @@
       </div>
     </div>
 
-
-
-<!--    <div class="legend-container mt-4">-->
-<!--      <div *ngFor="let series of lineChartOptions.series; let i = index" class="legend-item">-->
-<!--        <span class="legend-color" [style.backgroundColor]="lineChartOptions.colors[i]"></span>-->
-<!--        <span class="legend-label">{{ series.name }}</span>-->
-<!--      </div>-->
-<!--    </div>-->
-
-
     <table class="table table-bordered">
     <thead>
     <tr>
+      <th></th>
       <th>Session</th>
       <th>Date</th>
       <th>Heart Rate Range (BPM)</th>
-      <th>Max HR Exceed</th>
+      <th>Distance</th>
+      <th>Duration</th>
       <th>Pace</th>
-      <th>Avg Heart Rate (BPM)</th>
-      <th>Summary</th>
-      <th>Feedback</th>
+      <th>Calories Burned</th>
+      <th>Cardio Vascular Lift</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let session of heartRateTableData; let i = index">
-      <td>Session {{ i + 1 }}</td>
-      <td>{{ session.date }}</td>
-      <td>{{ session.heartRateRange }}</td>
-      <td>{{ session.maxHrExceed ? 'Yes' : 'No' }}</td>
+      <td>{{ i + 1 }}</td>
+      <td>{{ session.name }}</td>
+      <td>{{ session.start_time | date :'YYYY-MM-dd HH:mm:ss:SSS' }}</td>
+      <td>{{ session.heart_rate_detail }}</td>
+      <td>{{ session.distance }}</td>
+      <td>{{ session.duration }}</td>
       <td>{{ session.pace }}</td>
-      <td>{{ session.avgHeartRate.toFixed(2) }}</td>
-      <td>{{ session.summary }}</td>
-      <td>{{ session.feedback }}</td>
+      <td>{{ session.calories_burned}}</td>
+      <td>{{ session.cardio_vascular_lift }}</td>
     </tr>
     </tbody>
   </table>
