@@ -41,6 +41,10 @@ export class CommonService {
   }
 
   calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): Promise<number> {
+    console.log(lat1);
+    console.log(lat2);
+    console.log(lon1);
+    console.log(lon2);
     return new Promise(resolve => {
       const toRadians = (degrees: number) => degrees * (Math.PI / 180);
       const q1 = toRadians(lat1);
@@ -51,6 +55,7 @@ export class CommonService {
         Math.cos(q1) * Math.cos(q2) *
         Math.sin(pl / 2) ** 2;
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      console.log(c);
       resolve(this.EARTH_RADIUS * c);
     })
   }
@@ -60,8 +65,9 @@ export class CommonService {
       if (!timeString) {
         throw new Error('Invalid time string');
       }
-
+      console.log(timeString);
       const parts = timeString.split(':');
+      console.log(parts);
       if (parts.length !== 4) {
         throw new Error('Time string must be in the format HH:MM:SS:FF');
       }
@@ -71,7 +77,9 @@ export class CommonService {
       const seconds = parseInt(parts[2], 10);
       const frames = parseInt(parts[3], 10);
       const secondsFromFrames = frames / fps;
+      console.log('Hours : ', hours, ' Minutes : ', minutes, ' Seconds : ', seconds, ' MilliSeconds : ', frames, ' Seconds for frames : ', secondsFromFrames);
       const totalSeconds = hours * 3600 + minutes * 60 + seconds + secondsFromFrames;
+      console.log('Total Seconds : ', totalSeconds);
       resolve(totalSeconds / 60);
     })
   }
