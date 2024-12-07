@@ -32,7 +32,7 @@ export class AthletePerformanceHistoryComponent {
       this.heartRateTableData = JSON.parse(params['data']);
       for (let i = 0; i < this.heartRateTableData.length; i++) {
         let lastFiveElement = this.heartRateTableData[i];
-        let transform: any = this.datePipe.transform(lastFiveElement.start_time, 'YYYY-MM-dd HH:mm:ss:SSS');
+        let transform: any = this.datePipe.transform(lastFiveElement.start_time, 'YYYY-MM-dd HH:mm:ss');
         this.commonService.individualRaceEndTime(transform, lastFiveElement.duration).then((endTime: string) => {
           this.getData('D001', transform, endTime)
         });

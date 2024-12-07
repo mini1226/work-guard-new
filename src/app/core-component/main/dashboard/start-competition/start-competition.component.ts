@@ -76,10 +76,10 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
               let pace = timeTakenInMinutes / distanceRun;
               console.log('distance Run : ', distanceRun , ' cardiovascularDrift : ',cardiovascularDrift , ' caloriesBurned : ',caloriesBurned , ' pace : ',pace)
               this.athletes.controls[index].patchValue({
-                distance: distanceRun,
-                cardiovascularLift: cardiovascularDrift,
-                caloriesBurned: caloriesBurned,
-                pace: pace
+                distance: ''+distanceRun,
+                cardiovascularLift: ''+cardiovascularDrift,
+                caloriesBurned: ''+caloriesBurned,
+                pace: ''+pace
               })
               resolve(true)
             }
