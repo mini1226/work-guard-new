@@ -161,16 +161,13 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     console.log('Updated Form Value:', formValue);
 
     this.sessionService.saveSessionAll(formValue).subscribe(value => {
-      this.alertservice.saveBtn();
-    }, error => {
-    });
-
-
-    const sessionId = {
-      'id': this.isEditId
-    };
-    this.sessionService.startSession(sessionId, this.isEditId).subscribe(value => {
-      this.alertservice.saveBtn();
+      const sessionId = {
+        'id': this.isEditId
+      };
+      this.sessionService.startSession(sessionId, this.isEditId).subscribe(value => {
+        this.alertservice.saveBtn();
+      }, error => {
+      });
     }, error => {
     });
   }
