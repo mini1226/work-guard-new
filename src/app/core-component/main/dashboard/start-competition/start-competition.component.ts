@@ -8,6 +8,8 @@ import {AthleteService} from "../../../../core/service/athlete/athlete.service";
 import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.service";
 import {DatePipe} from "@angular/common";
 import {CommonService} from "../../../../core/service/common/common.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ViewHeartRateComponent} from "../view-heart-rate/view-heart-rate.component";
 
 @Component({
   selector: 'app-start-competition',
@@ -34,7 +36,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router, private datePipe: DatePipe,
               private alertservice: SweetalertService, private athleteService: AthleteService,
               private sessionService: SessionService, private af: Database,
-              private commonService: CommonService) {
+              private commonService: CommonService, public dialog: MatDialog) {
 
   }
 
@@ -62,8 +64,8 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
         console.log(snapshot.val());
         if (snapshot.val() != null) {
           this.commonService.convertToMinutes(this.stopWatch).then(timeTakenInMinutes => {
-            console.log('Athlete Weight : ',this.athletes.controls[index]);
-            if (timeTakenInMinutes!=undefined) {
+            console.log('Athlete Weight : ', this.athletes.controls[index]);
+            if (timeTakenInMinutes != undefined) {
               let values: any[] = Object.values(snapshot.val());
               let cardiovascularDrift = (values[values.length - 1].BPM_VALUE - values[0].BPM_VALUE) / timeTakenInMinutes;
               let totalHeartRate = 0;
@@ -74,12 +76,12 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
               let avgHR = (totalHeartRate / values.length);
               let caloriesBurned = ((avgHR * this.athletes.controls[index].value.althlete_weight * timeTakenInMinutes) * 5) / 1000;
               let pace = timeTakenInMinutes / distanceRun;
-              console.log('distance Run : ', distanceRun , ' cardiovascularDrift : ',cardiovascularDrift , ' caloriesBurned : ',caloriesBurned , ' pace : ',pace)
+              console.log('distance Run : ', distanceRun, ' cardiovascularDrift : ', cardiovascularDrift, ' caloriesBurned : ', caloriesBurned, ' pace : ', pace)
               this.athletes.controls[index].patchValue({
-                distance: ''+distanceRun,
-                cardiovascularLift: ''+cardiovascularDrift,
-                caloriesBurned: ''+caloriesBurned,
-                pace: ''+pace
+                distance: '' + distanceRun,
+                cardiovascularLift: '' + cardiovascularDrift,
+                caloriesBurned: '' + caloriesBurned,
+                pace: '' + pace
               })
               resolve(true)
             }
@@ -184,19 +186,18 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     this.startTimer();
   }
 
-  liveHr(device: string, duration: any,athleteId:string) {
+  liveHr(device: string, duration: any, athleteId: string) {
     console.log(duration);
     this.commonService.individualRaceEndTime(this.raceStartTime, duration).then((endTime: string) => {
-      let filter = this.athletesAll.filter(value => value.id== athleteId);
+      let filter = this.athletesAll.filter(value => value.id == athleteId);
       console.log(endTime);
       const x = {
         device: device,
         startTime: this.raceStartTime,
         endTime: endTime,
-        athleteHR:filter[0].heart_rate
+        athleteHR: filter[0].heart_rate
       }
-      console.log(x);
-      this.router.navigate([routes.liveHeartRate], {queryParams: x});
+      this.dialog.open(ViewHeartRateComponent, {data: x, width: '80%'})
     })
   }
 
@@ -218,7 +219,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
             let formGroup = new FormGroup({
               athleteId: new FormControl(item.athlete_id),
               deviceId: new FormControl(item.device_id),
-              duration: new FormControl('0'),
+              duration: new FormControl('00:00:00:00'),
               isStop: new FormControl(false),
               distance: new FormControl(''),
               caloriesBurned: new FormControl(''),

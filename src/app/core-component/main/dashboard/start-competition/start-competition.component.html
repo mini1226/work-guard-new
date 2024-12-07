@@ -55,7 +55,7 @@
                 </mat-select>
               </td>
               <td style="padding: 0px 5px !important;">
-                <b>{{ task.get('duration')?.value === '0' ? stopWatch : task.get('duration')?.value }}</b>
+                <b>{{ task.get('duration')?.value === '00:00:00:00' ? stopWatch : task.get('duration')?.value }}</b>
               </td>
               <td style="padding: 0px 5px !important;">
                 <button type="button" class="me-1 btn-sm btn-danger btn"
@@ -66,6 +66,7 @@
               </td>
               <td style="padding: 0px 5px !important;">
                 <button class="btn confirm-text p-2" href="javascript:void(0);"
+                        [disabled]="stopWatch === '00:00:00:00'"
                    (click)="liveHr(task.get('deviceId')?.value, task.get('duration')?.value, task.get('athleteId')?.value)">
                   <i class="feather icon-eye feather-eye"></i>
                 </button>

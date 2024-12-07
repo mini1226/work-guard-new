@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="card pb-2">
+      <div class="page-header px-5 pt-3">
+        <div class="page-title">
+          <h4>Live Heart Rate</h4>
+          <h6>Heart Rate - {{ athleteHR }}</h6>
+        </div>
+        <div class="btn-toolbar p-0 m-0">
+          <div class="m-0">
+            <button type="button" class="me-1 btn btn-danger btn" (click)="setAlarm()"><i
+              class="feather icon-alert-circle"></i> Alarm
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div class="row pt-5">
+          <div class="col-xl-12">
+            <div id="chart" #chart>
+              <ng-container *ngIf="lineChartOptions.series && lineChartOptions.series.length > 0">
+                <apx-chart
+                  [series]="lineChartOptions.series"
+                  [chart]="lineChartOptions.chart"
+                  [xaxis]="lineChartOptions.xaxis"
+                  [yaxis]="lineChartOptions.yaxis"
+                  [stroke]="lineChartOptions.stroke"
+                  [labels]="lineChartOptions.labels"
+                  [responsive]="lineChartOptions.responsive"
+                ></apx-chart>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
