@@ -5,10 +5,11 @@
     </div>
     <div class="btn-toolbar p-0 m-0">
       <div class="m-0">
-        <button type="button" class="me-1 btn btn-info btn ms-1" (click)="reset()"><i class="feather icon-refresh-ccw"></i>
+        <button type="button" class="me-1 btn btn-info btn ms-1" (click)="reset()"><i
+          class="feather icon-refresh-ccw"></i>
           Reset
         </button>
-        <button type="submit" class="me-1 btn btn-success btn" (click)="onSubmit()"><i class="feather icon-save"></i>
+        <button type="submit" class="me-1 btn btn-success btn" (click)="onSave()"><i class="feather icon-save"></i>
           SAVE
         </button>
         <button type="button" class="me-1 btn btn-danger btn" (click)="onBackClick()"><i
@@ -18,52 +19,64 @@
     </div>
   </div>
 
-
-  <div class="px-5 mt-3" >
+  <div class="px-5 mt-3">
     <div>
-        <div class="row">
-          <div class="col-xl-4"></div>
-          <div class="col-xl-4 text-center">
-            <button type="submit" class="me-1 btn-w-lg btn-success btn" (click)="onSubmit()"><i class="feather icon-play"></i>
-              START SESSION
-            </button>
-          </div>
-          <div class="col-xl-4"></div>
+      <div class="row">
+        <div class="col-xl-4"></div>
+        <div class="col-xl-4 text-center">
+          <button type="submit" class="me-1 btn-w-lg btn-success btn" (click)="onSubmit()"><i
+            class="feather icon-play"></i>
+            START SESSION
+          </button>
         </div>
+        <div class="col-xl-4"></div>
+      </div>
     </div>
-    <div class="row pt-5">
-<!--      <div class="col-xl-4"></div>-->
+    <div class="row pt-5" [formGroup]="sessionForm">
+      <!--      <div class="col-xl-4"></div>-->
       <div class="col-xl-12">
         <div class="table-responsive dataview px-3">
-          <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
+          <table class="table datanew" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
             <thead>
             <tr>
-              <th mat-sort-header="id">ID</th>
-              <th mat-sort-header="name">Name</th>
-              <th mat-sort-header="action">Action</th>
-              <th mat-sort-header="hr">Heart Rate</th>
+              <th style="width: 300px !important;">Name</th>
+              <th style="width: 200px !important;">Time</th>
+              <th style="width: 200px !important;">Action</th>
+              <th style="width: 100px !important;">Hr Rate</th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let project of sampleData">
-              <td>{{ project.id }}</td>
-              <td>{{ project.name }}</td>
-              <td>
-                <button type="submit" class="me-1 btn-sm btn-danger btn" (click)="onSubmit()"><i class="feather icon-pause"></i>
-                  STOP
+            <tbody formArrayName="athletes">
+            <tr *ngFor="let task of athletes.controls; let i = index" [formGroupName]="i">
+              <td style="padding: 0px 5px !important;">
+                <mat-select formControlName="athleteId" readonly>
+                  <mat-option *ngFor="let athlete of athletesAll" [value]="athlete.id">
+                    {{ athlete.first_name + ' ' + athlete.last_name }}
+                  </mat-option>
+                </mat-select>
+              </td>
+              <td style="padding: 0px 5px !important;">
+                <b>{{ task.get('duration')?.value === '0' ? stopWatch : task.get('duration')?.value }}</b>
+              </td>
+              <td style="padding: 0px 5px !important;">
+                <button type="button" class="me-1 btn-sm btn-danger btn"
+                        (click)="stopTimer(task.get('deviceId')?.value,i)"
+                        [disabled]="task.get('isStop')?.value">
+                  <i class="feather icon-pause"></i> STOP
                 </button>
               </td>
-              <td>
-                <a class="confirm-text p-2" href="javascript:void(0);" (click)="liveHr()">
+              <td style="padding: 0px 5px !important;">
+                <button class="btn confirm-text p-2" href="javascript:void(0);"
+                   [disabled]="!task.get('isStop')?.value"
+                   (click)="liveHr(task.get('deviceId')?.value,task.get('duration')?.value)">
                   <i class="feather icon-eye feather-eye"></i>
-                </a>
+                </button>
               </td>
             </tr>
             </tbody>
           </table>
         </div>
       </div>
-<!--      <div class="col-xl-4"></div>-->
-    </div >
+      <!--      <div class="col-xl-4"></div>-->
+    </div>
   </div>
 </div>

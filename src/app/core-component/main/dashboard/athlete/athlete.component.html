@@ -19,7 +19,6 @@
         <th mat-sort-header="name">First Name</th>
         <th mat-sort-header="name">Last Name</th>
         <th mat-sort-header="email">Events</th>
-        <th mat-sort-header="device">Device</th>
         <th mat-sort-header="gender">Gender</th>
         <th mat-sort-header="age">DOB</th>
         <th mat-sort-header="level">Level</th>
@@ -32,14 +31,13 @@
       <tbody>
       <tr *ngFor="let project of athletes;let i=index;">
         <td>{{ i+1 }}</td>
-        <td>{{ project.firstName }}</td>
-        <td>{{ project.lastName }}</td>
+        <td>{{ project.first_name }}</td>
+        <td>{{ project.last_name }}</td>
         <td>{{ project.event }}</td>
-        <td>D001</td>
         <td>{{ project.gender }}</td>
-        <td>{{ project.dob }} years</td>
+        <td>{{ calculateAge(project.dob) }} years</td>
         <td>{{ project.level }}</td>
-        <td>{{ project.heartRate }}</td>
+        <td>{{ project.heart_rate }}</td>
         <td>{{ project.weight }} Kg</td>
         <td>{{ project.height }} Cm</td>
         <td>

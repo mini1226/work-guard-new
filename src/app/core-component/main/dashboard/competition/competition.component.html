@@ -15,7 +15,7 @@
     <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
       <thead>
       <tr>
-        <th mat-sort-header="id">ID</th>
+<!--        <th mat-sort-header="id">ID</th>-->
         <th mat-sort-header="name">Name</th>
         <th mat-sort-header="date">Date</th>
         <th mat-sort-header="venue">Venue</th>
@@ -25,14 +25,14 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let project of sampleData">
-        <td>{{ project.id }}</td>
+      <tr *ngFor="let project of sessions">
+<!--        <td>{{ project.id }}</td>-->
         <td>{{ project.name }}</td>
-        <td>{{ project.date }}</td>
+        <td>{{ project.session_date }}</td>
         <td>{{ project.venue }}</td>
         <td>
           {{ project.status }}
-          <ng-container *ngIf="project.status === 'Not Completed'">
+          <ng-container *ngIf="project.status === 'NOT_COMPLETED'">
             <a class="confirm-text p-2" href="javascript:void(0);" (click)="startCompetition(project.id)">
               <i class="feather icon-play feather-play"></i>
             </a>
@@ -47,8 +47,8 @@
           <a
             class="confirm-text p-2"
             href="javascript:void(0);"
-            [ngClass]="{'disabled-link': project.status === 'Not Completed'}"
-            (click)="project.status !== 'Not Completed' && viewDetails()"
+            [ngClass]="{'disabled-link': project.status === 'NOT_COMPLETED'}"
+            (click)="project.status !== 'NOT_COMPLETED' && viewDetails(project.id)"
           >
             <i class="feather icon-eye feather-eye"></i>
           </a>

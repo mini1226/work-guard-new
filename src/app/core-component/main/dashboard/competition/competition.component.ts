@@ -92,6 +92,8 @@ export class CompetitionComponent {
     }
   ];
 
+  sessions: Array<any> = [];
+
 
   constructor(private router: Router,
               private sessionService: SessionService,) {
@@ -102,8 +104,12 @@ export class CompetitionComponent {
     this.router.navigate([routes.addCompetition]);
   }
 
-  viewDetails() {
-    this.router.navigate([routes.competitionSummary]);
+  viewDetails(comId: any) {
+    this.router.navigate([routes.competitionSummary], {
+      queryParams: {
+        id: comId
+      }
+    });
   }
 
   editCompetition(competitionId: any) {
@@ -123,7 +129,8 @@ export class CompetitionComponent {
   }
 
   private loadAllSessions() {
-    this.sessionService.getAllSessionDetails().subscribe(value => {
+    this.sessionService.getAllSessionDetails(localStorage.getItem('userId')).subscribe(value => {
+      this.sessions = value;
       console.log(value);
     })
   }

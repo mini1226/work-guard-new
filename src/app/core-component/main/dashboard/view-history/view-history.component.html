@@ -29,7 +29,6 @@
           <table class="table" matSort matSortActive="Sno" matSortDirection="asc" matSortDisableClear>
             <thead>
             <tr>
-              <th mat-sort-header="id">ID</th>
               <th mat-sort-header="competitionName">Session Name</th>
               <th mat-sort-header="date">Date</th>
               <th mat-sort-header="performance">Time</th>
@@ -43,19 +42,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let project of sampleData">
-              <td>{{ project.id }}</td>
-              <td>{{ project.competitionName }}</td>
+            <tr *ngFor="let project of historyData">
+              <td>{{ project.name }}</td>
               <td>{{ project.date }}</td>
-              <td>{{ project.performance }}</td>
+              <td>{{ project.duration }}</td>
               <td>{{ project.distance }}</td>
-              <td>{{ project.hrRange }}</td>
+              <td>{{ project.heart_rate_detail }}</td>
               <td>{{ project.maxHrExceeded }}</td>
-              <td>{{ project.cal }}</td>
-              <td>{{ project.car }}</td>
-              <td>{{ project.cardiovascularDrift }}</td>
+              <td>{{ project.calories_burned }}</td>
+              <td>{{ project.cardio_vascular_lift }}</td>
+              <td>{{ project.pace }}</td>
               <td>
-                <a class="confirm-text p-2" href="javascript:void(0);" (click)="viewDetails(project.id )">
+                <a class="confirm-text p-2" href="javascript:void(0);" (click)="viewDetails(project)">
                   <i class="feather icon-eye feather-eye"></i>
                 </a>
               </td>

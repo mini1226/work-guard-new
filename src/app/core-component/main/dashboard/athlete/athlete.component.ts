@@ -11,7 +11,7 @@ import {Athlete} from "../../../../core/models/models";
 })
 export class AthleteComponent {
 
-  athletes: Array<Athlete> = [];
+  athletes: Array<any> = [];
 
   constructor(private router: Router, private athleteService: AthleteService) {
     this.loadAllAthletes();
@@ -35,4 +35,20 @@ export class AthleteComponent {
       // this.sampleData
     })
   }
+
+
+  calculateAge(dob: string): number {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // Adjust age if the birthday hasn't occurred yet this year
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
 }
