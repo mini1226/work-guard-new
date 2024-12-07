@@ -18,13 +18,13 @@ export class CommonService {
     return new Promise<string>(resolve => {
       let year = baseTime.split(' ')[0];
       baseTime = baseTime.split(' ')[1];
-      const [baseHours, baseMinutes, baseSeconds, baseMilliseconds] = baseTime.split(':').map(Number);
-      const [durationHours, durationMinutes, durationSeconds, durationMilliseconds] = duration.split(':').map(Number);
+      const [baseHours, baseMinutes, baseSeconds] = baseTime.split(':').map(Number);
+      const [durationHours, durationMinutes, durationSeconds] = duration.split(':').map(Number);
 
       const baseTimeInMilliseconds =
-        (baseHours * 3600 + baseMinutes * 60 + baseSeconds) * 1000 + baseMilliseconds;
+        (baseHours * 3600 + baseMinutes * 60 + baseSeconds) * 1000;
       const durationInMilliseconds =
-        (durationHours * 3600 + durationMinutes * 60 + durationSeconds) * 1000 + durationMilliseconds;
+        (durationHours * 3600 + durationMinutes * 60 + durationSeconds) * 1000 ;
       const totalMilliseconds = baseTimeInMilliseconds + durationInMilliseconds;
       const resultHours = Math.floor(totalMilliseconds / (3600 * 1000)) % 24; // Handle overflow of 24 hours
       const resultMinutes = Math.floor((totalMilliseconds % (3600 * 1000)) / (60 * 1000));
@@ -34,7 +34,7 @@ export class CommonService {
         resultHours.toString().padStart(2, '0'),
         resultMinutes.toString().padStart(2, '0'),
         resultSeconds.toString().padStart(2, '0'),
-        resultMilliseconds.toString().padStart(3, '0'),
+        // resultMilliseconds.toString().padStart(3, '0'),
       ].join(':');
       resolve(year + ' ' + s);
     })
