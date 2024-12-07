@@ -34,6 +34,8 @@ export class AthletePerformanceHistoryComponent {
         let lastFiveElement = this.heartRateTableData[i];
         let transform: any = this.datePipe.transform(lastFiveElement.start_time, 'YYYY-MM-dd HH:mm:ss');
         this.commonService.individualRaceEndTime(transform, lastFiveElement.duration).then((endTime: string) => {
+          console.log(transform);
+          console.log(endTime);
           this.getData('D001', transform, endTime)
         });
       }
@@ -44,6 +46,7 @@ export class AthletePerformanceHistoryComponent {
     let databaseReference = ref(this.af, device + '/BPM');
     let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
     onValue(res, snapshot => {
+      console.log(snapshot.val());
       if (snapshot.val() != null) {
         let values: number[] = Object.values(snapshot.val());
         this.heartRateData.push(values.map((res: any) => {

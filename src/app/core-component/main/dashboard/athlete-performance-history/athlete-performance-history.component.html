@@ -22,35 +22,40 @@
         </div>
       </div>
     </div>
-
-    <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Session</th>
-      <th>Date</th>
-      <th>Heart Rate Range (BPM)</th>
-      <th>Distance</th>
-      <th>Duration</th>
-      <th>Pace</th>
-      <th>Calories Burned</th>
-      <th>Cardio Vascular Lift</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let session of heartRateTableData; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td>{{ session.name }}</td>
-      <td>{{ session.start_time | date :'YYYY-MM-dd HH:mm:ss:SSS' }}</td>
-      <td>{{ session.heart_rate_detail }}</td>
-      <td>{{ session.distance }}</td>
-      <td>{{ session.duration }}</td>
-      <td>{{ session.pace }}</td>
-      <td>{{ session.calories_burned}}</td>
-      <td>{{ session.cardio_vascular_lift }}</td>
-    </tr>
-    </tbody>
-  </table>
+    <div class="container">
+      <table class="table table-responsive table-bordered">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Session</th>
+          <th>Date</th>
+          <th>Heart Rate Range (BPM)</th>
+          <th>Distance</th>
+          <th>Duration</th>
+          <th>Pace</th>
+          <th>Calories Burned</th>
+          <th>Cardio Vascular Lift</th>
+          <th>Summary</th>
+          <th>Feedback</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let session of heartRateTableData; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ session.name }}</td>
+          <td>{{ session.start_time | date :'YYYY-MM-dd HH:mm:ss:SSS' }}</td>
+          <td>{{ session.heart_rate_detail }}</td>
+          <td>{{ session.distance }}</td>
+          <td>{{ session.duration }}</td>
+          <td>{{ session.pace }}</td>
+          <td>{{ session.calories_burned}}</td>
+          <td>{{ session.cardio_vascular_lift }}</td>
+          <td>{{ session.summary }}</td>
+          <td>{{ session.feedback }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <p class="text-center">Note: Each details are compared with the previous days details</p>
 </div>
