@@ -24,8 +24,9 @@ export class LiveHeartRateComponent {
   @ViewChild("chart") chart!: ChartComponent;
   public lineChartOptions: Partial<LineChartOptions> | any = {};
   device: string;
+  athleteHR: any;
   private heartRateValues: any[] = [];
-  private timeInSeconds: any[] = [1,2,3,4];
+  private timeInSeconds: any[] = [];
   private maxRate: any[] = [];
   private minRate: any[] = [];
 
@@ -34,9 +35,7 @@ export class LiveHeartRateComponent {
     this.device = device;
     let startTime: any = this.route.snapshot.queryParamMap.get('startTime');
     let endTime: any = this.route.snapshot.queryParamMap.get('endTime');
-    let athleteHR: any = this.route.snapshot.queryParamMap.get('athleteHR');
-   this.maxRate.push(...Array.from({ length: 60 }, () => athleteHR.split('-')[1]));
-   this.minRate.push(...Array.from({ length: 60 }, () => athleteHR.split('-')[0]));
+    this.athleteHR = this.route.snapshot.queryParamMap.get('athleteHR');
 
     console.log(startTime);
     startTime = startTime.split(' ')[1];
@@ -69,9 +68,15 @@ export class LiveHeartRateComponent {
       console.log(snapshot.val());
       if (snapshot.val() != null) {
         let values: number[] = Object.values(snapshot.val());
-        this.heartRateValues = values.map((res: any) => {
+        let numbers = values.slice(-60);
+        this.heartRateValues = numbers.map((res: any) => {
           return res.BPM_VALUE
         });
+        console.log(this.heartRateValues);
+        this.maxRate=[];
+        this.minRate=[];
+        this.maxRate.push(...Array.from({ length: this.heartRateValues.length }, () => this.athleteHR.split('-')[1]));
+        this.minRate.push(...Array.from({ length: this.heartRateValues.length }, () => this.athleteHR.split('-')[0]));
         this.initializeHeartRateData()
       }
     })
