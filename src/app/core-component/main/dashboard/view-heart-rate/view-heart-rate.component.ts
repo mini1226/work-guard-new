@@ -23,12 +23,10 @@ export class ViewHeartRateComponent {
     let device: any = this.data.device;
     this.device = device;
     let startTime: any = this.data.startTime;
-    let endTime: any = this.data.endTime;
     this.athleteHR = this.data.athleteHR;
 
     console.log(startTime);
-    startTime = startTime.split(' ')[1];
-    this.getData(device, startTime, endTime);
+    this.getData(device, startTime, new Date().toDateString());
   }
   @ViewChild("chart") chart!: ChartComponent;
   public lineChartOptions: Partial<LineChartOptions> | any = {};
