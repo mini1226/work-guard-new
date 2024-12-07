@@ -29,7 +29,86 @@ export class AthletePerformanceHistoryComponent {
 
   constructor(private route: ActivatedRoute, private datePipe: DatePipe, private af: Database, private commonService: CommonService) {
     this.route.queryParams.subscribe(params => {
-      this.heartRateTableData = JSON.parse(params['data']);
+      const x = JSON.parse(params['data']);
+      console.log(x);
+      x.forEach((res: any, index: number) => {
+        let sum = '';
+        let feed = '';
+        if (index == 0) {
+          sum = 'Initial Pace and heart rate';
+          feed = 'Maintain your pace and stay efficient'
+        } else {
+          const paceBefore = Number(x[index - 1].pace ? x[index - 1].pace : 0);
+          const hrBefore = Number(x[index - 1].heart_rate_detail ? x[index - 1].heart_rate_detail:0);
+          const paceNow = Number(res.pace ? res.pace:0);
+          const hrNow = Number(res.heart_rate_detail ? res.heart_rate_detail:0);
+
+          console.log('paceBefore : ',paceBefore , ' paceNow : ', paceNow);
+          console.log('hrBefore : ',hrBefore , ' hrNow : ', hrNow);
+
+          if (paceBefore == paceNow && hrBefore == hrNow) {
+            sum='1';
+            feed='1'
+          }
+
+          if (paceBefore == paceNow && hrBefore < hrNow) {
+            sum='Same pace, but increased heart rate.';
+            feed='Your heart rate is rising at the same pace, which could be a sign of fatigue. Ensure you\'re recovering properly and managing stress.'
+          }
+
+          if (paceBefore == paceNow && hrBefore != hrNow) {
+            sum='Same pace, but decreased heart rate';
+            feed='Great job! You’re becoming more efficient and your cardiovascular system is adapting well to the workload.'
+          }
+
+          if (paceBefore < paceNow && hrBefore == hrNow) {
+            sum="Improved pace, same heart rate.";
+            feed="Excellent improvement! You're running faster while keeping your heart rate steady, showing progress in fitness and endurance."
+          }
+
+          if (paceBefore < paceNow && hrBefore < hrNow) {
+            sum="Improved pace, but increased heart rate.";
+            feed="Your speed is increasing, but so is your effort level. Make sure you're not pushing too hard and monitor for over training."
+          }
+
+          if (paceBefore < paceNow && hrBefore > hrNow) {
+            sum="Improved pace, but decreased heart rate.";
+            feed="Fantastic! You're running faster while exerting less effort—clear signs of improved fitness and endurance."
+          }
+
+          if (paceBefore > paceNow && hrBefore == hrNow) {
+            sum="Slower pace, same heart rate.";
+            feed="Your pace is decreasing without a change in heart rate. Consider reviewing your training and recovery routine, as this could indicate fatigue."
+          }
+
+          if (paceBefore > paceNow && hrBefore < hrNow) {
+            sum="Slower pace, but increased heart rate.";
+            feed="Your heart rate is higher while your pace is slower. This may be a sign of over training or lack of recovery. Consider taking a rest day or focusing on recovery."
+          }
+
+          if (paceBefore > paceNow && hrBefore > hrNow) {
+            sum="Slower pace, but decreased heart rate.";
+            feed="Your body might be recovering. Use this time to focus on form and light recovery training."
+          }
+
+          if(hrNow> 150){
+            sum="Heart rate exceeded target zone.";
+            feed="Your heart rate is higher than the optimal training range. This could indicate overexertion; consider lowering your intensity or incorporating more recovery."
+          }
+
+          if(paceNow> 10){
+            sum="Heart rate significantly below resting level.";
+            feed="Your heart rate is unusually low. This might indicate fatigue or overtraining. Monitor your overall health and consider consulting a coach or trainer."
+          }
+
+        }
+        const y = {
+          ...res,
+          summary: sum,
+          feedback: feed
+        }
+        this.heartRateTableData.push(y)
+      })
       for (let i = 0; i < this.heartRateTableData.length; i++) {
         let lastFiveElement = this.heartRateTableData[i];
         let transform: any = this.datePipe.transform(lastFiveElement.start_time, 'YYYY-MM-dd HH:mm:ss');
