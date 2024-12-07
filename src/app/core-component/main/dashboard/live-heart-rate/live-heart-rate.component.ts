@@ -25,19 +25,26 @@ export class LiveHeartRateComponent {
   public lineChartOptions: Partial<LineChartOptions> | any = {};
   device: string;
   private heartRateValues: any[] = [];
-  private timeInSeconds: any[] = [];
+  private timeInSeconds: any[] = [1,2,3,4];
+  private maxRate: any[] = [];
+  private minRate: any[] = [];
 
   constructor(private route: ActivatedRoute, private af: Database) {
     let device: any = this.route.snapshot.queryParamMap.get('device');
     this.device = device;
     let startTime: any = this.route.snapshot.queryParamMap.get('startTime');
     let endTime: any = this.route.snapshot.queryParamMap.get('endTime');
+    let athleteHR: any = this.route.snapshot.queryParamMap.get('athleteHR');
+   this.maxRate.push(...Array.from({ length: 60 }, () => athleteHR.split('-')[1]));
+   this.minRate.push(...Array.from({ length: 60 }, () => athleteHR.split('-')[0]));
+
     console.log(startTime);
     startTime = startTime.split(' ')[1];
     this.getData(device, startTime, endTime);
   }
 
   ngOnInit(): void {
+    this.initializeHeartRateData()
 
   }
 
@@ -81,6 +88,16 @@ export class LiveHeartRateComponent {
         {
           name: "Heart Rate",
           data: this.heartRateValues
+        },
+        {
+          name: "Max Rate",
+          type: "line",
+          data: this.maxRate,
+        },
+        {
+          name: "Min Rate",
+          type: "line",
+          data: this.minRate,
         }
       ],
       zoom: {

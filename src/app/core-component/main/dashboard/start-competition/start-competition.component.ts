@@ -184,14 +184,16 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     this.startTimer();
   }
 
-  liveHr(device: string, duration: any) {
+  liveHr(device: string, duration: any,athleteId:string) {
     console.log(duration);
     this.commonService.individualRaceEndTime(this.raceStartTime, duration).then((endTime: string) => {
+      let filter = this.athletesAll.filter(value => value.id== athleteId);
       console.log(endTime);
       const x = {
         device: device,
         startTime: this.raceStartTime,
-        endTime: endTime
+        endTime: endTime,
+        athleteHR:filter[0].heart_rate
       }
       console.log(x);
       this.router.navigate([routes.liveHeartRate], {queryParams: x});
@@ -239,6 +241,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
 
   private loadAllAthletes() {
     this.athleteService.getAthleteAll(localStorage.getItem('userId')).subscribe(value => {
+      console.log(value);
       this.athletesAll = value;
     })
   }

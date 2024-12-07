@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://3b1237c1b29ffb6d0d4d81685bd64e0a.serveo.net/api/v1/',
+  baseUrl: 'https://954108ff6ce6112308770c66a69e73f7.serveo.net/api/v1/',
   firebaseConfig : {
     apiKey: "AIzaSyA1VOLpuanVp7Qes7m7i9fSOYlLxLG-Tr0",
     authDomain: "sports-project-ce7f5.firebaseapp.com",
