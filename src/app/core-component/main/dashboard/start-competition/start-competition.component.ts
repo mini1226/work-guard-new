@@ -42,48 +42,51 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     return this.sessionForm.get('athletes') as FormArray;
   }
 
-  calculateParams(device: string, startTime: string, endTime: string, index: number) {
-    let databaseReference = ref(this.af, device + '/GPS');
-    let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
-    let distanceRun = 0;
-    onValue(res, snapshot => {
-      if (snapshot.val() != null) {
-        let values: any[] = Object.values(snapshot.val());
-        this.commonService.calculateDistance(values[0].Latitude, values[0].Longitude, values[values.length - 1].Latitude, values[values.length - 1].Longitude).then(value => {
-          distanceRun = value;
-        });
-      }
-    })
-
-    let reference = ref(this.af, device + '/BPM');
-    let resBPM = query(reference, orderByChild('Time'), startAt(startTime), endAt(endTime));
-    onValue(resBPM, snapshot => {
-      if (snapshot.val() != null) {
-        let timeTakenInMinutes;
-        this.commonService.convertToMinutes(this.stopWatch).then(value => {
-          timeTakenInMinutes = value;
-        })
-        if (timeTakenInMinutes) {
+  calculateParams(device: string, startTime: string, endTime: string, index: number): Promise<boolean> {
+    return new Promise(resolve => {
+      let databaseReference = ref(this.af, device + '/GPS');
+      let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
+      let distanceRun = 0;
+      onValue(res, snapshot => {
+        if (snapshot.val() != null) {
           let values: any[] = Object.values(snapshot.val());
-          let cardiovascularDrift = (values[values.length - 1].BPM_VALUE - values[0].BPM_VALUE) / timeTakenInMinutes;
-          let totalHeartRate = 0;
-          values.forEach(value => {
-            totalHeartRate += value.BPM_VALUE;
-          })
+          this.commonService.calculateDistance(values[0].Latitude, values[0].Longitude, values[values.length - 1].Latitude, values[values.length - 1].Longitude).then(value => {
+            distanceRun = value;
+          });
+        }
+      })
 
-          let avgHR = (totalHeartRate / values.length);
-          let caloriesBurned = ((avgHR * this.athletes.controls[index].value.althlete_weight * timeTakenInMinutes) * 5) / 1000;
-          let pace = timeTakenInMinutes / distanceRun;
+      let reference = ref(this.af, device + '/BPM');
+      let resBPM = query(reference, orderByChild('Time'), startAt(startTime), endAt(endTime));
+      onValue(resBPM, snapshot => {
+        console.log(snapshot.val());
+        if (snapshot.val() != null) {
+          this.commonService.convertToMinutes(this.stopWatch).then(timeTakenInMinutes => {
+            console.log('Athlete Weight : ',this.athletes.controls[index]);
+            if (timeTakenInMinutes!=undefined) {
+              let values: any[] = Object.values(snapshot.val());
+              let cardiovascularDrift = (values[values.length - 1].BPM_VALUE - values[0].BPM_VALUE) / timeTakenInMinutes;
+              let totalHeartRate = 0;
+              values.forEach(value => {
+                totalHeartRate += value.BPM_VALUE;
+              })
 
-          this.athletes.controls[index].patchValue({
-            distance: distanceRun,
-            cardiovascularLift: cardiovascularDrift,
-            caloriesBurned: caloriesBurned,
-            pace: pace
+              let avgHR = (totalHeartRate / values.length);
+              let caloriesBurned = ((avgHR * this.athletes.controls[index].value.althlete_weight * timeTakenInMinutes) * 5) / 1000;
+              let pace = timeTakenInMinutes / distanceRun;
+              console.log('distance Run : ', distanceRun , ' cardiovascularDrift : ',cardiovascularDrift , ' caloriesBurned : ',caloriesBurned , ' pace : ',pace)
+              this.athletes.controls[index].patchValue({
+                distance: distanceRun,
+                cardiovascularLift: cardiovascularDrift,
+                caloriesBurned: caloriesBurned,
+                pace: pace
+              })
+              resolve(true)
+            }
           })
         }
-      }
-    });
+      });
+    })
   }
 
   formatTime(time: number): string {
@@ -141,10 +144,9 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   onSave(): void {
-    this.calculateParams('D001',this.raceStartTime,this.stopWatch,1);
     this.sessionForm.patchValue({
-      'sessionStartTime': this.raceStartTime,
-      'sessionEndTime': this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss:SSS'),
+      'sessionStartTime': this.datePipe.transform(this.raceStartTime, 'yyyy-MM-dd hh:mm:ss.SSS'),
+      'sessionEndTime': this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS'),
     });
 
     const formValue = {...this.sessionForm.value};
@@ -171,7 +173,6 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
       this.alertservice.saveBtn();
     }, error => {
     });
-
   }
 
   reset() {
@@ -182,7 +183,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.raceStartTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss:SSS');
+    this.raceStartTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
     this.startTimer();
   }
 
@@ -224,6 +225,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
               caloriesBurned: new FormControl(''),
               cardiovascularLift: new FormControl(''),
               pace: new FormControl(''),
+              althlete_weight: new FormControl(item.weight),
             });
             this.athletes.push(formGroup);
           });

@@ -59,7 +59,7 @@
               </td>
               <td style="padding: 0px 5px !important;">
                 <button type="button" class="me-1 btn-sm btn-danger btn"
-                        (click)="stopTimer('D001',i)"
+                        (click)="stopTimer(task.get('deviceId')?.value,i)"
                         [disabled]="task.get('isStop')?.value">
                   <i class="feather icon-pause"></i> STOP
                 </button>

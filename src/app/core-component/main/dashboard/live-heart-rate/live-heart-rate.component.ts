@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ApexAxisChartSeries, ApexChart, ApexStroke, ApexXAxis, ApexYAxis, ChartComponent} from "ng-apexcharts";
 import {ActivatedRoute} from "@angular/router";
-import {Database, endAt, onValue, orderByChild, query, ref, startAt} from "@angular/fire/database";
+import {Database, endAt, onValue, orderByChild, query, ref, set, startAt} from "@angular/fire/database";
 
 
 export type LineChartOptions = {
@@ -23,11 +23,13 @@ export type LineChartOptions = {
 export class LiveHeartRateComponent {
   @ViewChild("chart") chart!: ChartComponent;
   public lineChartOptions: Partial<LineChartOptions> | any = {};
+  device: string;
   private heartRateValues: any[] = [];
   private timeInSeconds: any[] = [];
 
   constructor(private route: ActivatedRoute, private af: Database) {
     let device: any = this.route.snapshot.queryParamMap.get('device');
+    this.device = device;
     let startTime: any = this.route.snapshot.queryParamMap.get('startTime');
     let endTime: any = this.route.snapshot.queryParamMap.get('endTime');
     console.log(startTime);
@@ -36,6 +38,21 @@ export class LiveHeartRateComponent {
   }
 
   ngOnInit(): void {
+
+  }
+
+  setAlarm() {
+    console.log('Buzzer Fire');
+    this.setBuzzer(1);
+    setTimeout(()=>{
+      this.setBuzzer(0)
+      console.log('Buzzer Reset');
+    },5000)
+  }
+
+  setBuzzer(value:number){
+    let reference = ref(this.af, this.device + '/Buzzer');
+    set(reference, value)
   }
 
   getData(device: string, startTime: string, endTime: string) {

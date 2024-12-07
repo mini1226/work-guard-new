@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
 import {SessionService} from "../../../../core/service/sessions/session.service";
+import {CommonService} from "../../../../core/service/common/common.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-competition-summary',
@@ -13,10 +15,10 @@ export class CompetitionSummaryComponent {
   isEditId: any;
   historyData: any[] = [];
 
-
   constructor(private route: ActivatedRoute,
-              private sessionService: SessionService,
-              private router:Router) { }
+              private sessionService: SessionService, private datePipe: DatePipe,
+              private router: Router, private commonService: CommonService) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -31,30 +33,28 @@ export class CompetitionSummaryComponent {
     window.history.back();
   }
 
-  reset(){
+  reset() {
   }
 
 
   onSubmit(): void {
   }
 
-  viewDetails(projectId: any) {
-    this.router.navigate([routes.viewHeartRate], {
-      queryParams: {
-        id: projectId
+  viewDetails(project: any) {
+    let startTime: any = this.datePipe.transform(project.start_time, 'YYYY-MM-dd HH:mm:ss:SSS');
+    this.commonService.individualRaceEndTime(startTime, project.time).then((endTime: string) => {
+      const x = {
+        device: project.device_id,
+        startTime: startTime,
+        endTime: endTime
       }
-    });
+      this.router.navigate([routes.liveHeartRate], {queryParams: x});
+    })
   }
-
-  performanceHistory(){
-
-  }
-
 
   private loadAllSessionistory() {
     this.sessionService.getSessionHistory(this.isEditId).subscribe(value => {
-      this.historyData=value;
-      // this.sampleData
+      this.historyData = value;
     })
   }
 }
