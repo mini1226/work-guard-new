@@ -98,11 +98,17 @@ export class LiveHeartRateComponent {
           name: "Max Rate",
           type: "line",
           data: this.maxRate,
+          animations: {
+            enabled: false, // Disable animations
+          },
         },
         {
           name: "Min Rate",
           type: "line",
           data: this.minRate,
+          animations: {
+            enabled: false, // Disable animations
+          },
         }
       ],
       zoom: {
@@ -112,7 +118,19 @@ export class LiveHeartRateComponent {
       },
       chart: {
         type: "line",
-        height: 350
+        height: 350,
+        animations: {
+          enabled: false,
+          speed: 100,
+          animateGradually: {
+            enabled: false,
+            delay: 500
+          },
+          dynamicAnimation: {
+            enabled: false,
+            speed: 150
+          }
+        }
       },
       xaxis: {
         categories: this.timeInSeconds, // X-axis representing seconds (0-59)

@@ -1,8 +1,7 @@
 import {Component, Inject, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {ChartComponent, NgApexchartsModule} from "ng-apexcharts";
 import {NgIf} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
 import {Database, endAt, onValue, orderByChild, query, ref, set, startAt} from "@angular/fire/database";
 import {LineChartOptions} from "../live-heart-rate/live-heart-rate.component";
 
@@ -18,6 +17,15 @@ import {LineChartOptions} from "../live-heart-rate/live-heart-rate.component";
 })
 export class ViewHeartRateComponent {
 
+  @ViewChild("chart") chart!: ChartComponent;
+  public lineChartOptions: Partial<LineChartOptions> | any = {};
+  device: string = '';
+  athleteHR: any;
+  private heartRateValues: any[] = [];
+  private timeInSeconds: any[] = [];
+  private maxRate: any[] = [];
+  private minRate: any[] = [];
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private af: Database) {
     console.log(this.data);
     let device: any = this.data.device;
@@ -28,30 +36,21 @@ export class ViewHeartRateComponent {
     console.log(startTime);
     this.getData(device, startTime, new Date().toDateString());
   }
-  @ViewChild("chart") chart!: ChartComponent;
-  public lineChartOptions: Partial<LineChartOptions> | any = {};
-  device: string ='';
-  athleteHR: any;
-  private heartRateValues: any[] = [];
-  private timeInSeconds: any[] = [];
-  private maxRate: any[] = [];
-  private minRate: any[] = [];
 
   ngOnInit(): void {
     this.initializeHeartRateData()
-
   }
 
   setAlarm() {
     console.log('Buzzer Fire');
     this.setBuzzer(1);
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setBuzzer(0)
       console.log('Buzzer Reset');
-    },5000)
+    }, 5000)
   }
 
-  setBuzzer(value:number){
+  setBuzzer(value: number) {
     let reference = ref(this.af, this.device + '/Buzzer');
     set(reference, value)
   }
@@ -67,11 +66,10 @@ export class ViewHeartRateComponent {
         this.heartRateValues = numbers.map((res: any) => {
           return res.BPM_VALUE
         });
-        console.log(this.heartRateValues);
         this.maxRate=[];
         this.minRate=[];
-        this.maxRate.push(...Array.from({ length: this.heartRateValues.length }, () => this.athleteHR.split('-')[1]));
-        this.minRate.push(...Array.from({ length: this.heartRateValues.length }, () => this.athleteHR.split('-')[0]));
+        this.maxRate.push(...Array.from({length: this.heartRateValues.length}, () => this.athleteHR.split('-')[1]));
+        this.minRate.push(...Array.from({length: this.heartRateValues.length}, () => this.athleteHR.split('-')[0]));
         this.initializeHeartRateData()
       }
     })
@@ -102,12 +100,24 @@ export class ViewHeartRateComponent {
       ],
       zoom: {
         type: 'x',
-        enabled: true,
+        enabled: false,
         autoScaleYaxis: true,
       },
       chart: {
         type: "line",
-        height: 350
+        height: 350,
+        animations: {
+          enabled: false,
+          speed: 100,
+          animateGradually: {
+            enabled: false,
+            delay: 500
+          },
+          dynamicAnimation: {
+            enabled: false,
+            speed: 150
+          }
+        }
       },
       xaxis: {
         categories: this.timeInSeconds, // X-axis representing seconds (0-59)
