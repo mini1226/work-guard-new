@@ -148,7 +148,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   onSave(): void {
     this.sessionForm.patchValue({
       'sessionStartTime': this.datePipe.transform(this.raceStartTime, 'yyyy-MM-dd hh:mm:ss.SSS'),
-      'sessionEndTime': this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS'),
+      'sessionEndTime': this.datePipe.transform(new Date().toLocaleString('en-GB'), 'yyyy-MM-dd hh:mm:ss.SSS'),
     });
 
     const formValue = {...this.sessionForm.value};
@@ -182,7 +182,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.raceStartTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
+    this.raceStartTime = this.datePipe.transform(new Date().toLocaleString('en-GB'), 'yyyy-MM-dd hh:mm:ss');
     this.startTimer();
   }
 
@@ -200,7 +200,6 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
       this.dialog.open(ViewHeartRateComponent, {data: x, width: '80%'})
     })
   }
-
 
   ngOnDestroy(): void {
     this.reset();
