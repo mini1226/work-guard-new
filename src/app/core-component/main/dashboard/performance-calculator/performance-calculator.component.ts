@@ -18,10 +18,10 @@ export class PerformanceCalculatorComponent {
 
   genderData = [
     {
-      'id': 1,
+      'id': 0,
       'name': 'Male'
     },{
-      'id': 2,
+      'id': 1,
       'name': 'Female'
     }
   ];

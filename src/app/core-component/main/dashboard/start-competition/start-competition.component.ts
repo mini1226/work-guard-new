@@ -25,7 +25,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   stopWatch = '00:00:00:00';
   athletesAll: Array<any> = [];
   raceStartTime: any = '20:01:15:418';
-
+  avgHR:any;
   sessionForm: FormGroup = new FormGroup({
     sessionId: new FormControl(''),
     sessionStartTime: new FormControl(''),
@@ -81,6 +81,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
                 distance: '' + distanceRun,
                 cardiovascularLift: '' + cardiovascularDrift,
                 caloriesBurned: '' + caloriesBurned,
+                heartRateDetail: '' + avgHR,
                 pace: '' + pace
               })
               resolve(true)
@@ -223,6 +224,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
               isStop: new FormControl(false),
               distance: new FormControl(''),
               caloriesBurned: new FormControl(''),
+              heartRateDetail: new FormControl(''),
               cardiovascularLift: new FormControl(''),
               pace: new FormControl(''),
               althlete_weight: new FormControl(item.weight),
