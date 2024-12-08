@@ -19,13 +19,15 @@ import {ViewHeartRateComponent} from "../view-heart-rate/view-heart-rate.compone
 export class StartCompetitionComponent implements OnInit, OnDestroy {
   public routes = routes;
   isEditId: any;
-
+  hours = 0;
+  minutes = 0;
   seconds: number = 0;
+  milliseconds: number = 0;
   interval: number | null = null;
   stopWatch = '00:00:00:00';
   athletesAll: Array<any> = [];
   raceStartTime: any = '20:01:15:418';
-  avgHR:any;
+  avgHR: any;
   sessionForm: FormGroup = new FormGroup({
     sessionId: new FormControl(''),
     sessionStartTime: new FormControl(''),
@@ -74,6 +76,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
               })
 
               let avgHR = (totalHeartRate / values.length);
+              console.log('avgHR : ', avgHR, ' weight : ', this.athletes.controls[index].value.althlete_weight, ' timeTakenInMinutes : ', timeTakenInMinutes);
               let caloriesBurned = ((avgHR * this.athletes.controls[index].value.althlete_weight * timeTakenInMinutes) * 5) / 1000;
               let pace = timeTakenInMinutes / distanceRun;
               console.log('distance Run : ', distanceRun, ' cardiovascularDrift : ', cardiovascularDrift, ' caloriesBurned : ', caloriesBurned, ' pace : ', pace)
@@ -93,12 +96,15 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   formatTime(time: number): string {
-    const milliseconds = Math.floor((time % 1000) / 10);
-    const seconds = Math.floor((time / 1000) % 60);
-    const minutes = Math.floor((time / (1000 * 60)) % 60);
-    const hours = Math.floor(time / (1000 * 60 * 60));
-    const format = (num: number) => (num < 10 ? '0' + num : num);
-    return `${format(hours)}:${format(minutes)}:${format(seconds)}:${milliseconds.toString().padStart(2, '0')}`;
+    // const milliseconds = Math.floor((time % 1000) / 10);
+    // const seconds = Math.floor((time / 1000) % 60);
+    // const minutes = Math.floor((time / (1000 * 60)) % 60);
+    // const hours = Math.floor(time / (1000 * 60 * 60));
+    // const format = (num: number) => (num < 10 ? '0' + num : num);
+    // return `${format(hours)}:${format(minutes)}:${format(seconds)}:${format(milliseconds)}`;
+
+    const pad = (num: number) => String(num).padStart(2, '0');
+    return `${pad(this.hours)}:${pad(this.minutes)}:${pad(this.seconds)}:${pad(this.milliseconds)}`;
   }
 
   ngOnInit(): void {
@@ -125,14 +131,31 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   startTimer(): void {
     if (this.interval) return;  // Prevent multiple intervals
     this.interval = window.setInterval(() => {
-      this.seconds++;
+
+      this.milliseconds += 10;
+      if (this.milliseconds === 1000) {
+        this.milliseconds = 0;
+        this.seconds++;
+      }
+
+      if (this.seconds === 60) {
+        this.seconds = 0;
+        this.minutes++;
+      }
+      if (this.minutes === 60) {
+        this.minutes = 0;
+        this.hours++;
+      }
+
       this.updateDisplay();
-    }, 1);
+    }, 10);
   }
 
-  stopTimer(device: string, i: number): void {
+  stopTimer(device: string, i: number, athleteId: any): void {
     if (this.interval !== null) {
+      let filter = this.athletesAll.filter(value => value.id == athleteId);
       this.athletes.controls[i].patchValue({
+        althlete_weight: filter[0].weight,
         duration: this.stopWatch,
         isStop: true
       })

@@ -11,7 +11,7 @@ export class CommonService {
 
   private _currency = new BehaviorSubject<string>('USD');
   public readonly currency$ = this._currency.asObservable();
-  private readonly EARTH_RADIUS = 6371e3;
+  private readonly EARTH_RADIUS = 6371000;
 
   individualRaceEndTime(baseTime: string, duration: string): Promise<string> {
     console.log(baseTime);
@@ -55,7 +55,7 @@ export class CommonService {
         Math.cos(q1) * Math.cos(q2) *
         Math.sin(pl / 2) ** 2;
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      console.log(c);
+      console.log('Call Distance C - ',c);
       resolve(this.EARTH_RADIUS * c);
     })
   }
