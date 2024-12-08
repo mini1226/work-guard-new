@@ -87,8 +87,12 @@
         <h4>Predicted Time for 10000m</h4>
       </div>
       <div class="d-flex justify-content-center mt-3">
-        <h2>00:00:09.58</h2>
+        <h2 *ngIf="result; else noTime">{{ result }}</h2>
+        <ng-template #noTime>
+          <h2>Waiting for prediction...</h2>
+        </ng-template>
       </div>
+
     </div>
   </div>
 </div>

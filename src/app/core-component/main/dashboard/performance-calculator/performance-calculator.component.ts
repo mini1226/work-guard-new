@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {routes} from "../../../../core/helpers/routes";
+import {SweetalertService} from "../../../../shared/sweetalert/sweetalert.service";
+import {SessionService} from "../../../../core/service/sessions/session.service";
 
 @Component({
   selector: 'app-performance-calculator',
@@ -11,6 +13,8 @@ import {routes} from "../../../../core/helpers/routes";
 export class PerformanceCalculatorComponent {
   public routes = routes;
   isEditId: any;
+
+  result: any;
 
   genderData = [
     {
@@ -31,7 +35,9 @@ export class PerformanceCalculatorComponent {
     time: new FormControl(''),
   });
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              private alertservice: SweetalertService,
+              private sessionService: SessionService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -59,7 +65,23 @@ export class PerformanceCalculatorComponent {
 
 
   onSubmit(): void {
-
+    console.log(this.athleteForm.value);
+    if (this.athleteForm.valid){
+      this.sessionService.calculator(this.athleteForm.value).subscribe(
+        value => {
+          this.result = value?.result;
+          if (value !== undefined) {
+            console.log('Result:', value);
+            this.alertservice.saveBtn(); // Call your save button logic
+          } else {
+            this.alertservice.errorPopup();
+          }
+        },
+        error => {
+          console.error('Error:', error); // Log error for debugging
+        }
+      );
+    }
   }
 
   calculateBMI() {
@@ -68,9 +90,10 @@ export class PerformanceCalculatorComponent {
 
     if (weight && height) {
       const heightInMeters = height / 100; // Convert height to meters
-      const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2); // Calculate BMI and round to 2 decimal places
-      this.athleteForm.get('bmi')?.setValue(bmi);
+      const bmi = parseFloat((weight / (heightInMeters * heightInMeters)).toFixed(2)); // Calculate BMI and convert to number
+      this.athleteForm.get('bmi')?.setValue(bmi); // Set the BMI as a number
     }
   }
+
 
 }

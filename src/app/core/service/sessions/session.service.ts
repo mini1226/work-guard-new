@@ -25,6 +25,15 @@ export class SessionService {
   }
 
 
+  public calculator(body :any) :Observable<any>{
+    return this.http.post<any>('http://139.162.18.41:5000/process-data' ,body,{}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
   public startSession(body :any, id: any) :Observable<any>{
     return this.http.post<any>(this.baseURL+'/'+id+'/start' ,body,{}).pipe(
       map((res: any) => {
