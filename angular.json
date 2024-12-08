@@ -25,6 +25,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "node_modules/ngx-spinner/animations/line-scale-pulse-out.css",
               "src/assets/icons/fontawesome/css/fontawesome.min.css",
               "src/assets/icons/fontawesome/css/all.min.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",

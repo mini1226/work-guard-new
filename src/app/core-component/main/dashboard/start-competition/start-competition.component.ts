@@ -96,13 +96,6 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   }
 
   formatTime(time: number): string {
-    // const milliseconds = Math.floor((time % 1000) / 10);
-    // const seconds = Math.floor((time / 1000) % 60);
-    // const minutes = Math.floor((time / (1000 * 60)) % 60);
-    // const hours = Math.floor(time / (1000 * 60 * 60));
-    // const format = (num: number) => (num < 10 ? '0' + num : num);
-    // return `${format(hours)}:${format(minutes)}:${format(seconds)}:${format(milliseconds)}`;
-
     const pad = (num: number) => String(num).padStart(2, '0');
     return `${pad(this.hours)}:${pad(this.minutes)}:${pad(this.seconds)}:${pad(this.milliseconds)}`;
   }
@@ -193,6 +186,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
       };
       this.sessionService.startSession(sessionId, this.isEditId).subscribe(value => {
         this.alertservice.saveBtn();
+        this.onBackClick()
       }, error => {
       });
     }, error => {

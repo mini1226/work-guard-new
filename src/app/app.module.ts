@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,14 +12,16 @@ import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
+import {NgxSpinnerModule} from "ngx-spinner";
 
 
 
 @NgModule({
   declarations: [AppComponent, LoaderComponent],
-  imports: [BrowserModule, AppRoutingModule, sharedModule, BrowserAnimationsModule,
+  imports: [BrowserModule, AppRoutingModule, sharedModule, BrowserAnimationsModule, NgxSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgxSpinnerModule.forRoot({ type: 'line-scale-pulse-out' })
   ],
   exports: [],
   bootstrap: [AppComponent],
@@ -28,5 +30,6 @@ import { getDatabase, provideDatabase } from '@angular/fire/database';
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase())
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

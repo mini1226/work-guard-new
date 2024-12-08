@@ -6,11 +6,11 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
-import { SpinnerService } from '../../core.index';
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
-  constructor(private spinner: SpinnerService) {}
+  constructor(private spinner: NgxSpinnerService) {}
 
   intercept(
     request: HttpRequest<unknown>,
