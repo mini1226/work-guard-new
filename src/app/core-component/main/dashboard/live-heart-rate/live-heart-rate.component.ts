@@ -27,8 +27,7 @@ export class LiveHeartRateComponent {
   athleteHR: any;
   private heartRateValues: any[] = [];
   private timeInSeconds: any[] = [];
-  private maxRate: any[] = [];
-  private minRate: any[] = [];
+  private avgRate: any[] = [];
 
   constructor(private route: ActivatedRoute, private af: Database) {
     let device: any = this.route.snapshot.queryParamMap.get('device');
@@ -47,36 +46,19 @@ export class LiveHeartRateComponent {
 
   }
 
-  setAlarm() {
-    console.log('Buzzer Fire');
-    this.setBuzzer(1);
-    setTimeout(()=>{
-      this.setBuzzer(0)
-      console.log('Buzzer Reset');
-    },5000)
-  }
-
-  setBuzzer(value:number){
-    let reference = ref(this.af, this.device + '/Buzzer');
-    set(reference, value)
-  }
-
   getData(device: string, startTime: string, endTime: string) {
     let databaseReference = ref(this.af, device + '/BPM');
     let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
     onValue(res, snapshot => {
       console.log(snapshot.val());
       if (snapshot.val() != null) {
-        let values: number[] = Object.values(snapshot.val());
-        let numbers = values.slice(-60);
+        let numbers: number[] = Object.values(snapshot.val());
         this.heartRateValues = numbers.map((res: any) => {
           return res.BPM_VALUE
         });
         console.log(this.heartRateValues);
-        this.maxRate=[];
-        this.minRate=[];
-        this.maxRate.push(...Array.from({ length: this.heartRateValues.length }, () => this.athleteHR.split('-')[1]));
-        this.minRate.push(...Array.from({ length: this.heartRateValues.length }, () => this.athleteHR.split('-')[0]));
+        this.avgRate=[];
+        this.avgRate.push(...Array.from({ length: this.heartRateValues.length }, () => Number(this.athleteHR)));
         this.initializeHeartRateData()
       }
     })
@@ -95,17 +77,9 @@ export class LiveHeartRateComponent {
           data: this.heartRateValues
         },
         {
-          name: "Max Rate",
+          name: "Average HR Rate",
           type: "line",
-          data: this.maxRate,
-          animations: {
-            enabled: false, // Disable animations
-          },
-        },
-        {
-          name: "Min Rate",
-          type: "line",
-          data: this.minRate,
+          data: this.avgRate,
           animations: {
             enabled: false, // Disable animations
           },

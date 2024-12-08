@@ -50,7 +50,8 @@ export class ViewHistoryComponent {
       const x = {
         device: project.device_id,
         startTime: startTime,
-        endTime: endTime
+        endTime: endTime,
+        athleteHR:project.heart_rate_detail
       }
       this.router.navigate([routes.liveHeartRate], {queryParams: x});
     })
