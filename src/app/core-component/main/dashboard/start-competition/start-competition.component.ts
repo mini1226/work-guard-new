@@ -46,7 +46,7 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
     return this.sessionForm.get('athletes') as FormArray;
   }
 
-  calculateParams(device: string, startTime: string, endTime: string, index: number): Promise<boolean> {
+  calculateParams(device: string, startTime: string, endTime: string, index: number, athleteDuration: string): Promise<boolean> {
     return new Promise(resolve => {
       let databaseReference = ref(this.af, device + '/GPS');
       let res = query(databaseReference, orderByChild('Time'), startAt(startTime), endAt(endTime));
@@ -154,13 +154,14 @@ export class StartCompetitionComponent implements OnInit, OnDestroy {
   stopTimer(device: string, i: number, athleteId: any): void {
     if (this.interval !== null) {
       let filter = this.athletesAll.filter(value => value.id == athleteId);
+      let stop = this.stopWatch;
       this.athletes.controls[i].patchValue({
         althlete_weight: filter[0].weight,
-        duration: this.stopWatch,
+        duration: stop,
         isStop: true
       })
       this.commonService.individualRaceEndTime(this.raceStartTime, this.stopWatch).then((endTime: string) => {
-        this.calculateParams(device, this.raceStartTime, endTime, i)
+        this.calculateParams(device, this.raceStartTime, endTime, i, stop)
       });
     }
   }

@@ -21,7 +21,7 @@ export class CommonService {
       const [baseHours, baseMinutes, baseSeconds] = baseTime.split(':').map(Number);
       const [durationHours, durationMinutes, durationSeconds] = duration.split(':').map(Number);
 
-      const baseTimeInMilliseconds =
+     /* const baseTimeInMilliseconds =
         (baseHours * 3600 + baseMinutes * 60 + baseSeconds) * 1000;
       const durationInMilliseconds =
         (durationHours * 3600 + durationMinutes * 60 + durationSeconds) * 1000 ;
@@ -35,8 +35,22 @@ export class CommonService {
         resultMinutes.toString().padStart(2, '0'),
         resultSeconds.toString().padStart(2, '0'),
         // resultMilliseconds.toString().padStart(3, '0'),
-      ].join(':');
-      resolve(year + ' ' + s);
+      ].join(':');*/
+
+      // Add the seconds, minutes, and hours
+      let totalSeconds = baseSeconds + durationSeconds;
+      let totalMinutes = baseMinutes + durationMinutes + Math.floor(totalSeconds / 60);
+      let totalHours = baseHours + durationHours + Math.floor(totalMinutes / 60);
+
+// Normalize seconds and minutes
+      totalSeconds = totalSeconds % 60;
+      totalMinutes = totalMinutes % 60;
+
+// Format the result
+      const pad = (num: number) => String(num).padStart(2, '0');
+      const result = `${pad(totalHours)}:${pad(totalMinutes)}:${pad(totalSeconds)}`;
+
+      resolve(year + ' ' + result);
     })
   }
 
