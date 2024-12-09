@@ -46,7 +46,8 @@ export class CompetitionSummaryComponent {
       const x = {
         device: project.device_id,
         startTime: startTime,
-        endTime: endTime
+        endTime: endTime,
+        athleteHR:Number(project.average_heart_rate).toFixed(2)
       }
       this.router.navigate([routes.liveHeartRate], {queryParams: x});
     })

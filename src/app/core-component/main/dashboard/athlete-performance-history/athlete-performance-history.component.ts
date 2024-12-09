@@ -189,4 +189,7 @@ export class AthletePerformanceHistoryComponent {
     return session.reduce((a, b) => Math.min(a, b), Infinity);
   }
 
+  onBackClick() {
+    window.history.back();
+  }
 }
